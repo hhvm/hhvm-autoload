@@ -18,7 +18,6 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
       $root.'/composer.json',
       shape(
         'autoloadFilesBehavior' => AutoloadFilesBehavior::FIND_DEFINITIONS,
-        'composerJsonFallback' => true,
         'includeVendor' => false,
         'roots' => ImmVector { $root },
       ),
@@ -42,7 +41,6 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
       $root.'/composer.json',
       shape(
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
-        'composerJsonFallback' => true,
         'includeVendor' => false,
         'roots' => ImmVector { $root },
       ),

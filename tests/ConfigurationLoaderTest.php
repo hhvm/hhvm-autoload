@@ -17,7 +17,6 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     return [
       'fully specified' => [[
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
-        'composerJsonFallback' => true,
         'includeVendor' => false,
         'roots' => ['foo/', 'bar/'],
       ]],
@@ -75,7 +74,6 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     $this->assertNotNull(
       AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
     );
-    $this->assertTrue(is_bool($config['composerJsonFallback']));
 
     $config = Shapes::toArray($config); 
     foreach ($data as $key => $value) {
