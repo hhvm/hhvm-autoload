@@ -16,7 +16,7 @@ use Facebook\DefinitionFinder\FileParser;
 use Facebook\DefinitionFinder\ScannedBase;
 use Facebook\DefinitionFinder\TreeParser;
 
-final class Scanner {
+final class Scanner implements Builder {
   private function __construct(
     private BaseParser $parser,
   ) {
@@ -67,6 +67,10 @@ final class Scanner {
       'type' => $this->getDefinitionFileMap($types),
       'constant' => $this->getDefinitionFileMap($constants),
     );
+  }
+
+  public function getFiles(): ImmVector<string> {
+    return ImmVector { };
   }
 
   private function getDefinitionFileMap<T as ScannedBase>(

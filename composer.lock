@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2e15c1473ea120d557382ac50b124a0e",
+    "hash": "b31fdda64bbf5eac7ebdba2240aadd29",
     "content-hash": "cf0ca28f6b14feb98a5822e61d88d5ed",
     "packages": [
         {
@@ -98,16 +98,16 @@
         },
         {
             "name": "fredemmott/definition-finder",
-            "version": "v0.3.6",
+            "version": "v0.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fredemmott/definitions-finder.git",
-                "reference": "651ecc60ef6a4c11cecd40086faf9dd758032ab6"
+                "reference": "45317d5b53e528d43b0644ddb621e099784bd75a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/651ecc60ef6a4c11cecd40086faf9dd758032ab6",
-                "reference": "651ecc60ef6a4c11cecd40086faf9dd758032ab6",
+                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/45317d5b53e528d43b0644ddb621e099784bd75a",
+                "reference": "45317d5b53e528d43b0644ddb621e099784bd75a",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2015-12-05 00:19:34"
+            "time": "2015-12-13 23:34:10"
         },
         {
             "name": "myclabs/deep-copy",

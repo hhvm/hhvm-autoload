@@ -11,14 +11,22 @@
 
 namespace Facebook\AutoloadMap;
 
-class Exception extends \Exception {
+final class ClassesOnlyFilter implements Builder {
   public function __construct(
-    \HH\FormatString<\PlainSprintf> $format,
-    array<mixed> ...$args
+    private Builder $source,
   ) {
-    /* HH_FIXME[4027] - the typechecker's printf support doesn't allow
-     * passing it along to something else that has validated format
-     * strings */
-    parent::__construct(sprintf($format, ...$args));
+  }
+
+  public function getFiles(): ImmVector<string> {
+    return ImmVector { };
+  }
+
+  public function getAutoloadMap(): AutoloadMap {
+    return shape(
+      'class' => $this->source->getAutoloadMap()['class'],
+      'function' => [],
+      'type' => [],
+      'constant' => [],
+    );
   }
 }
