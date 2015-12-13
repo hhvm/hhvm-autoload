@@ -17,7 +17,10 @@ abstract final class ConfigurationLoader {
   }
 
   public static function fromJSON(string $json, string $path): Config {
-    return self::fromData(json_decode($json), $path);
+    return self::fromData(
+      json_decode($json, /* as array = */ true),
+      $path,
+    );
   }
 
   public static function fromData(
