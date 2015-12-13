@@ -14,5 +14,6 @@ namespace Facebook\AutoloadMap;
 type Config = shape(
   'autoloadFilesBehavior' => AutoloadFilesBehavior,
   'composerJsonFallback' => bool,
+  'includeVendor' => bool,
   'roots' => ImmVector<string>,
 );

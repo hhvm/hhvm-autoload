@@ -18,6 +18,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
       'fully specified' => [[
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
         'composerJsonFallback' => true,
+        'includeVendor' => false,
         'roots' => ['foo/', 'bar/'],
       ]],
       'just roots' => [[

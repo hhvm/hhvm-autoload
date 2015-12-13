@@ -83,9 +83,23 @@ abstract final class ConfigurationLoader {
       $composer_json_fallback = (bool) $value;
     }
 
+    $include_vendor = true;
+    if (array_key_exists('includeVendor', $data)) {
+      $value = $data['includeVendor'];
+      if (!is_bool($value)) {
+        throw new ConfigurationException(
+          'File "%s" has non-bool value of includeVendor: %s',
+          $path,
+          var_export($value, true),
+        );
+      }
+      $include_vendor = (bool) $value;
+    }
+
     return shape(
       'autoloadFilesBehavior' => $autoload_files_behavior,
       'composerJsonFallback' => $composer_json_fallback,
+      'includeVendor' => $include_vendor,
       'roots' => $roots->toImmVector(),
     );
   }
