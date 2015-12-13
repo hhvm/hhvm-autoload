@@ -1,0 +1,14 @@
+{
+  "require": {
+    "91carriage/phpunit-hhi": "^5.1"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ],
+    "files": [
+      "src/AutoloadShapes.php",
+      "src/Config.php"
+    ]
+  }
+}

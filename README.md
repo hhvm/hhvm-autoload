@@ -12,6 +12,13 @@ supported and receiving security updates).
 In the mean time, use Composer, and use the `autoload/files` configuration
 to load things that aren't classes.
 
+FAQ
+---
+
+Q. Why does this project use Composer's autoloader?
+
+A. It can't depend on itself :)
+
 License
 -------
 
