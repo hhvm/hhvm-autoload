@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "064a35fd922275b4f6d05bfcda53f74a",
-    "content-hash": "e06590dc037fe9c05c8d0570aee30c62",
+    "hash": "2e15c1473ea120d557382ac50b124a0e",
+    "content-hash": "cf0ca28f6b14feb98a5822e61d88d5ed",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -95,6 +95,52 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "fredemmott/definition-finder",
+            "version": "v0.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fredemmott/definitions-finder.git",
+                "reference": "651ecc60ef6a4c11cecd40086faf9dd758032ab6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/651ecc60ef6a4c11cecd40086faf9dd758032ab6",
+                "reference": "651ecc60ef6a4c11cecd40086faf9dd758032ab6",
+                "shasum": ""
+            },
+            "require": {
+                "hhvm": "~3.9"
+            },
+            "require-dev": {
+                "91carriage/phpunit-hhi": "~5.1.0",
+                "hhvm/systemlib-extractor": "^0.1.0",
+                "phpunit/phpunit": "~5.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ],
+                "files": [
+                    "src/typedefs.php",
+                    "src/utils.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Find definitions in PHP or Hack files. Useful for autoloaders.",
+            "homepage": "https://github.com/fredemmott/definitions-finder",
+            "keywords": [
+                "autoload",
+                "definitions",
+                "hack",
+                "hhvm"
+            ],
+            "time": "2015-12-05 00:19:34"
         },
         {
             "name": "myclabs/deep-copy",

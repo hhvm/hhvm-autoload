@@ -1,13 +1,14 @@
 {
   "require": {
-    "91carriage/phpunit-hhi": "^5.1"
+    "91carriage/phpunit-hhi": "^5.1",
+    "fredemmott/definition-finder": "^0.3.6"
   },
   "autoload": {
     "classmap": [
       "src/"
     ],
     "files": [
-      "src/AutoloadShapes.php",
+      "src/AutoloadMap.php",
       "src/Config.php"
     ]
   }
