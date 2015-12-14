@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b31fdda64bbf5eac7ebdba2240aadd29",
-    "content-hash": "cf0ca28f6b14feb98a5822e61d88d5ed",
+    "hash": "7f8a99e55a9aaa25d87779f6eb5a85b3",
+    "content-hash": "a679c81712e9505d7d4b675174d9182d",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -98,16 +98,16 @@
         },
         {
             "name": "fredemmott/definition-finder",
-            "version": "v0.3.7",
+            "version": "v0.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fredemmott/definitions-finder.git",
-                "reference": "45317d5b53e528d43b0644ddb621e099784bd75a"
+                "reference": "abbd72b6b1590215c7aed673697669bbff9ff07a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/45317d5b53e528d43b0644ddb621e099784bd75a",
-                "reference": "45317d5b53e528d43b0644ddb621e099784bd75a",
+                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/abbd72b6b1590215c7aed673697669bbff9ff07a",
+                "reference": "abbd72b6b1590215c7aed673697669bbff9ff07a",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2015-12-13 23:34:10"
+            "time": "2015-12-14 01:19:41"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1132,6 +1132,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "hhvm": "~3.11"
+    },
     "platform-dev": []
 }

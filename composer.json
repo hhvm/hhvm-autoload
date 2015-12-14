@@ -2,7 +2,7 @@
   "require": {
     "hhvm": "~3.11",
     "91carriage/phpunit-hhi": "^5.1",
-    "fredemmott/definition-finder": "^0.3"
+    "fredemmott/definition-finder": "^0.3.8"
   },
   "autoload": {
     "classmap": [
