@@ -18,9 +18,8 @@ final class RootImporter implements Builder {
     string $root,
     Config $config,
   ) {
-    $composer = $root.'/composer.json';
-    if (file_exists($composer)) {
-      $this->builders[] = new ComposerImporter($composer, $config);
+    foreach ($config['roots'] as $tree) {
+      $this->builders[] = Scanner::fromTree($tree);
     }
 
     if (!$config['includeVendor']) {
