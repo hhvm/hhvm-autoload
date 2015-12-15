@@ -62,10 +62,10 @@ final class Scanner implements Builder {
     $constants = $this->parser->getConstants();
 
     return shape(
-      'class' => $this->getDefinitionFileMap($classes),
-      'function' => $this->getDefinitionFileMap($functions),
-      'type' => $this->getDefinitionFileMap($types),
-      'constant' => $this->getDefinitionFileMap($constants),
+      'class' => $this->getLowerCaseFileMap($classes),
+      'function' => $this->getLowerCaseFileMap($functions),
+      'type' => $this->getLowerCaseFileMap($types),
+      'constant' => $this->getCasePreservedFileMap($constants),
     );
   }
 
@@ -73,12 +73,23 @@ final class Scanner implements Builder {
     return ImmVector { };
   }
 
-  private function getDefinitionFileMap<T as ScannedBase>(
+  private function getCasePreservedFileMap<T as ScannedBase>(
     \ConstVector<T> $scanned,
   ): array<string, string> {
     $out = [];
     foreach ($scanned as $def) {
       $out[$def->getName()] = $def->getFileName();
+    }
+    return $out;
+  }
+
+  private function getLowerCaseFileMap<T as ScannedBase>(
+    \ConstVector<T> $scanned,
+  ): array<string, string> {
+    $scanned = $this->getCasePreservedFileMap($scanned);
+    $out = [];
+    foreach ($scanned as $k => $v) {
+      $out[strtolower($k)] = $v;
     }
     return $out;
   }

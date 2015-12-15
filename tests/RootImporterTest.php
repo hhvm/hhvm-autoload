@@ -24,12 +24,12 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     );
     $map = $importer->getAutoloadMap();
     $this->assertContains(
-      'Facebook\AutoloadMap\Exception',
+      'fredemmott\autoloadmap\exception',
       array_keys($map['class']),
     );
 
     $this->assertContains(
-      'PHPUnit_Framework_TestCase',
+      'phpunit_framework_testcase',
       array_keys($map['class']),
     );
     $this->assertEmpty($importer->getFiles());
@@ -48,11 +48,11 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
 
     $map = $importer->getAutoloadMap();
     $this->assertContains(
-      'Facebook\AutoloadMap\Exception',
+      'fredemmott\autoloadmap\exception',
       array_keys($map['class']),
     );
     $this->assertNotContains(
-      'PHPUnit_Framework_TestCase',
+      'phpunit_framework_testcase',
       array_keys($map['class']),
     );
     $this->assertEmpty($importer->getFiles());

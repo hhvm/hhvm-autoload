@@ -67,7 +67,8 @@ final class ScannerTest extends \PHPUnit_Framework_TestCase {
     foreach ($expected as $name => $file) {
       $this->assertSame(
         self::HH_ONLY_SRC.'/'.$file,
-        idx($actual, self::FIXTURES_PREFIX.$name),
+        idx($actual, strtolower(self::FIXTURES_PREFIX.$name))
+        ?: idx($actual, self::FIXTURES_PREFIX.$name),
       );
     }
   }

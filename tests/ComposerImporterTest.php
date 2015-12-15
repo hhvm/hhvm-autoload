@@ -27,11 +27,11 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
     $map = $importer->getAutoloadMap();
     $this->assertSame(
       $root.'/src/Exception.php',
-      idx($map['class'], 'Facebook\AutoloadMap\Exception'),
+      idx($map['class'], 'fredemmott\autoloadmap\exception'),
     );
     $this->assertSame(
       $root.'/src/Config.php',
-      idx($map['type'], 'Facebook\AutoloadMap\Config'),
+      idx($map['type'], 'fredemmott\autoloadmap\config'),
     );
   }
 
@@ -81,7 +81,7 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
       $root.'/Dumper.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'Symfony\Component\Yaml\Dumper',
+        'symfony\component\yaml\dumper',
       ),
     );
   }
@@ -108,12 +108,11 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
         'roots' => ImmVector { $root },
       ),
     );
-
     $this->assertSame(
       $root.'/src/Prophecy/Prophet.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'Prophecy\Prophet',
+        'prophecy\prophet',
       ),
     );
   }
