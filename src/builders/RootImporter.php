@@ -11,7 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-final class DirectoryImporter implements Builder {
+final class RootImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
 
   public function __construct(
@@ -27,9 +27,8 @@ final class DirectoryImporter implements Builder {
       return;
     }
 
-    foreach (glob($root.'/vendor/*/*/composer.json') as $dependency) {
-      $dir = dirname($dependency);
-      $this->builders[] = new DirectoryImporter($dir, $config);
+    foreach (glob($root.'/vendor/*/*/composer.json') as $composer_json) {
+      $this->builders[] = new ComposerImporter($composer_json, $config);
     }
   }
 

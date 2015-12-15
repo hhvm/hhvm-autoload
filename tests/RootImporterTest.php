@@ -11,14 +11,10 @@
 
 namespace Facebook\AutoloadMap;
 
-final class DirectoryImporterTest extends \PHPUnit_Framework_TestCase {
+final class RootImporterTest extends \PHPUnit_Framework_TestCase {
   public function testFullImport(): void {
-/*    $this->markTestSkipped(
-      "Can't yet load full tree",
-    );*/
-
     $root = realpath(__DIR__.'/../');
-    $importer = new DirectoryImporter(
+    $importer = new RootImporter(
       $root,
       shape(
         'autoloadFilesBehavior' => AutoloadFilesBehavior::FIND_DEFINITIONS,
