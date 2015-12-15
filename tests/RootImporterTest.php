@@ -33,4 +33,26 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     );
     $this->assertEmpty($importer->getFiles());
   }
+
+  public function testImportWithoutVendor(): void {
+    $root = realpath(__DIR__.'/../');
+    $importer = new RootImporter(
+      $root,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::FIND_DEFINITIONS,
+        'includeVendor' => false,
+        'roots' => ImmVector { $root },
+      ),
+    );
+    $map = $importer->getAutoloadMap();
+    $this->assertContains(
+      'Facebook\AutoloadMap\Exception',
+      array_keys($map['class']),
+    );
+    $this->assertNotContains(
+      'PHPUnit_Framework_TestCase',
+      array_keys($map['class']),
+    );
+    $this->assertEmpty($importer->getFiles());
+  }
 }
