@@ -17,8 +17,8 @@ use \HH\Client\TypecheckStatus;
 
 final class Bootstrap {
   public static function build(): \HH\void {
-    require_once(__DIR__.'/unsupported/AutoTypecheck.php');
-    __UNSUPPORTED__\AutoTypecheck::disable();
+    require_once(__DIR__.'/unsupported/AutoTypecheckGuard.php');
+    $typechecker_guard = new __UNSUPPORTED__\AutoTypecheckGuard();
     require_once(__DIR__.'/../vendor/autoload.php');
 
     $builder = Scanner::fromTree(realpath(__DIR__));

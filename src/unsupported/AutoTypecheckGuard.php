@@ -24,8 +24,26 @@ use \HH\Client\TypecheckStatus;
  *  - may break at any time
  *  - are not supported for any user, ever
  */
-final class AutoTypecheck {
-  public static function disable(): \HH\void {
+final class AutoTypecheckGuard {
+  private $released;
+
+  public function __construct() {
+    $this->released = false;
+    self::disable();
+  }
+
+  public function __destruct() {
+    if (!$this->released) {
+      self::enable();
+    }
+  }
+
+  public function release(): \HH\void {
+    $this->released = true;
+    self::enable();
+  }
+
+  private static function disable(): \HH\void {
     /* Theses APC sets and the '<?php' are because of
      * auto-typecheck being over-eager:
      *
@@ -42,5 +60,9 @@ final class AutoTypecheck {
       CacheKeys::RESULT_CACHE_KEY,
       new TypecheckResult(TypecheckStatus::SUCCESS, /* error = */ null)
     );
+  }
+
+   private static function enable(): \HH\void {
+    apc_store(CacheKeys::TIME_CACHE_KEY, -1);
   }
 }
