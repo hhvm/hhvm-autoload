@@ -1,5 +1,8 @@
 {
+  "name": "fredemmott/hhvm-autoload",
+  "type": "composer-plugin",
   "require": {
+    "composer-plugin-api": "^1.0",
     "hhvm": "~3.11",
     "91carriage/phpunit-hhi": "^5.1",
     "fredemmott/definition-finder": "^1.0"
@@ -16,6 +19,11 @@
   "scripts": {
     "post-autoload-dump": [
       "FredEmmott\\AutoloadMap\\Bootstrap::build"
+    ]
+  },
+  "extra": {
+    "class": [
+      "FredEmmott\\AutoloadMap\\ComposerPlugin"
     ]
   }
 }

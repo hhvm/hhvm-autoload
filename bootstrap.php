@@ -32,6 +32,7 @@ HH\autoload_set_paths(array (
     'fredemmott\\autoloadmap\\composerimporter' => 'src/builders/ComposerImporter.php',
     'fredemmott\\autoloadmap\\__unsupported__\\autotypecheckguard' => 'src/unsupported/AutoTypecheckGuard.php',
     'fredemmott\\autoloadmap\\writer' => 'src/Writer.php',
+    'fredemmott\\autoloadmap\\composerplugin' => 'src/ComposerPlugin.php',
     'fredemmott\\autoloadmap\\builder' => 'src/builders/Builder.php',
     'fredemmott\\autoloadmap\\autoloadfilesbehavior' => 'src/AutoloadFilesBehavior.php',
   ),
