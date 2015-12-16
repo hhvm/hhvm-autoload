@@ -16,11 +16,6 @@
       "src/Config.php"
     ]
   },
-  "scripts": {
-    "post-autoload-dump": [
-      "FredEmmott\\AutoloadMap\\Bootstrap::build"
-    ]
-  },
   "extra": {
     "class": [
       "FredEmmott\\AutoloadMap\\ComposerPlugin"
