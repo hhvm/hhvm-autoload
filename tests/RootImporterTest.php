@@ -57,4 +57,38 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     );
     $this->assertEmpty($importer->getFiles());
   }
+
+  public function testImportTree(): void {
+    $root = __DIR__.'/fixtures/hh-only';
+    $builder = RootImporter::forTree($root);
+    $tempfile = tempnam(sys_get_temp_dir(), 'hh_autoload');
+    (new Writer())
+      ->setBuilder($builder)
+      ->setRoot($root)
+      ->writeToFile($tempfile);
+
+    // the file is meant to be in the root directory of the source, but
+    // that's not good for testing. Fix it up.
+    $codegen = file_get_contents($tempfile);
+    $this->assertContains('__DIR__', $codegen);
+    $codegen = str_replace('__DIR__', var_export($root, true), $codegen);
+    file_put_contents($tempfile, $codegen);
+
+    $cmd = (Vector {
+      PHP_BINARY,
+      '-v', 'Eval.Jit=0',
+      __DIR__.'/fixtures/hh-only/test.php',
+      $tempfile,
+    })->map($x ==> escapeshellarg($x));
+    $cmd = implode(' ', $cmd);
+
+    $output = [];
+    $exit_code = null;
+    $result = exec($cmd, $output, $exit_code);
+
+    unlink($tempfile);
+
+    $this->assertSame(0, $exit_code, implode("\n", $output));
+    $this->assertSame($result, 'OK!');
+  }
 }

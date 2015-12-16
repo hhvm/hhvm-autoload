@@ -19,6 +19,9 @@ final class RootImporter implements Builder {
     Config $config,
   ) {
     foreach ($config['roots'] as $tree) {
+      if ($tree[0] !== '/') {
+        $tree = $root.'/'.$tree;
+      }
       $this->builders[] = Scanner::fromTree($tree);
     }
 
@@ -43,5 +46,14 @@ final class RootImporter implements Builder {
       $files->addAll($builder->getFiles());
     }
     return $files->toImmVector();
+  }
+
+  public static function forTree(string $root): Builder {
+    $config = $root.'/hh_autoload.json';
+    if (!file_exists($config)) {
+      throw new Exception("%s does not exist", $config);
+    }
+    $config = ConfigurationLoader::fromFile($config);
+    return new RootImporter($root, $config);
   }
 }

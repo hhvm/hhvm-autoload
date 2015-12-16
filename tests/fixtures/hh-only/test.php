@@ -1,4 +1,4 @@
-<?hh // strict
+<?hh
 /*
  *  Copyright (c) 2015, Facebook, Inc.
  *  All rights reserved.
@@ -9,4 +9,15 @@
  *
  */
 
-const string FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT = 'herp';
+namespace Facebook\AutoloadMap\TestFixtures;
+
+require($argv[1]);
+
+$x = new ExampleClass();
+example_function();
+$x = FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT;
+$x = (ExampleType $x) ==> null;
+$x = (ExampleNewtype $x) ==> null;
+$x = ExampleEnum::HERP;
+
+print("OK!");
