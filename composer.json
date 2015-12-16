@@ -12,5 +12,10 @@
       "src/AutoloadMap.php",
       "src/Config.php"
     ]
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "FredEmmott\\AutoloadMap\\Bootstrap::build"
+    ]
   }
 }
