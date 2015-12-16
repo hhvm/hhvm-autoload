@@ -12,16 +12,9 @@
 namespace Facebook\AutoloadMap;
 
 final class RootImporterTest extends \PHPUnit_Framework_TestCase {
-  public function testFullImport(): void {
+  public function testSelf(): void {
     $root = realpath(__DIR__.'/../');
-    $importer = new RootImporter(
-      $root,
-      shape(
-        'autoloadFilesBehavior' => AutoloadFilesBehavior::FIND_DEFINITIONS,
-        'includeVendor' => true,
-        'roots' => ImmVector { $root.'/src' },
-      ),
-    );
+    $importer = new RootImporter($root);
     $map = $importer->getAutoloadMap();
     $this->assertContains(
       'fredemmott\autoloadmap\exception',
@@ -29,29 +22,6 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     );
 
     $this->assertContains(
-      'phpunit_framework_testcase',
-      array_keys($map['class']),
-    );
-    $this->assertEmpty($importer->getFiles());
-  }
-
-  public function testImportWithoutVendor(): void {
-    $root = realpath(__DIR__.'/../');
-    $importer = new RootImporter(
-      $root,
-      shape(
-        'autoloadFilesBehavior' => AutoloadFilesBehavior::FIND_DEFINITIONS,
-        'includeVendor' => false,
-        'roots' => ImmVector { $root.'/src' },
-      ),
-    );
-
-    $map = $importer->getAutoloadMap();
-    $this->assertContains(
-      'fredemmott\autoloadmap\exception',
-      array_keys($map['class']),
-    );
-    $this->assertNotContains(
       'phpunit_framework_testcase',
       array_keys($map['class']),
     );
@@ -60,7 +30,7 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
 
   public function testImportTree(): void {
     $root = __DIR__.'/fixtures/hh-only';
-    $builder = RootImporter::forTree($root);
+    $builder = new RootImporter($root);
     $tempfile = tempnam(sys_get_temp_dir(), 'hh_autoload');
     (new Writer())
       ->setBuilder($builder)

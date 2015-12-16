@@ -11,22 +11,22 @@
 
 namespace Facebook\AutoloadMap;
 
-final class RootImporter implements Builder {
+final class HHImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
+  private Config $config;
 
   public function __construct(
     string $root,
   ) {
-    $hh_importer = new HHImporter($root);
-    $this->builders[] = $hh_importer;
-    $config = $hh_importer->getConfig();
+    $config_file = $root.'/hh_autoload.json';
+    $config = ConfigurationLoader::fromFile($config_file);
+    $this->config = $config;
 
-    if (!$config['includeVendor']) {
-      return;
-    }
-
-    foreach (glob($root.'/vendor/*/*/composer.json') as $composer_json) {
-      $this->builders[] = new ComposerImporter($composer_json, $config);
+    foreach ($config['roots'] as $tree) {
+      if ($tree[0] !== '/') {
+        $tree = $root.'/'.$tree;
+      }
+      $this->builders[] = Scanner::fromTree($tree);
     }
   }
 
@@ -42,5 +42,9 @@ final class RootImporter implements Builder {
       $files->addAll($builder->getFiles());
     }
     return $files->toImmVector();
+  }
+
+  public function getConfig(): Config {
+    return $this->config;
   }
 }

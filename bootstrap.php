@@ -27,6 +27,7 @@ HH\autoload_set_paths(array (
     'fredemmott\\autoloadmap\\merger' => 'src/Merger.php',
     'fredemmott\\autoloadmap\\exception' => 'src/Exception.php',
     'fredemmott\\autoloadmap\\rootimporter' => 'src/builders/RootImporter.php',
+    'fredemmott\\autoloadmap\\hhimporter' => 'src/builders/HHImporter.php',
     'fredemmott\\autoloadmap\\scanner' => 'src/builders/Scanner.php',
     'fredemmott\\autoloadmap\\composerimporter' => 'src/builders/ComposerImporter.php',
     'fredemmott\\autoloadmap\\__unsupported__\\autotypecheckguard' => 'src/unsupported/AutoTypecheckGuard.php',
