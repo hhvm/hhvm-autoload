@@ -47,7 +47,7 @@ final class ComposerPlugin
 
   public function onPostAutoloadDump(Event $event) {
     var_dump('writing dump');
-    require_once(__DIR__.'/unsupported/AutoTypecheckGuard.php');
+    require_once($this->vendor.'/fredemmott/hhvm-autoload/src/unsupported/AutoTypecheckGuard.php');
     $typechecker_guard = new __UNSUPPORTED__\AutoTypecheckGuard();
     require_once($this->vendor.'/autoload.php');
 
