@@ -29,21 +29,21 @@ final class AutoTypecheckGuard {
 
   public function __construct() {
     $this->released = false;
-    self::disable();
+    self::disableAutoTypecheck();
   }
 
   public function __destruct() {
     if (!$this->released) {
-      self::enable();
+      self::enableAutoTypecheck();
     }
   }
 
   public function release(): \HH\void {
     $this->released = true;
-    self::enable();
+    self::enableAutoTypecheck();
   }
 
-  private static function disable(): \HH\void {
+  private static function disableAutoTypecheck(): \HH\void {
     /* Theses APC sets and the '<?php' are because of
      * auto-typecheck being over-eager:
      *
@@ -62,7 +62,7 @@ final class AutoTypecheckGuard {
     );
   }
 
-   private static function enable(): \HH\void {
+   private static function enableAutoTypecheck(): \HH\void {
     apc_store(CacheKeys::TIME_CACHE_KEY, -1);
   }
 }
