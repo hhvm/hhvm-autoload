@@ -13,6 +13,7 @@ namespace Facebook\AutoloadMap;
 
 final class HHImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
+  private Vector<string> $files = Vector { };
   private Config $config;
 
   public function __construct(
@@ -28,6 +29,13 @@ final class HHImporter implements Builder {
       }
       $this->builders[] = Scanner::fromTree($tree);
     }
+
+    foreach ($config['extraFiles'] as $file) {
+      if ($file[0] !== '/') {
+        $file = $root.'/'.$file;
+      }
+      $this->files[] = $file;
+    }
   }
 
   public function getAutoloadMap(): AutoloadMap {
@@ -38,6 +46,7 @@ final class HHImporter implements Builder {
 
   public function getFiles(): ImmVector<string> {
     $files = Vector { };
+    $files->addAll($this->files);
     foreach ($this->builders as $builder) {
       $files->addAll($builder->getFiles());
     }

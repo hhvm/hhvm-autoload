@@ -53,6 +53,25 @@ abstract final class ConfigurationLoader {
       $roots[] = $root;
     }
 
+    $files_arr = idx($data, 'extraFiles', []);
+    if (!is_array($files_arr)) {
+      throw new ConfigurationException(
+        'File "%s" has a "extraFiles" key that is not an array',
+        $path,
+      );
+    }
+
+    $files = Vector { };
+    foreach ($files_arr as $root) {
+      if (!is_string($root)) {
+        throw new ConfigurationException(
+          'File "%s" has a non-string extraFile',
+          $path,
+        );
+      }
+      $files[] = $root;
+    }
+
     $autoload_files_behavior = AutoloadFilesBehavior::FIND_DEFINITIONS;
     if (array_key_exists('autoloadFilesBehavior', $data)) {
       $value = AutoloadFilesBehavior::coerce(
@@ -87,6 +106,7 @@ abstract final class ConfigurationLoader {
       'autoloadFilesBehavior' => $autoload_files_behavior,
       'includeVendor' => $include_vendor,
       'roots' => $roots->toImmVector(),
+      'extraFiles' => $files->toImmVector(),
     );
   }
 }
