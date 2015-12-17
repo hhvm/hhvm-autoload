@@ -68,7 +68,7 @@ final class Writer {
       Shapes::toArray($map),
     );
     $map = var_export($map, true);
-
+    $root = var_export($this->root.'/', true);
     $code = <<<EOF
 <?hh
 
@@ -76,7 +76,7 @@ final class Writer {
 
 $requires
 
-HH\autoload_set_paths($map, __DIR__.'/');
+HH\autoload_set_paths($map, $root);
 EOF;
     file_put_contents(
       $destination_file,
