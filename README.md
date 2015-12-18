@@ -16,6 +16,8 @@ functions, etc) is fairly new, and has not been used on a wide variety of projec
 
 If you encounter a parse error, please [file an issue](https://github.com/fredemmott/definition-finder/issues) against [fredemmott/definition-finder](https://github.com/fredemmott/definition-finder/) with either example code, or a link to an open source project that it can't parse.
 
+For any other issue, please [file an issue](https://github.com/fredemmott/hhvm-autoload/issues) against [this project](https://github.com/fredemmott/hhvm-autoload).
+
 Usage
 -----
 
