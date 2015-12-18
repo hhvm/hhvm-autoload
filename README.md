@@ -1,10 +1,7 @@
-Autoload Map Generator for HHVM
-===============================
-
 A Composer plugin for autoloading classes, enums, functions, typedefs, and constants on HHVM.
 
-Pre-release Warning
--------------------
+Preview Warning
+===============
 
 The autoload mechanism itself is very heavily tested at Facebook, however
 [the library](https://github.com/fredemmott/definition-finder/) used to find the autoloadables (classes,
@@ -19,7 +16,7 @@ If you encounter a parse error, please [file an issue](https://github.com/fredem
 For any other issue, please [file an issue](https://github.com/fredemmott/hhvm-autoload/issues) against [this project](https://github.com/fredemmott/hhvm-autoload).
 
 Usage
------
+=====
 
 1. Add an `hh_autoload.json` file (see section below) and optionally remove your configuration from composer.json
 2. `composer require fredemmott/hhvm-autoload`
@@ -28,7 +25,7 @@ Usage
 5. To re-generate the map, run `composer dump-autoload` or any other command that generates the map
 
 Configuration (`hh_autoload.json`)
-----------------------------------
+==================================
 
 A minimal configuration file is:
 
@@ -65,7 +62,7 @@ Q. Why does this project use Composer's autoloader?
 A. It can't depend on itself :)
 
 How It Works
-------------
+============
 
  - [`fredemmott/definition-finder`](https://github.com/fredemmott/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
  - This is used to generate something similar to a classmap, except including other kinds of definitions
@@ -74,6 +71,6 @@ How It Works
 The [Composer plugin API](https://getcomposer.org/doc/articles/plugins.md) allows it to re-generate the `vendor/hh_autoload.php` file automatically whenever Composer itself regenerates `vendor/autoload.php`
 
 License
--------
+=======
 
 hhvm-autoload is [BSD-licensed](LICENSE). We also provide an additional [patent grant](PATENTS).
