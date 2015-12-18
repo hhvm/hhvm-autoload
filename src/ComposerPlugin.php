@@ -23,18 +23,14 @@ final class ComposerPlugin
 
   private $vendor;
   private $root;
+  private $io;
+
   public function activate(Composer $composer, IOInterface $io) {
-    var_dump('activating');
+    $this->io = $io;
     $vendor = $composer->getConfig()->get('vendor-dir', '/');
 
     $this->vendor = $vendor;
     $this->root = dirname($vendor);
-/*
-    $composer->getEventDispatcher()->addListener(
-      ScriptEvents::POST_AUTOLOAD_DUMP,
-      function($event) { $this->onPostAutoloadDump($event); }
-    );
-    */
   }
 
   public static function getSubscribedEvents() {
@@ -46,16 +42,25 @@ final class ComposerPlugin
   }
 
   public function onPostAutoloadDump(Event $event) {
-    var_dump('writing dump');
+    $this->debugMessage("Disabling AutoTypecheck");
     require_once($this->vendor.'/fredemmott/hhvm-autoload/src/unsupported/AutoTypecheckGuard.php');
     $typechecker_guard = new __UNSUPPORTED__\AutoTypecheckGuard();
+    $this->debugMessage("Loading composer autoload");
     require_once($this->vendor.'/autoload.php');
 
+    $this->debugMessage("Parsing tree");
     $importer = new RootImporter($this->root);
-    
+   
+    $this->debugMessage("Writing hh_autoload.php"); 
     (new Writer())
       ->setBuilder($importer)
       ->setRoot($this->root)
       ->writeToFile($this->vendor.'/hh_autoload.php');
+  }
+
+  private function debugMessage(\HH\string $message) {
+    if ($this->io->isDebug()) {
+      $this->io->write('hhvm-autoload: '.$message);
+    }
   }
 }
