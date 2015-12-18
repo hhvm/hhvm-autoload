@@ -64,6 +64,15 @@ Q. Why does this project use Composer's autoloader?
 
 A. It can't depend on itself :)
 
+How It Works
+------------
+
+ - [`fredemmott/definition-finder`](https://github.com/fredemmott/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
+ - This is used to generate something similar to a classmap, except including other kinds of definitions
+ - The map is provided to HHVM with [`HH\autoload_set_paths()`](https://docs.hhvm.com/hack/reference/function/HH.autoload_set_paths/)
+
+The [Composer plugin API](https://getcomposer.org/doc/articles/plugins.md) allows it to re-generate the `vendor/hh_autoload.php` file automatically whenever Composer itself regenerates `vendor/autoload.php`
+
 License
 -------
 
