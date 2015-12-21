@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "258223baf112c3a9c2bd3a9c3b90ade2",
-    "content-hash": "783c0ac5cd4a85a2722ed1c02bd18b04",
+    "hash": "228746483ec61c376625892b90ae6bd4",
+    "content-hash": "582cd10d7cb927e9ff86d58456483644",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -101,12 +101,12 @@
             "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fredemmott/definitions-finder.git",
+                "url": "https://github.com/fredemmott/definition-finder.git",
                 "reference": "2550fd6a836f8aa2a53264033b6c8edad7b63353"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fredemmott/definitions-finder/zipball/2550fd6a836f8aa2a53264033b6c8edad7b63353",
+                "url": "https://api.github.com/repos/fredemmott/definition-finder/zipball/2550fd6a836f8aa2a53264033b6c8edad7b63353",
                 "reference": "2550fd6a836f8aa2a53264033b6c8edad7b63353",
                 "shasum": ""
             },
