@@ -1,5 +1,26 @@
 A Composer plugin for autoloading classes, enums, functions, typedefs, and constants on HHVM.
 
+FAQ
+===
+
+Do I need to use Hack?
+----------------------
+
+No, PHP is fine - but HHVM is required because:
+
+ - PHP does not support autoloading anything other than classes
+ - this project and the parser are written in Hack
+
+Can I autoload functions and constants if I'm not writing Hack?
+---------------------------------------------------------------
+
+Yes :)
+
+Why does this project use Composer's autoloader?
+------------------------------------------------
+
+It can't depend on itself :)
+
 Preview Warning
 ===============
 
@@ -42,25 +63,6 @@ The following settings are optional:
  - `"extraFiles": ["file1.php"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/hh_autoload.php`. This should be needed much less frequently than under Composer
  - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/hh_autoload.php`
  - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/hh_autoload.php` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
-
-FAQ
----
-
-Q. Do I need to use Hack?
-
-A. No, PHP is fine - but HHVM is required because:
-
- - PHP does not support autoloading anything other than functions
- - this project and the parser are written in Hack
-
-Q. Can I autoload functions and constants if I'm not writing Hack?
-
-A. Yes :)
-
-Q. Why does this project use Composer's autoloader?
-
-A. It can't depend on itself :)
-
 How It Works
 ============
 
