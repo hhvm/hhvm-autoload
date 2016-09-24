@@ -24,7 +24,7 @@ final class ScannerTest extends \PHPUnit_Framework_TestCase {
       [
         'ExampleClass' => 'class.php',
         'ExampleEnum' => 'enum.php',
-        'xhp_example__xhp-class' => 'xhp_class.php',
+        'xhp_example__xhp_class' => 'xhp_class.php',
       ],
       $map['class'],
     );
