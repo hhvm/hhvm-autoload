@@ -1,3 +1,5 @@
+HHVM-Autoload ![build status](https://api.travis-ci.org/fredemmott/hhvm-autoload.svg)
+=============
 A Composer plugin for autoloading classes, enums, functions, typedefs, and constants on HHVM.
 
 FAQ
