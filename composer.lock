@@ -98,16 +98,16 @@
         },
         {
             "name": "fredemmott/definition-finder",
-            "version": "v1.0.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fredemmott/definition-finder.git",
-                "reference": "2550fd6a836f8aa2a53264033b6c8edad7b63353"
+                "reference": "f1501a74c0d10afa4106ef46baef56e6787a9777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fredemmott/definition-finder/zipball/2550fd6a836f8aa2a53264033b6c8edad7b63353",
-                "reference": "2550fd6a836f8aa2a53264033b6c8edad7b63353",
+                "url": "https://api.github.com/repos/fredemmott/definition-finder/zipball/f1501a74c0d10afa4106ef46baef56e6787a9777",
+                "reference": "f1501a74c0d10afa4106ef46baef56e6787a9777",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2015-12-15 03:20:01"
+            "time": "2016-09-15 03:18:56"
         },
         {
             "name": "myclabs/deep-copy",
