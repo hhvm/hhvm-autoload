@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "228746483ec61c376625892b90ae6bd4",
-    "content-hash": "582cd10d7cb927e9ff86d58456483644",
+    "hash": "688a10e16fa02b5f8514da375c90eaf2",
+    "content-hash": "624529607cc79db5e946b5abcf90bf37",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -1133,7 +1133,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "hhvm": "~3.11"
+        "hhvm": "~3.9"
     },
     "platform-dev": []
 }
