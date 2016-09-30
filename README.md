@@ -1,4 +1,4 @@
-HHVM-Autoload ![build status](https://api.travis-ci.org/fredemmott/hhvm-autoload.svg)
+HHVM-Autoload [![Build Status](https://travis-ci.org/fredemmott/hhvm-autoload.svg?branch=master)](https://travis-ci.org/fredemmott/hhvm-autoload)
 =============
 A Composer plugin for autoloading classes, enums, functions, typedefs, and constants on HHVM.
 
