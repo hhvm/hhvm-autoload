@@ -7,6 +7,9 @@
     "91carriage/phpunit-hhi": "^5.1",
     "fredemmott/definition-finder": "^1.0"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^5.1"
+  },
   "autoload": {
     "classmap": [
       "src/"
