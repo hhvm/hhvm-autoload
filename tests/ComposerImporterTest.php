@@ -31,6 +31,10 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
       idx($map['class'], 'fredemmott\autoloadmap\exception'),
     );
     $this->assertSame(
+      $root.'/src/Writer.php',
+      idx($map['class'], 'fredemmott\autoloadmap\writer'),
+    );
+    $this->assertSame(
       $root.'/src/Config.php',
       idx($map['type'], 'fredemmott\autoloadmap\config'),
     );

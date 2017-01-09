@@ -85,9 +85,13 @@ final class ComposerImporter implements Builder {
 
   private function importClassmap(array<string> $roots): void {
     foreach ($roots as $root) {
-      $this->builders[] = new ClassesOnlyFilter(
-        Scanner::fromTree($this->root.'/'.$root)
-      );
+      $path = $this->root.'/'.$root;
+      if (is_dir($path)) {
+        $scanner = Scanner::fromTree($path);
+      } else {
+        $scanner = Scanner::fromFile($path);
+      }
+      $this->builders[] = new ClassesOnlyFilter($scanner);
     }
   }
 

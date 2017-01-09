@@ -12,6 +12,7 @@
   },
   "autoload": {
     "classmap": [
+      "src/Writer.php",
       "src/"
     ],
     "files": [
