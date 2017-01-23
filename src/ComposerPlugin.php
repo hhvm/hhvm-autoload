@@ -43,15 +43,17 @@ final class ComposerPlugin
 
   public function onPostAutoloadDump(Event $event) {
     $this->debugMessage("Disabling AutoTypecheck");
-    require_once($this->vendor.'/fredemmott/hhvm-autoload/src/unsupported/AutoTypecheckGuard.php');
-    $typechecker_guard = new __UNSUPPORTED__\AutoTypecheckGuard();
+    require_once($this->vendor.'/fredemmott/hack-error-suppressor/src/HackErrorSuppressor.php');
+    require_once($this->vendor.'/fredemmott/hack-error-suppressor/src/ScopedHackErrorSuppressor.php');
+    $typechecker_guard = new \Facebook\ScopedHackErrorSuppressor();
+
     $this->debugMessage("Loading composer autoload");
     require_once($this->vendor.'/autoload.php');
 
     $this->debugMessage("Parsing tree");
     $importer = new RootImporter($this->root);
-   
-    $this->debugMessage("Writing hh_autoload.php"); 
+
+    $this->debugMessage("Writing hh_autoload.php");
     (new Writer())
       ->setBuilder($importer)
       ->setRoot($this->root)

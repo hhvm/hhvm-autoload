@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "68cebb46c4b99820ec0206a9db785c62",
-    "content-hash": "690426193cb704f8aac7624be79ef653",
+    "hash": "8e00e1965abb0ab625831d9463f8cfc0",
+    "content-hash": "4a35cd00656f5c3dde35467f25faeff3",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -13,7 +13,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.simon.geek.nz/91-carriage/phpunit-hhi.git",
-                "reference": "38a1ec29adeb193d1b664efb5c86c06c8efab303"
+                "reference": "48f047b15234c3936c70b512d49f877e64f5dce3"
             },
             "require": {
                 "hhvm": ">=3.9.0"
@@ -99,6 +99,43 @@
                 "hhvm"
             ],
             "time": "2016-09-30 02:18:15"
+        },
+        {
+            "name": "fredemmott/hack-error-suppressor",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fredemmott/hack-error-suppressor.git",
+                "reference": "acaba332c5597455b9900388b00b11a53d773a93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fredemmott/hack-error-suppressor/zipball/acaba332c5597455b9900388b00b11a53d773a93",
+                "reference": "acaba332c5597455b9900388b00b11a53d773a93",
+                "shasum": ""
+            },
+            "require-dev": {
+                "91carriage/phpunit-hhi": "^5.6",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Fred Emmott",
+                    "email": "fred@fredemmott.co.uk"
+                }
+            ],
+            "description": "Suppress HHVM's automatic conversion of typechecker errors to fatals.",
+            "time": "2017-01-23 01:19:07"
         }
     ],
     "packages-dev": [
@@ -1411,7 +1448,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "hhvm": "~3.9"
+        "hhvm": "^3.12"
     },
     "platform-dev": []
 }
