@@ -65,6 +65,7 @@ The following settings are optional:
  - `"extraFiles": ["file1.php"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/hh_autoload.php`. This should be needed much less frequently than under Composer
  - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/hh_autoload.php`
  - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/hh_autoload.php` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
+
 How It Works
 ============
 
