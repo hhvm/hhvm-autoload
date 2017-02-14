@@ -75,6 +75,11 @@ How It Works
 
 The [Composer plugin API](https://getcomposer.org/doc/articles/plugins.md) allows it to re-generate the `vendor/hh_autoload.php` file automatically whenever Composer itself regenerates `vendor/autoload.php`
 
+Contributing
+============
+
+We welcome GitHub issues and pull requests - please see CONTRIBUTING.md for details.
+
 License
 =======
 
