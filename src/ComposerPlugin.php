@@ -45,7 +45,7 @@ final class ComposerPlugin
     $this->debugMessage("Disabling AutoTypecheck");
     require_once($this->vendor.'/fredemmott/hack-error-suppressor/src/HackErrorSuppressor.php');
     require_once($this->vendor.'/fredemmott/hack-error-suppressor/src/ScopedHackErrorSuppressor.php');
-    $typechecker_guard = new \Facebook\ScopedHackErrorSuppressor();
+    $typechecker_guard = new \FredEmmott\ScopedHackErrorSuppressor();
 
     $this->debugMessage("Loading composer autoload");
     require_once($this->vendor.'/autoload.php');
