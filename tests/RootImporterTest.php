@@ -17,7 +17,7 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     $importer = new RootImporter($root);
     $map = $importer->getAutoloadMap();
     $this->assertContains(
-      'fredemmott\autoloadmap\exception',
+      'hhvm\autoloadmap\exception',
       array_keys($map['class']),
     );
 
