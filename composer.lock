@@ -57,16 +57,16 @@
         },
         {
             "name": "facebook/definition-finder",
-            "version": "v1.4.3",
+            "version": "v1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/definition-finder.git",
-                "reference": "d6c516de2b5a19d92dc9ba8267d2ec24eb165051"
+                "reference": "9bd4c5bc3fb0ffe040903b212342be6a4d5cbbd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/d6c516de2b5a19d92dc9ba8267d2ec24eb165051",
-                "reference": "d6c516de2b5a19d92dc9ba8267d2ec24eb165051",
+                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/9bd4c5bc3fb0ffe040903b212342be6a4d5cbbd4",
+                "reference": "9bd4c5bc3fb0ffe040903b212342be6a4d5cbbd4",
                 "shasum": ""
             },
             "require": {
@@ -87,18 +87,15 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
             "description": "Find definitions in PHP or Hack files. Useful for autoloaders.",
-            "homepage": "https://github.com/fredemmott/definitions-finder",
+            "homepage": "https://github.com/hhvm/definitions-finder",
             "keywords": [
                 "autoload",
                 "definitions",
                 "hack",
                 "hhvm"
             ],
-            "time": "2017-02-08T03:50:07+00:00"
+            "time": "2017-02-15T01:01:26+00:00"
         },
         {
             "name": "fredemmott/hack-error-suppressor",
