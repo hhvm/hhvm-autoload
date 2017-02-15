@@ -28,15 +28,15 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
     $map = $importer->getAutoloadMap();
     $this->assertSame(
       $root.'/src/Exception.php',
-      idx($map['class'], 'hhvm\autoloadmap\exception'),
+      idx($map['class'], 'facebook\autoloadmap\exception'),
     );
     $this->assertSame(
       $root.'/src/Writer.php',
-      idx($map['class'], 'hhvm\autoloadmap\writer'),
+      idx($map['class'], 'facebook\autoloadmap\writer'),
     );
     $this->assertSame(
       $root.'/src/Config.php',
-      idx($map['type'], 'hhvm\autoloadmap\config'),
+      idx($map['type'], 'facebook\autoloadmap\config'),
     );
   }
 

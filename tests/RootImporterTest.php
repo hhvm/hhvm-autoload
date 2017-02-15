@@ -17,7 +17,7 @@ final class RootImporterTest extends \PHPUnit_Framework_TestCase {
     $importer = new RootImporter($root);
     $map = $importer->getAutoloadMap();
     $this->assertContains(
-      'hhvm\autoloadmap\exception',
+      'facebook\autoloadmap\exception',
       array_keys($map['class']),
     );
 
