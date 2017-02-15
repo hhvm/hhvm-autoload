@@ -1,4 +1,4 @@
-HHVM-Autoload [![Build Status](https://travis-ci.org/fredemmott/hhvm-autoload.svg?branch=master)](https://travis-ci.org/fredemmott/hhvm-autoload)
+HHVM-Autoload [![Build Status](https://travis-ci.org/hhvm/hhvm-autoload.svg?branch=master)](https://travis-ci.org/hhvm/hhvm-autoload)
 =============
 A Composer plugin for autoloading classes, enums, functions, typedefs, and constants on HHVM.
 
@@ -27,22 +27,22 @@ Preview Warning
 ===============
 
 The autoload mechanism itself is very heavily tested at Facebook, however
-[the library](https://github.com/fredemmott/definition-finder/) used to find the autoloadables (classes,
+[the library](https://github.com/hhvm/definition-finder/) used to find the autoloadables (classes,
 functions, etc) is fairly new, and has not been used on a wide variety of projects. It's been tested on:
 
  - The PHP and Hack code inside HHVM and Hack
  - [The Hack/HHVM documentation site](https://github.com/hhvm/user-documentation/)
  - [The dependencies](https://github.com/hhvm/user-documentation/blob/master/composer.lock) of the Hack/HHVM documentation site
 
-If you encounter a parse error, please [file an issue](https://github.com/fredemmott/definition-finder/issues) against [fredemmott/definition-finder](https://github.com/fredemmott/definition-finder/) with either example code, or a link to an open source project that it can't parse.
+If you encounter a parse error, please [file an issue](https://github.com/hhvm/definition-finder/issues) against [hhvm/definition-finder](https://github.com/hhvm/definition-finder/) with either example code, or a link to an open source project that it can't parse.
 
-For any other issue, please [file an issue](https://github.com/fredemmott/hhvm-autoload/issues) against [this project](https://github.com/fredemmott/hhvm-autoload).
+For any other issue, please [file an issue](https://github.com/hhvm/hhvm-autoload/issues) against [this project](https://github.com/hhvm/hhvm-autoload).
 
 Usage
 =====
 
 1. Add an `hh_autoload.json` file (see section below) and optionally remove your configuration from composer.json
-2. `composer require fredemmott/hhvm-autoload`
+2. `composer require facebook/hhvm-autoload`
 3. Replace any references to `vendor/autoload.php` with  `vendor/hh_autoload.php`
 4. If you are using PHPUnit, you will need to add `vendor/hh_autoload.php` to your `bootstrap.php`, or to `phpunit.xml` as a `bootstrap` file if you don't already have one. This is because PHPUnit automatically loads `vendor/autoload.php`, but is not aware of `vendor/hh_autoload.php`
 5. To re-generate the map, run `composer dump-autoload` or any other command that generates the map
@@ -69,7 +69,7 @@ The following settings are optional:
 How It Works
 ============
 
- - [`fredemmott/definition-finder`](https://github.com/fredemmott/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
+ - [`facebook/definition-finder`](https://github.com/facebook/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
  - This is used to generate something similar to a classmap, except including other kinds of definitions
  - The map is provided to HHVM with [`HH\autoload_set_paths()`](https://docs.hhvm.com/hack/reference/function/HH.autoload_set_paths/)
 

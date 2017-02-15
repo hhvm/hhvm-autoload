@@ -1,11 +1,11 @@
 {
-  "name": "fredemmott/hhvm-autoload",
+  "name": "facebook/hhvm-autoload",
   "type": "composer-plugin",
   "require": {
     "composer-plugin-api": "^1.0",
     "hhvm": "^3.12",
     "91carriage/phpunit-hhi": "^5.1",
-    "fredemmott/definition-finder": "^1.0",
+    "facebook/definition-finder": "^1.0",
     "fredemmott/hack-error-suppressor": "^1.0"
   },
   "require-dev": {
@@ -23,7 +23,7 @@
   },
   "extra": {
     "class": [
-      "FredEmmott\\AutoloadMap\\ComposerPlugin"
+      "Facebook\\AutoloadMap\\ComposerPlugin"
     ]
   }
 }
