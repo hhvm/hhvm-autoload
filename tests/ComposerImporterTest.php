@@ -11,8 +11,11 @@
 
 namespace Facebook\AutoloadMap;
 
-final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
-  public function testRootImportWithScannedFiles(): void {
+final class ComposerImporterTest extends BaseTestCase {
+  /**
+   * @dataProvider getParsers
+   */
+  public function testRootImportWithScannedFiles(Parser $parser): void {
     $root = realpath(__DIR__.'/../');
     $importer = new ComposerImporter(
       $root.'/composer.json',
@@ -21,6 +24,7 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'parser' => $parser,
       ),
     );
     $this->assertEmpty($importer->getFiles());
@@ -40,7 +44,10 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testRootImportWithRequiredFiles(): void {
+  /**
+   * @dataProvider getParsers
+   */
+  public function testRootImportWithRequiredFiles(Parser $parser): void {
     $root = realpath(__DIR__.'/../');
     $importer = new ComposerImporter(
       $root.'/composer.json',
@@ -49,6 +56,7 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'parser' => $parser,
       ),
     );
 
@@ -60,7 +68,10 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testPSR4Import(): void {
+  /**
+   * @dataProvider getParsers
+   */
+  public function testPSR4Import(Parser $parser): void {
     // This is brittle, but loud and easy to diagnoze + replace...
     $root = realpath(__DIR__.'/../vendor/symfony/yaml');
     $composer = $root.'/composer.json';
@@ -81,6 +92,7 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'parser' => $parser,
       ),
     );
 
@@ -93,7 +105,10 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testPSR0Import(): void {
+  /**
+   * @dataProvider getParsers
+   */
+  public function testPSR0Import(Parser $parser): void {
     // This is brittle, but loud and easy to diagnoze + replace...
     $root = realpath(__DIR__.'/../vendor/phpspec/prophecy');
     $composer = $root.'/composer.json';
@@ -114,6 +129,7 @@ final class ComposerImporterTest extends \PHPUnit_Framework_TestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'parser' => $parser,
       ),
     );
     $this->assertSame(

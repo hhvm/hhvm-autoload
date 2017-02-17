@@ -102,11 +102,18 @@ abstract final class ConfigurationLoader {
       $include_vendor = (bool) $value;
     }
 
+    if (array_key_exists('parser', $data)) {
+      $parser = Parser::assert($data['parser']);
+    } else {
+      $parser = Parser::DEFINITION_FINDER;
+    }
+
     return shape(
       'autoloadFilesBehavior' => $autoload_files_behavior,
       'includeVendor' => $include_vendor,
       'roots' => $roots->toImmVector(),
       'extraFiles' => $files->toImmVector(),
+      'parser' => $parser,
     );
   }
 }

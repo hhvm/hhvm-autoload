@@ -11,14 +11,20 @@
 
 namespace Facebook\AutoloadMap;
 
-final class ScannerTest extends \PHPUnit_Framework_TestCase {
+final class ScannerTest extends BaseTestCase {
   const string FIXTURES = __DIR__.'/fixtures';
   const string HH_ONLY_SRC = self::FIXTURES.'/hh-only/src';
   const string FIXTURES_PREFIX =
     "Facebook\\AutoloadMap\\TestFixtures\\";
 
-  public function testHHOnly(): void {
-    $map = Scanner::fromTree(self::HH_ONLY_SRC)->getAutoloadMap();
+  /**
+   * @dataProvider getParsers
+   */
+  public function testHHOnly(Parser $parser): void {
+    $map = Scanner::fromTree(
+      self::HH_ONLY_SRC,
+      $parser,
+    )->getAutoloadMap();
 
     $this->assertMapMatches(
       [
@@ -48,12 +54,17 @@ final class ScannerTest extends \PHPUnit_Framework_TestCase {
           => 'constant.php',
       ],
       $map['constant'],
-    ); 
+    );
   }
 
-  public function testFromFile(): void {
-    $map = Scanner::fromFile(self::HH_ONLY_SRC.'/constant.php')
-      ->getAutoloadMap();
+  /**
+   * @dataProvider getParsers
+   */
+  public function testFromFile(Parser $parser): void {
+    $map = Scanner::fromFile(
+      self::HH_ONLY_SRC.'/constant.php',
+      $parser,
+    )->getAutoloadMap();
     $this->assertEmpty($map['class']);
     $this->assertEmpty($map['function']);
     $this->assertEmpty($map['type']);
@@ -72,11 +83,11 @@ final class ScannerTest extends \PHPUnit_Framework_TestCase {
   ): void {
     foreach ($expected as $name => $file) {
       $a = self::HH_ONLY_SRC.'/'.$file;
-      $b = 
+      $b =
         idx($actual, strtolower(self::FIXTURES_PREFIX.$name))
         ?: idx($actual, self::FIXTURES_PREFIX.$name)
         ?: idx($actual, $name);
-      
+
       $this->assertSame($a, $b);
     }
   }

@@ -87,9 +87,9 @@ final class ComposerImporter implements Builder {
     foreach ($roots as $root) {
       $path = $this->root.'/'.$root;
       if (is_dir($path)) {
-        $scanner = Scanner::fromTree($path);
+        $scanner = Scanner::fromTree($path, $this->config['parser']);
       } else {
-        $scanner = Scanner::fromFile($path);
+        $scanner = Scanner::fromFile($path, $this->config['parser']);
       }
       $this->builders[] = new ClassesOnlyFilter($scanner);
     }
@@ -102,7 +102,10 @@ final class ComposerImporter implements Builder {
         $this->builders[] = new PSR4Filter(
           $prefix,
           $this->root.'/'.$root,
-          Scanner::fromTree($this->root.'/'.$root)
+          Scanner::fromTree(
+            $this->root.'/'.$root,
+            $this->config['parser'],
+          ),
         );
       }
     }
@@ -115,7 +118,10 @@ final class ComposerImporter implements Builder {
         $this->builders[] = new PSR0Filter(
           $prefix,
           $this->root.'/'.$root,
-          Scanner::fromTree($this->root.'/'.$root)
+          Scanner::fromTree(
+            $this->root.'/'.$root,
+            $this->config['parser'],
+          ),
         );
       }
     }
@@ -144,7 +150,10 @@ final class ComposerImporter implements Builder {
         $this->config['autoloadFilesBehavior']
         === AutoloadFilesBehavior::FIND_DEFINITIONS
       ) {
-        $this->builders[] = Scanner::fromFile($file);
+        $this->builders[] = Scanner::fromFile(
+          $file,
+          $this->config['parser'],
+        );
       } else {
         $this->files[] = $file;
       }

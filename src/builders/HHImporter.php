@@ -27,7 +27,10 @@ final class HHImporter implements Builder {
       if ($tree[0] !== '/') {
         $tree = $root.'/'.$tree;
       }
-      $this->builders[] = Scanner::fromTree($tree);
+      $this->builders[] = Scanner::fromTree(
+        $tree,
+        $config['parser'],
+      );
     }
 
     foreach ($config['extraFiles'] as $file) {

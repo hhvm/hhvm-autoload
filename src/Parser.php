@@ -11,10 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-type Config = shape(
-  'autoloadFilesBehavior' => AutoloadFilesBehavior,
-  'includeVendor' => bool,
-  'roots' => ImmVector<string>,
-  'extraFiles' => ImmVector<string>,
-  'parser' => Parser,
-);
+enum Parser: string {
+  DEFINITION_FINDER = 'definition-finder';
+  EXT_FACTPARSE = 'ext-factparse';
+}
