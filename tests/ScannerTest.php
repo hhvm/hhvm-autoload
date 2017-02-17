@@ -95,7 +95,7 @@ final class ScannerTest extends BaseTestCase {
   public function testParsersMatch(): void {
     /* HH_FIXME[2049] no HHI for HHVM_VERSION */
     /* HH_FIXME[4106] no HHI for HHVM_VERSION */
-    if (version_compare('3.18.0', HHVM_VERSION, '<')) {
+    if (version_compare(HHVM_VERSION, '3.18.0', '<')) {
       $this->markTestSkipped('definition-finder is the only option');
     }
 

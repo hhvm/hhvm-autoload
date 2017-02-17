@@ -15,7 +15,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase {
   public function getParsers(): array<array<Parser>> {
     /* HH_FIXME[2049] HHVM_VERSION not in HHI */
     /* HH_FIXME[4106] HHVM_VERSION not in HHI */
-    if (version_compare('3.18.0', HHVM_VERSION, '>=')) {
+    if (version_compare(HHVM_VERSION, '3.18.0', '>=')) {
       return [
         [Parser::DEFINITION_FINDER],
         [Parser::EXT_FACTPARSE],
