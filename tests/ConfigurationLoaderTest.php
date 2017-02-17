@@ -20,6 +20,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
         'includeVendor' => false,
         'extraFiles' => [],
         'roots' => ['foo/', 'bar/'],
+        'parser' => 'ext-factparse',
       ]],
       'just roots' => [[
         'roots' => ['foo/', 'bar/'],
