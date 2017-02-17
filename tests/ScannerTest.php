@@ -91,4 +91,28 @@ final class ScannerTest extends BaseTestCase {
       $this->assertSame($a, $b);
     }
   }
+
+  public function testParsersMatch(): void {
+    /* HH_FIXME[2049] no HHI for HHVM_VERSION */
+    /* HH_FIXME[4106] no HHI for HHVM_VERSION */
+    if (version_compare('3.18.0', HHVM_VERSION, '<')) {
+      $this->markTestSkipped('definition-finder is the only option');
+    }
+
+    $root = realpath(__DIR__.'/../');
+    $def_finder = DefinitionFinderScanner::fromTree($root)->getAutoloadMap();
+    $fact_parse = FactParseScanner::fromTree($root)->getAutoloadMap();
+    foreach (array_keys(Shapes::toArray($def_finder)) as $type) {
+      /* HH_IGNORE_ERROR[4051] */
+      $expected = $def_finder[$type];
+      /* HH_IGNORE_ERROR[4051] */
+      $actual = $fact_parse[$type];
+      ksort($expected);
+      ksort($actual);
+      $this->assertEquals(
+        array_filter($expected, $path ==> strpos($path, '/test') === false),
+        array_filter($actual, $path ==> strpos($path, '/test') === false),
+      );
+    }
+  }
 }

@@ -11,7 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-final class RootImporterTest extends \PHPUnit_Framework_TestCase {
+final class RootImporterTest extends BaseTestCase {
   public function testSelf(): void {
     $root = realpath(__DIR__.'/../');
     $importer = new RootImporter($root);

@@ -93,7 +93,7 @@ final class FactParseScanner implements Builder {
         $functions[strtolower($func)] = $file;
       }
       foreach ($file_facts['typeAliases'] as $alias) {
-        $types[$alias] = $alias;
+        $types[strtolower($alias)] = $file;
       }
     }
     return shape(
