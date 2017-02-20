@@ -86,11 +86,17 @@ final class ComposerImporter implements Builder {
   private function importClassmap(array<string> $roots): void {
     foreach ($roots as $root) {
       $path = $this->root.'/'.$root;
-      if (is_dir($path)) {
-        $scanner = Scanner::fromTree($path, $this->config['parser']);
-      } else {
-        $scanner = Scanner::fromFile($path, $this->config['parser']);
+      try {
+        if (is_dir($path)) {
+          $scanner = Scanner::fromTree($path, $this->config['parser']);
+        } else {
+          $scanner = Scanner::fromFile($path, $this->config['parser']);
+        }
+      } catch (\UnexpectedValueException $e) {
+        // Incorrectly configured configured path.
+        continue;
       }
+
       $this->builders[] = new ClassesOnlyFilter($scanner);
     }
   }
@@ -99,14 +105,14 @@ final class ComposerImporter implements Builder {
     $roots = self::normalizePSRRoots($roots);
     foreach ($roots as $prefix => $prefix_roots) {
       foreach ($prefix_roots as $root) {
-        $this->builders[] = new PSR4Filter(
-          $prefix,
-          $this->root.'/'.$root,
-          Scanner::fromTree(
-            $this->root.'/'.$root,
-            $this->config['parser'],
-          ),
-        );
+        try {
+          $scanner = Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
+        } catch (\UnexpectedValueException $e) {
+          // Incorrectly configured configured path.
+          continue;
+        }
+
+        $this->builders[] = new PSR4Filter($prefix, $this->root.'/'.$root, $scanner);
       }
     }
   }
@@ -115,14 +121,14 @@ final class ComposerImporter implements Builder {
     $roots = self::normalizePSRRoots($roots);
     foreach ($roots as $prefix => $prefix_roots) {
       foreach ($prefix_roots as $root) {
-        $this->builders[] = new PSR0Filter(
-          $prefix,
-          $this->root.'/'.$root,
-          Scanner::fromTree(
-            $this->root.'/'.$root,
-            $this->config['parser'],
-          ),
-        );
+        try {
+          $scanner = Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
+        } catch (\UnexpectedValueException $e) {
+          // Incorrectly configured configured path.
+          continue;
+        }
+
+        $this->builders[] = new PSR0Filter($prefix, $this->root.'/'.$root, $scanner);
       }
     }
   }
@@ -150,10 +156,11 @@ final class ComposerImporter implements Builder {
         $this->config['autoloadFilesBehavior']
         === AutoloadFilesBehavior::FIND_DEFINITIONS
       ) {
-        $this->builders[] = Scanner::fromFile(
-          $file,
-          $this->config['parser'],
-        );
+        try {
+          $this->builders[] = Scanner::fromFile($file, $this->config['parser']);
+        } catch (\UnexpectedValueException $e) {
+          // Incorrectly configured configured path.
+        }
       } else {
         $this->files[] = $file;
       }
