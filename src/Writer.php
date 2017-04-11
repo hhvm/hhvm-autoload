@@ -47,7 +47,7 @@ final class Writer {
       throw new Exception('Call setFiles() before writeToFile()');
     }
     if ($map === null) {
-      throw new Exception('Call setAutoloadMap(0 before writeToFile()');
+      throw new Exception('Call setAutoloadMap() before writeToFile()');
     }
 
     $requires = implode(
