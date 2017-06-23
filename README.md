@@ -69,7 +69,7 @@ The following settings are optional:
 How It Works
 ============
 
- - [`facebook/definition-finder`](https://github.com/facebook/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
+ - [`hhvm/definition-finder`](https://github.com/hhvm/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
  - This is used to generate something similar to a classmap, except including other kinds of definitions
  - The map is provided to HHVM with [`HH\autoload_set_paths()`](https://docs.hhvm.com/hack/reference/function/HH.autoload_set_paths/)
 
