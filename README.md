@@ -23,21 +23,6 @@ Why does this project use Composer's autoloader?
 
 It can't depend on itself :)
 
-Preview Warning
-===============
-
-The autoload mechanism itself is very heavily tested at Facebook, however
-[the library](https://github.com/hhvm/definition-finder/) used to find the autoloadables (classes,
-functions, etc) is fairly new, and has not been used on a wide variety of projects. It's been tested on:
-
- - The PHP and Hack code inside HHVM and Hack
- - [The Hack/HHVM documentation site](https://github.com/hhvm/user-documentation/)
- - [The dependencies](https://github.com/hhvm/user-documentation/blob/master/composer.lock) of the Hack/HHVM documentation site
-
-If you encounter a parse error, please [file an issue](https://github.com/hhvm/definition-finder/issues) against [hhvm/definition-finder](https://github.com/hhvm/definition-finder/) with either example code, or a link to an open source project that it can't parse.
-
-For any other issue, please [file an issue](https://github.com/hhvm/hhvm-autoload/issues) against [this project](https://github.com/hhvm/hhvm-autoload).
-
 Usage
 =====
 
