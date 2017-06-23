@@ -60,11 +60,30 @@ final class ScannerTest extends BaseTestCase {
   /**
    * @dataProvider getParsers
    */
-  public function testFromFile(Parser $parser): void {
-    $map = Scanner::fromFile(
+  public function testFromTree(
+    Parser $parser,
+    classname<Builder> $class,
+  ): void {
+    $builder = Scanner::fromTree(
+      self::HH_ONLY_SRC,
+      $parser,
+    );
+    $this->assertSame($class, get_class($builder));
+  }
+
+  /**
+   * @dataProvider getParsers
+   */
+  public function testFromFile(
+    Parser $parser,
+    classname<Builder> $class,
+  ): void {
+    $builder = Scanner::fromFile(
       self::HH_ONLY_SRC.'/constant.php',
       $parser,
-    )->getAutoloadMap();
+    );
+    $this->assertSame($class, get_class($builder));
+    $map = $builder->getAutoloadMap();
     $this->assertEmpty($map['class']);
     $this->assertEmpty($map['function']);
     $this->assertEmpty($map['type']);

@@ -11,25 +11,28 @@
 
 namespace Facebook\AutoloadMap;
 
-use Facebook\DefinitionFinder\{
-  BaseParser,
-  FileParser,
-  ScannedBase,
-  TreeParser
-};
-
 abstract final class Scanner {
   public static function fromFile(
     string $path,
     Parser $parser,
   ): Builder {
-    return DefinitionFinderScanner::fromFile($path);
+    switch ($parser) {
+      case Parser::DEFINITION_FINDER:
+        return DefinitionFinderScanner::fromFile($path);
+      case Parser::EXT_FACTPARSE:
+        return FactParseScanner::fromFile($path);
+    }
   }
 
   public static function fromTree(
     string $path,
     Parser $parser,
   ): Builder {
-    return DefinitionFinderScanner::fromTree($path);
+    switch ($parser) {
+      case Parser::DEFINITION_FINDER:
+        return DefinitionFinderScanner::fromTree($path);
+      case Parser::EXT_FACTPARSE:
+        return FactParseScanner::fromTree($path);
+    }
   }
 }
