@@ -13,9 +13,7 @@ namespace Facebook\AutoloadMap;
 
 abstract class BaseTestCase extends \PHPUnit\Framework\TestCase {
   public function getParsers(): array<(Parser, classname<Builder>)> {
-    /* HH_FIXME[2049] HHVM_VERSION not in HHI */
-    /* HH_FIXME[4106] HHVM_VERSION not in HHI */
-    if (version_compare(HHVM_VERSION, '3.18.0', '>=')) {
+    if (extension_loaded('factparse')) {
       return [
         tuple(Parser::DEFINITION_FINDER, DefinitionFinderScanner::class),
         tuple(Parser::EXT_FACTPARSE, FactParseScanner::class),

@@ -105,7 +105,7 @@ abstract final class ConfigurationLoader {
     if (array_key_exists('parser', $data)) {
       $parser = Parser::assert($data['parser']);
     } else {
-      $parser = Parser::DEFINITION_FINDER;
+      $parser = self::getDefaultParser();
     }
 
     return shape(
@@ -115,5 +115,12 @@ abstract final class ConfigurationLoader {
       'extraFiles' => $files->toImmVector(),
       'parser' => $parser,
     );
+  }
+
+  private static function getDefaultParser(): Parser {
+    if (extension_loaded('factparse')) {
+      return Parser::EXT_FACTPARSE;
+    }
+    return Parser::DEFINITION_FINDER;
   }
 }
