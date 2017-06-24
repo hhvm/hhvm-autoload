@@ -50,11 +50,12 @@ The following settings are optional:
  - `"extraFiles": ["file1.php"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/hh_autoload.php`. This should be needed much less frequently than under Composer
  - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/hh_autoload.php`
  - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/hh_autoload.php` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
+ - `"parser": "ext-factparse"|"definition-finder"` - how to parse files. FactParse is an HHVM extension in 3.18 and above, while DefinitionFinder is a library supporting older versions of HHVM.
 
 How It Works
 ============
 
- - [`hhvm/definition-finder`](https://github.com/hhvm/definition-finder/) provides a list of all PHP and Hack definitions in the specified locations
+ - A parser (FactParse or DefinitionFinder) provides a list of all PHP and Hack definitions in the specified locations
  - This is used to generate something similar to a classmap, except including other kinds of definitions
  - The map is provided to HHVM with [`HH\autoload_set_paths()`](https://docs.hhvm.com/hack/reference/function/HH.autoload_set_paths/)
 
