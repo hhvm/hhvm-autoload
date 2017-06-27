@@ -51,7 +51,10 @@ final class ComposerPlugin
     require_once($this->vendor.'/autoload.php');
 
     $this->debugMessage("Parsing tree");
-    $importer = new RootImporter($this->root);
+    $importer = new RootImporter(
+      $this->root,
+      IncludedRoots::PROD_ONLY
+    );
 
     $this->debugMessage("Writing hh_autoload.php");
     (new Writer())

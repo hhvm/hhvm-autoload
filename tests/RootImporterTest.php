@@ -14,7 +14,7 @@ namespace Facebook\AutoloadMap;
 final class RootImporterTest extends BaseTestCase {
   public function testSelf(): void {
     $root = realpath(__DIR__.'/../');
-    $importer = new RootImporter($root);
+    $importer = new RootImporter($root, IncludedRoots::PROD_ONLY);
     $map = $importer->getAutoloadMap();
     $this->assertContains(
       'facebook\autoloadmap\exception',
@@ -28,9 +28,20 @@ final class RootImporterTest extends BaseTestCase {
     $this->assertEmpty($importer->getFiles());
   }
 
-  public function testImportTree(): void {
+  public function provideTestModes(): array<(IncludedRoots, string)> {
+    return [
+      tuple(IncludedRoots::PROD_ONLY, 'test-prod.php'),
+      tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php'),
+    ];
+  }
+
+  /** @dataProvider provideTestModes */
+  public function testImportTree(
+    IncludedRoots $included_roots,
+    string $test_file,
+  ): void {
     $root = __DIR__.'/fixtures/hh-only';
-    $builder = new RootImporter($root);
+    $builder = new RootImporter($root, $included_roots);
     $tempfile = tempnam(sys_get_temp_dir(), 'hh_autoload');
     (new Writer())
       ->setBuilder($builder)
@@ -40,7 +51,7 @@ final class RootImporterTest extends BaseTestCase {
     $cmd = (Vector {
       PHP_BINARY,
       '-v', 'Eval.Jit=0',
-      __DIR__.'/fixtures/hh-only/test.php',
+      __DIR__.'/fixtures/hh-only/'.$test_file,
       $tempfile,
     })->map($x ==> escapeshellarg($x));
     $cmd = implode(' ', $cmd);

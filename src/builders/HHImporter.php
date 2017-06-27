@@ -18,12 +18,22 @@ final class HHImporter implements Builder {
 
   public function __construct(
     string $root,
+    IncludedRoots $included_roots,
   ) {
     $config_file = $root.'/hh_autoload.json';
     $config = ConfigurationLoader::fromFile($config_file);
     $this->config = $config;
 
-    foreach ($config['roots'] as $tree) {
+    switch($included_roots) {
+      case IncludedRoots::PROD_ONLY:
+        $roots = $config['roots'];
+        break;
+      case IncludedRoots::DEV_AND_PROD:
+        $roots = $config['roots']->concat($config['devRoots']);
+        break;
+    }
+
+    foreach ($roots as $tree) {
       if ($tree[0] !== '/') {
         $tree = $root.'/'.$tree;
       }

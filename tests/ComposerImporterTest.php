@@ -24,6 +24,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
         'parser' => $parser,
       ),
     );
@@ -56,6 +57,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
         'parser' => $parser,
       ),
     );
@@ -92,6 +94,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
         'parser' => $parser,
       ),
     );
@@ -129,6 +132,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'includeVendor' => false,
         'extraFiles' => ImmVector { },
         'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
         'parser' => $parser,
       ),
     );

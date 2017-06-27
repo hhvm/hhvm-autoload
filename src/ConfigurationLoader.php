@@ -17,6 +17,7 @@ abstract final class ConfigurationLoader {
 
   const type TJSONConfig = shape(
     'roots' => array<string>,
+    'devRoots' => ?array<string>,
     'autoloadFilesBehavior' => ?AutoloadFilesBehavior,
     'includeVendor' => ?bool,
     'extraFiles' => ?array<string>,
@@ -45,11 +46,14 @@ abstract final class ConfigurationLoader {
 
     return shape(
       'roots' => new ImmVector($config['roots']),
+      'devRoots' => self::maybeArrayToImmVector(
+        $config['devRoots'] ?? null,
+      ),
       'autoloadFilesBehavior' => $config['autoloadFilesBehavior']
         ?? AutoloadFilesBehavior::FIND_DEFINITIONS,
       'includeVendor' => $config['includeVendor'] ?? true,
       'extraFiles' => self::maybeArrayToImmVector(
-        $config['extraFiles'] ?? null
+        $config['extraFiles'] ?? null,
       ),
       'parser' => $config['parser'] ?? self::getDefaultParser(),
     );

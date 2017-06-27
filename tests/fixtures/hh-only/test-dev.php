@@ -26,7 +26,11 @@ invariant(
 );
 invariant(
   !class_exists(VendorComposerExampleClass::class),
-  "Should *not* able to load class from vendor composer.json if there's also ".
+  "Should *not* be able to load class from vendor composer.json if there's also ".
   "an hh_autoload.json"
+);
+invariant(
+  class_exists(MyExampleTest::class),
+  "Should be able to load class from dev root in prod mode"
 );
 print("OK!");
