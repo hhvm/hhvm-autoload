@@ -1,6 +1,7 @@
 {
   "name": "facebook/hhvm-autoload",
   "type": "composer-plugin",
+  "bin": [ "bin/hh-autoload" ],
   "require": {
     "composer-plugin-api": "^1.0",
     "hhvm": "^3.12",

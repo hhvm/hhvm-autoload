@@ -1,0 +1,106 @@
+#!/usr/bin/env hhvm
+<?hh
+/*
+ *  Copyright (c) 2015-present, Facebook, Inc.
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the BSD-style license found in the
+ *  LICENSE file in the root directory of this source tree. An additional grant
+ *  of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+namespace Facebook\AutoloadMap;
+
+$dir = __DIR__;
+while (true) {
+  if (file_exists($dir.'/autoload.php')) {
+    require_once($dir.'/autoload.php');
+    break;
+  }
+  if (file_exists($dir.'/vendor/autoload.php')) {
+    require_once($dir.'/vendor/autoload.php');
+    break;
+  }
+
+  if ($dir === '') {
+    fwrite(STDERR, "Failed to find composer autoloader to bootstrap\n");
+    exit(1);
+  }
+
+  $pos = strrpos($dir, '/');
+  if ($pos === false) {
+    $dir = '';
+    continue;
+  }
+
+  $dir = substr($dir, 0, $pos);
+}
+
+final class GenerateScript {
+  const type TOptions = shape(
+    'dev' => bool,
+  );
+
+  public static function main(array<string> $argv): void {
+    self::checkRoot();
+    $options = self::parseOptions($argv);
+    self::initAutoloader($options);
+  }
+
+  private static function parseOptions(array<string> $argv) {
+    $options = shape(
+      'dev' => true,
+    );
+    $bin = array_shift($argv);
+    foreach ($argv as $arg) {
+      if ($arg === '--no-dev') {
+        $options['dev'] = false;
+        continue;
+      }
+      if ($arg === '--help') {
+        self::printUsage(STDOUT, $bin);
+        exit(0);
+      }
+      fprintf(STDERR, "Unrecognized option: '%s'\n", $arg);
+      self::printUsage(STDERR, $bin);
+      exit(1);
+    }
+    return $options;
+  }
+
+  private static function checkRoot(): void {
+    if (!file_exists('hh_autoload.json')) {
+      fwrite(
+        STDERR,
+        "This executable must be ran from a directory containing an ".
+        "hh_autoload.json\n",
+      );
+      exit(1);
+    }
+  }
+
+  private static function initAutoloader(self::TOptions $options): void {
+    $importer = new RootImporter(
+      getcwd(),
+      $options['dev']
+        ? IncludedRoots::DEV_AND_PROD
+        : IncludedRoots::PROD_ONLY,
+    );
+    $file = getcwd().'/vendor/hh_autoload.php';
+    (new Writer())
+      ->setBuilder($importer)
+      ->setRoot(getcwd())
+      ->writeToFile($file);
+    print($file."\n");
+  }
+
+  private static function printUsage(
+    resource $to,
+    string $bin,
+  ): void {
+    fprintf($to, "USAGE: %s [--no-dev]\n", $bin);
+  }
+}
+
+GenerateScript::main($argv);
