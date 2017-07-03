@@ -11,7 +11,10 @@
 
 namespace Facebook\AutoloadMap;
 
-use FredEmmott\TypeAssert\TypeAssert;
+use FredEmmott\TypeAssert\{
+  IncorrectTypeException,
+  TypeAssert
+};
 
 abstract final class ConfigurationLoader {
 
@@ -25,12 +28,23 @@ abstract final class ConfigurationLoader {
   );
 
   public static function fromFile(string $path): Config {
+    invariant(
+      is_readable($path),
+      'Tried to load configuration file %s, but it is not readable.',
+      $path,
+    );
     return self::fromJSON(file_get_contents($path), $path);
   }
 
   public static function fromJSON(string $json, string $path): Config {
+    $decoded = json_decode($json, /* as array = */ true);
+    invariant(
+      is_array($decoded),
+      'Expected configuration file to contain a JSON object, got %s',
+      gettype($decoded),
+    );
     return self::fromData(
-      json_decode($json, /* as array = */ true),
+      $decoded,
       $path,
     );
   }
@@ -39,10 +53,14 @@ abstract final class ConfigurationLoader {
     array<string, mixed> $data,
     string $path,
   ): Config {
-    $config = TypeAssert::matchesTypeStructure(
-      type_structure(self::class, 'TJSONConfig'),
-      $data,
-    );
+    try {
+      $config = TypeAssert::matchesTypeStructure(
+        type_structure(self::class, 'TJSONConfig'),
+        $data,
+      );
+    } catch (IncorrectTypeException $_) {
+      invariant_violation("Configuration file does not match expected shape");
+    }
 
     return shape(
       'roots' => new ImmVector($config['roots']),
