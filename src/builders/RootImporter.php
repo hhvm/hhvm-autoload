@@ -16,7 +16,7 @@ final class RootImporter implements Builder {
 
   public function __construct(
     string $root,
-    IncludedRoots $included,
+    IncludedRoots $included = IncludedRoots::PROD_ONLY,
   ) {
     $hh_importer = new HHImporter($root, $included);
     $this->builders[] = $hh_importer;

@@ -65,4 +65,14 @@ final class RootImporterTest extends BaseTestCase {
     $this->assertSame(0, $exit_code, implode("\n", $output));
     $this->assertSame($result, 'OK!');
   }
+
+  public function testSingleArgConstructor(): void {
+    // If a project uses <= 1.3, their existing composer plugin will try to do
+    // this while upgrading, and error out if it fails - so, we need to keep
+    // suppporting it.
+    $root = __DIR__.'/fixtures/hh-only';
+    $builder = new RootImporter($root);
+    $this->assertNotNull($builder);
+
+  }
 }
