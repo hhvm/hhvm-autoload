@@ -28,10 +28,12 @@ final class RootImporterTest extends BaseTestCase {
     $this->assertEmpty($importer->getFiles());
   }
 
-  public function provideTestModes(): array<(IncludedRoots, string)> {
+  public function provideTestModes(): array<(IncludedRoots, string, bool)> {
     return [
-      tuple(IncludedRoots::PROD_ONLY, 'test-prod.php'),
-      tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php'),
+      tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', true),
+      tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', false),
+      tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php', true),
+      tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php', false),
     ];
   }
 
@@ -39,13 +41,16 @@ final class RootImporterTest extends BaseTestCase {
   public function testImportTree(
     IncludedRoots $included_roots,
     string $test_file,
+    bool $relativeAutoloadRoot,
   ): void {
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root, $included_roots);
-    $tempfile = tempnam(sys_get_temp_dir(), 'hh_autoload');
+    $tempdir = $relativeAutoloadRoot ? $root.'/vendor' : sys_get_temp_dir();
+    $tempfile = tempnam($tempdir, 'hh_autoload');
     (new Writer())
       ->setBuilder($builder)
       ->setRoot($root)
+      ->setRelativeAutoloadRoot($relativeAutoloadRoot)
       ->writeToFile($tempfile);
 
     $cmd = (Vector {

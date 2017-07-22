@@ -15,6 +15,7 @@ final class Writer {
   private ?ImmVector<string> $files;
   private ?AutoloadMap $map;
   private ?string $root;
+  private bool $relativeAutoloadRoot = true;
 
   public function setFiles(ImmVector<string> $files): this {
     $this->files = $files;
@@ -34,6 +35,11 @@ final class Writer {
 
   public function setRoot(string $root): this {
     $this->root = realpath($root);
+    return $this;
+  }
+
+  public function setRelativeAutoloadRoot(bool $relativeAutoloadRoot): this {
+    $this->relativeAutoloadRoot = $relativeAutoloadRoot;
     return $this;
   }
 
@@ -68,7 +74,11 @@ final class Writer {
       Shapes::toArray($map),
     );
     $map = var_export($map, true);
-    $root = var_export($this->root.'/', true);
+    if ($this->relativeAutoloadRoot) {
+      $root = '__DIR__.\'/../\'';
+    } else {
+      $root = var_export($this->root.'/', true);
+    }
     $code = <<<EOF
 <?hh
 
@@ -82,7 +92,7 @@ EOF;
       $destination_file,
       $code,
     );
-      
+
     return $this;
   }
 
