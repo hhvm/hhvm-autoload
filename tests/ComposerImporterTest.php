@@ -188,7 +188,7 @@ final class ComposerImporterTest extends BaseTestCase {
    */
   public function testPSR0ImportNoTrailingSlash(Parser $parser): void {
     // This is brittle, but loud and easy to diagnoze + replace...
-    $root = realpath(__DIR__.'/../vendor/chrisboulton/php-resque');
+    $root = realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
 
@@ -213,10 +213,10 @@ final class ComposerImporterTest extends BaseTestCase {
     );
 
     $this->assertSame(
-      $root.'/lib/Resque.php',
+      $root.'/src/PSR0Test.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'resque',
+        'psr0test',
       ),
     );
   }
