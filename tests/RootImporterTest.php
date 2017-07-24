@@ -41,16 +41,16 @@ final class RootImporterTest extends BaseTestCase {
   public function testImportTree(
     IncludedRoots $included_roots,
     string $test_file,
-    bool $relativeAutoloadRoot,
+    bool $relative_root,
   ): void {
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root, $included_roots);
-    $tempdir = $relativeAutoloadRoot ? $root.'/vendor' : sys_get_temp_dir();
+    $tempdir = $relative_root ? $root.'/vendor' : sys_get_temp_dir();
     $tempfile = tempnam($tempdir, 'hh_autoload');
     (new Writer())
       ->setBuilder($builder)
       ->setRoot($root)
-      ->setRelativeAutoloadRoot($relativeAutoloadRoot)
+      ->setRelativeAutoloadRoot($relative_root)
       ->writeToFile($tempfile);
 
     $cmd = (Vector {

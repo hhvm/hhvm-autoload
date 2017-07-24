@@ -38,8 +38,8 @@ final class Writer {
     return $this;
   }
 
-  public function setRelativeAutoloadRoot(bool $relativeAutoloadRoot): this {
-    $this->relativeAutoloadRoot = $relativeAutoloadRoot;
+  public function setRelativeAutoloadRoot(bool $relative): this {
+    $this->relativeAutoloadRoot = $relative;
     return $this;
   }
 
