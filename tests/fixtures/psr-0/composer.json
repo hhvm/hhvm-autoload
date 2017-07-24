@@ -1,7 +1,8 @@
 {
   "autoload": {
     "psr-0": {
-      "PSR0Test": "src"
+      "PSR0Test": "src",
+      "PSR0TestWithSlash": "src-with-slash"
     }
   }
 }

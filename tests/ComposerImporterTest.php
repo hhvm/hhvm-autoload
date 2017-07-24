@@ -74,17 +74,13 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR4Import(Parser $parser): void {
-    // This is brittle, but loud and easy to diagnoze + replace...
-    $root = realpath(__DIR__.'/../vendor/symfony/yaml');
+    $root = realpath(__DIR__.'/fixtures/psr-4');
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
 
     $composer_config = json_decode(
       file_get_contents($composer),
       /* as array = */ true,
-    );
-    $this->assertNotEmpty(
-      $composer_config['autoload']['psr-4'],
     );
 
     $importer = new ComposerImporter(
@@ -100,10 +96,10 @@ final class ComposerImporterTest extends BaseTestCase {
     );
 
     $this->assertSame(
-      $root.'/Dumper.php',
+      $root.'/src-with-slash/PSR4Test.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'symfony\component\yaml\dumper',
+        'psr4\testwithslash\psr4test',
       ),
     );
   }
@@ -149,17 +145,13 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR0Import(Parser $parser): void {
-    // This is brittle, but loud and easy to diagnoze + replace...
-    $root = realpath(__DIR__.'/../vendor/phpspec/prophecy');
+    $root = realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
 
     $composer_config= json_decode(
       file_get_contents($composer),
       /* as array = */ true,
-    );
-    $this->assertNotEmpty(
-      $composer_config['autoload']['psr-0'],
     );
 
     $importer = new ComposerImporter(
@@ -174,10 +166,10 @@ final class ComposerImporterTest extends BaseTestCase {
       ),
     );
     $this->assertSame(
-      $root.'/src/Prophecy/Prophet.php',
+      $root.'/src-with-slash/PSR0TestWithSlash.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'prophecy\prophet',
+        'psr0testwithslash',
       ),
     );
   }
