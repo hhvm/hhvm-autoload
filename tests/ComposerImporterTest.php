@@ -112,8 +112,7 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR4ImportNoTrailingSlash(Parser $parser): void {
-    // This is brittle, but loud and easy to diagnoze + replace...
-    $root = realpath(__DIR__.'/../vendor/phpdocumentor/reflection-common');
+    $root = realpath(__DIR__.'/fixtures/psr-4');
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
 
@@ -138,10 +137,10 @@ final class ComposerImporterTest extends BaseTestCase {
     );
 
     $this->assertSame(
-      $root.'/src/File.php',
+      $root.'/src/PSR4Test.php',
       idx(
         $importer->getAutoloadMap()['class'],
-        'phpdocumentor\reflection\file',
+        'psr4\test\psr4test',
       ),
     );
   }
@@ -187,7 +186,6 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR0ImportNoTrailingSlash(Parser $parser): void {
-    // This is brittle, but loud and easy to diagnoze + replace...
     $root = realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
