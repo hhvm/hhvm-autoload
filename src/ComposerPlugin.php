@@ -62,6 +62,7 @@ final class ComposerPlugin
     (new Writer())
       ->setBuilder($importer)
       ->setRoot($this->root)
+      ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
       ->writeToFile($this->vendor.'/hh_autoload.php');
   }
 

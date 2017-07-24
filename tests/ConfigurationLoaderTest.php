@@ -17,6 +17,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     return [
       'fully specified' => [[
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'relativeAutoloadRoot' => false,
         'includeVendor' => false,
         'extraFiles' => [],
         'roots' => ['foo/', 'bar/'],
@@ -77,7 +78,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
       AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
     );
 
-    $config = Shapes::toArray($config); 
+    $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if (is_array($value)) {
         $value = new ImmVector($value);

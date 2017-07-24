@@ -22,6 +22,7 @@ abstract final class ConfigurationLoader {
     'roots' => array<string>,
     'devRoots' => ?array<string>,
     'autoloadFilesBehavior' => ?AutoloadFilesBehavior,
+    'relativeAutoloadRoot' => ?bool,
     'includeVendor' => ?bool,
     'extraFiles' => ?array<string>,
     'parser' => ?Parser,
@@ -69,6 +70,7 @@ abstract final class ConfigurationLoader {
       ),
       'autoloadFilesBehavior' => $config['autoloadFilesBehavior']
         ?? AutoloadFilesBehavior::FIND_DEFINITIONS,
+      'relativeAutoloadRoot' => $config['relativeAutoloadRoot'] ?? true,
       'includeVendor' => $config['includeVendor'] ?? true,
       'extraFiles' => self::maybeArrayToImmVector(
         $config['extraFiles'] ?? null,
