@@ -24,6 +24,7 @@ abstract class BasePSRFilter implements Builder {
     private string $root,
     private Builder $source,
   ) {
+    $this->root = rtrim($this->root, '/').'/';
   }
 
   public function getFiles(): ImmVector<string> {

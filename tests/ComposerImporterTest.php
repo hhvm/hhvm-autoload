@@ -111,6 +111,43 @@ final class ComposerImporterTest extends BaseTestCase {
   /**
    * @dataProvider getParsers
    */
+  public function testPSR4ImportNoTrailingSlash(Parser $parser): void {
+    $root = realpath(__DIR__.'/fixtures/psr-4');
+    $composer = $root.'/composer.json';
+    $this->assertTrue(file_exists($composer));
+
+    $composer_config = json_decode(
+      file_get_contents($composer),
+      /* as array = */ true,
+    );
+    $this->assertNotEmpty(
+      $composer_config['autoload']['psr-4'],
+    );
+
+    $importer = new ComposerImporter(
+      $composer,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'includeVendor' => false,
+        'extraFiles' => ImmVector { },
+        'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
+        'parser' => $parser,
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src/PSR4Test.php',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr4\test\psr4test',
+      ),
+    );
+  }
+
+  /**
+   * @dataProvider getParsers
+   */
   public function testPSR0Import(Parser $parser): void {
     // This is brittle, but loud and easy to diagnoze + replace...
     $root = realpath(__DIR__.'/../vendor/phpspec/prophecy');
@@ -141,6 +178,43 @@ final class ComposerImporterTest extends BaseTestCase {
       idx(
         $importer->getAutoloadMap()['class'],
         'prophecy\prophet',
+      ),
+    );
+  }
+
+  /**
+   * @dataProvider getParsers
+   */
+  public function testPSR0ImportNoTrailingSlash(Parser $parser): void {
+    $root = realpath(__DIR__.'/fixtures/psr-0');
+    $composer = $root.'/composer.json';
+    $this->assertTrue(file_exists($composer));
+
+    $composer_config = json_decode(
+      file_get_contents($composer),
+      /* as array = */ true,
+    );
+    $this->assertNotEmpty(
+      $composer_config['autoload']['psr-0'],
+    );
+
+    $importer = new ComposerImporter(
+      $composer,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'includeVendor' => false,
+        'extraFiles' => ImmVector { },
+        'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
+        'parser' => $parser,
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src/PSR0Test.php',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr0test',
       ),
     );
   }
