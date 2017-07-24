@@ -13,14 +13,15 @@ namespace Facebook\AutoloadMap;
 
 final class RootImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
+  private HHImporter $hh_importer;
 
   public function __construct(
     string $root,
     IncludedRoots $included = IncludedRoots::PROD_ONLY,
   ) {
-    $hh_importer = new HHImporter($root, $included);
-    $this->builders[] = $hh_importer;
-    $config = $hh_importer->getConfig();
+    $this->hh_importer = new HHImporter($root, $included);
+    $this->builders[] = $this->hh_importer;
+    $config = $this->hh_importer->getConfig();
 
     if (!$config['includeVendor']) {
       return;
@@ -54,5 +55,9 @@ final class RootImporter implements Builder {
       $files->addAll($builder->getFiles());
     }
     return $files->toImmVector();
+  }
+
+  public function getConfig(): Config {
+    return $this->hh_importer->getConfig();
   }
 }
