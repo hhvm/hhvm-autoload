@@ -8,7 +8,7 @@
     "91carriage/phpunit-hhi": "^5.5",
     "facebook/definition-finder": "^1.0",
     "fredemmott/hack-error-suppressor": "^1.0",
-    "fredemmott/type-assert": "^1.1"
+    "hhvm/type-assert": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.5"

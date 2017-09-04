@@ -11,7 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use FredEmmott\TypeAssert\{
+use Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeAssert
 };
