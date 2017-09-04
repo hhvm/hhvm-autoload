@@ -11,7 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use type Facebook\TypeAssert\TypeAssert;
+use Facebook\TypeAssert\TypeAssert;
 
 final class FactParseScanner implements Builder {
   const type TFacts = array<string, shape(
