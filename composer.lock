@@ -4,57 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6dc2ca2ab857cc820e9629fc2daedd85",
+    "content-hash": "7186ef55d9fa54dd4eb743ef1883935e",
     "packages": [
-        {
-            "name": "91carriage/phpunit-hhi",
-            "version": "5.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://git.simon.geek.nz/91-carriage/phpunit-hhi.git",
-                "reference": "6864897f023f111d8b72fb7340c1ef5d0d9f8a45"
-            },
-            "require": {
-                "hhvm": ">=3.12.0"
-            },
-            "conflict": {
-                "phpunit/phpunit": "<5.7.15"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "91carriage/dbunit-hhi": "HHI files for use with DbUnit"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.0.x-dev",
-                    "dev-phpunit-5.7": "5.7.x-dev",
-                    "dev-phpunit-5.6": "5.6.x-dev",
-                    "dev-phpunit-5.5": "5.5.x-dev",
-                    "dev-phpunit-5.4": "5.4.x-dev",
-                    "dev-phpunit-5.3": "5.3.x-dev",
-                    "dev-phpunit-5.2": "5.2.x-dev",
-                    "dev-phpunit-5.1": "5.1.x-dev",
-                    "dev-phpunit-5.0": "5.0.x-dev",
-                    "dev-phpunit-4.8": "4.8.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "HHI definitions for PHPUnit",
-            "homepage": "https://git.simon.geek.nz/91-carriage/phpunit-hhi",
-            "keywords": [
-                "hack",
-                "hhvm",
-                "phpunit",
-                "testing"
-            ],
-            "time": "2017-04-09T02:42:01+00:00"
-        },
         {
             "name": "facebook/definition-finder",
             "version": "v1.6.2",
@@ -171,6 +122,55 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "91carriage/phpunit-hhi",
+            "version": "5.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.simon.geek.nz/91-carriage/phpunit-hhi.git",
+                "reference": "6864897f023f111d8b72fb7340c1ef5d0d9f8a45"
+            },
+            "require": {
+                "hhvm": ">=3.12.0"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.7.15"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "91carriage/dbunit-hhi": "HHI files for use with DbUnit"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0.x-dev",
+                    "dev-phpunit-5.7": "5.7.x-dev",
+                    "dev-phpunit-5.6": "5.6.x-dev",
+                    "dev-phpunit-5.5": "5.5.x-dev",
+                    "dev-phpunit-5.4": "5.4.x-dev",
+                    "dev-phpunit-5.3": "5.3.x-dev",
+                    "dev-phpunit-5.2": "5.2.x-dev",
+                    "dev-phpunit-5.1": "5.1.x-dev",
+                    "dev-phpunit-5.0": "5.0.x-dev",
+                    "dev-phpunit-4.8": "4.8.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "HHI definitions for PHPUnit",
+            "homepage": "https://git.simon.geek.nz/91-carriage/phpunit-hhi",
+            "keywords": [
+                "hack",
+                "hhvm",
+                "phpunit",
+                "testing"
+            ],
+            "time": "2017-04-09T02:42:01+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
