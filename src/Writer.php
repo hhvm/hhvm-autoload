@@ -56,11 +56,27 @@ final class Writer {
       throw new Exception('Call setAutoloadMap() before writeToFile()');
     }
 
+    if ($this->relativeAutoloadRoot) {
+      $root = '__DIR__.\'/../\'';
+      $requires = $files->map(
+        $file ==> '__DIR__.'.var_export(
+          '/../'.$this->relativePath($file),
+          true,
+        ),
+      );
+    } else {
+      $root = var_export($this->root.'/', true);
+      $requires = $files->map(
+        $file ==> var_export(
+          $this->root.'/'.$this->relativePath($file),
+          true,
+        ),
+      );
+    }
+
     $requires = implode(
       "\n",
-      $files->map(
-        $file ==> 'require_once("'.$file.'");'
-      ),
+      $requires->map($require ==> 'require_once('.$require.');'),
     );
 
     $map = array_map(
@@ -74,11 +90,6 @@ final class Writer {
       Shapes::toArray($map),
     );
     $map = var_export($map, true);
-    if ($this->relativeAutoloadRoot) {
-      $root = '__DIR__.\'/../\'';
-    } else {
-      $root = var_export($this->root.'/', true);
-    }
     $code = <<<EOF
 <?hh
 

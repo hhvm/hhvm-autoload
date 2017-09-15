@@ -4,5 +4,8 @@
   ],
   "devRoots": [
     "tests/"
+  ],
+  "extraFiles": [
+    "extrafile.php"
   ]
 }

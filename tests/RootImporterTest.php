@@ -65,10 +65,23 @@ final class RootImporterTest extends BaseTestCase {
     $exit_code = null;
     $result = exec($cmd, $output, $exit_code);
 
+    $contents = file_get_contents($tempfile);
     unlink($tempfile);
 
     $this->assertSame(0, $exit_code, implode("\n", $output));
     $this->assertSame($result, 'OK!');
+
+    if ($relative_root) {
+      $this->assertContains(
+        "__DIR__.'/../extrafile.php'",
+        $contents,
+      );
+    } else {
+      $this->assertContains(
+        '\''.$root.'/extrafile.php\'',
+        $contents,
+      );
+    }
   }
 
   public function testSingleArgConstructor(): void {
@@ -78,6 +91,5 @@ final class RootImporterTest extends BaseTestCase {
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root);
     $this->assertNotNull($builder);
-
   }
 }
