@@ -13,7 +13,7 @@ namespace Facebook\AutoloadMap;
 
 abstract class BasePSRFilter implements Builder {
 
-  abstract protected static function getExpectedPath(
+  abstract protected static function getExpectedPathWithoutExtension(
     string $classname,
     string $prefix,
     string $root,
@@ -39,12 +39,14 @@ abstract class BasePSRFilter implements Builder {
           if (stripos($class_name, $this->prefix) !== 0) {
             return false;
           }
-          $expected = static::getExpectedPath(
+          $expected = static::getExpectedPathWithoutExtension(
             $class_name,
             $this->prefix,
             $this->root,
           );
-          return strtolower($expected) === strtolower($file);
+          $expected = strtolower($expected);
+          $file = strtolower($file);
+          return ($file === $expected.'.hh' || $file === $expected.'.php');
         }
       );
 

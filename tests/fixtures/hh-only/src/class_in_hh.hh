@@ -9,15 +9,6 @@
  *
  */
 
-namespace Facebook\AutoloadMap;
+namespace Facebook\AutoloadMap\TestFixtures;
 
-final class PSR0Filter extends BasePSRFilter {
-  <<__Override>>
-  protected static function getExpectedPathWithoutExtension(
-    string $class_name,
-    string $prefix,
-    string $root,
-  ): string {
-    return $root.strtr($class_name, "\\", '/');
-  }
-}
+class ExampleClassInHH {}

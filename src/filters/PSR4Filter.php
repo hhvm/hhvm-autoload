@@ -12,13 +12,13 @@
 namespace Facebook\AutoloadMap;
 
 final class PSR4Filter extends BasePSRFilter {
-  protected static function getExpectedPath(
+  protected static function getExpectedPathWithoutExtension(
     string $class_name,
     string $prefix,
     string $root,
   ): string {
     $local_part = str_ireplace($prefix, '', $class_name);
-    $expected = $root.strtr($local_part, "\\", '/').'.php';
+    $expected = $root.strtr($local_part, "\\", '/');
     return $expected;
   }
 }

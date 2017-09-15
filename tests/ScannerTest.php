@@ -28,6 +28,7 @@ final class ScannerTest extends BaseTestCase {
 
     $this->assertMapMatches(
       [
+        'ExampleClassInHH' => 'class_in_hh.hh',
         'ExampleClass' => 'class.php',
         'ExampleEnum' => 'enum.php',
         'xhp_example__xhp_class' => 'xhp_class.php',

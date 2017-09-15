@@ -1,0 +1,29 @@
+<?hh
+
+/// Generated file, do not edit by hand ///
+
+
+
+HH\autoload_set_paths(array (
+  'class' => 
+  array (
+    'facebook\\autoloadmap\\testfixtures\\exampleclass' => 'src/class.php',
+    'facebook\\autoloadmap\\testfixtures\\exampleenum' => 'src/enum.php',
+    'facebook\\autoloadmap\\testfixtures\\xhp_example__xhp_class' => 'src/xhp_class.php',
+    'facebook\\autoloadmap\\testfixtures\\myexampletest' => 'tests/testcase.php',
+    'facebook\\autoloadmap\\testfixtures\\vendorhhexampleclass' => 'vendor/somevendor/someproject/hh-root/VendorHHExampleClass.php',
+  ),
+  'function' => 
+  array (
+    'facebook\\autoloadmap\\testfixtures\\example_function' => 'src/function.php',
+  ),
+  'type' => 
+  array (
+    'facebook\\autoloadmap\\testfixtures\\examplenewtype' => 'src/newtype.php',
+    'facebook\\autoloadmap\\testfixtures\\exampletype' => 'src/type.php',
+  ),
+  'constant' => 
+  array (
+    'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT' => 'src/constant.php',
+  ),
+), __DIR__.'/../');

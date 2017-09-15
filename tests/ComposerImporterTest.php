@@ -102,6 +102,14 @@ final class ComposerImporterTest extends BaseTestCase {
         'psr4\testwithslash\psr4test',
       ),
     );
+
+    $this->assertSame(
+      $root.'/src/HHPSR4Test.hh',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr4\test\hhpsr4test',
+      ),
+    );
   }
 
   /**
@@ -207,6 +215,14 @@ final class ComposerImporterTest extends BaseTestCase {
       idx(
         $importer->getAutoloadMap()['class'],
         'psr0test',
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src/PSR0TestInHH.hh',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr0testinhh',
       ),
     );
   }
