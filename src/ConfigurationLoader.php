@@ -26,6 +26,8 @@ abstract final class ConfigurationLoader {
     'includeVendor' => ?bool,
     'extraFiles' => ?array<string>,
     'parser' => ?Parser,
+    'failureHandler' => ?string,
+    'devFailureHandler' => ?string,
   );
 
   public static function fromFile(string $path): Config {
@@ -76,6 +78,10 @@ abstract final class ConfigurationLoader {
         $config['extraFiles'] ?? null,
       ),
       'parser' => $config['parser'] ?? self::getDefaultParser(),
+      'failureHandler' => $config['failureHandler'] ?? null,
+      'devFailureHandler' => $config['devFailureHandler']
+        ?? $config['failureHandler']
+        ?? null,
     );
   }
 

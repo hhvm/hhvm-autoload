@@ -58,11 +58,16 @@ final class ComposerPlugin
         : IncludedRoots::PROD_ONLY
     );
 
+    $handler = $event->isDevMode()
+      ? ($importer()->getConfig()['devFailureHandler'] ?? null)
+      : ($importer()->getConfig()['filureHandler'] ?? null);
+
     $this->debugMessage("Writing hh_autoload.php");
     (new Writer())
       ->setBuilder($importer)
       ->setRoot($this->root)
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
+      ->setFailureHandler($handler)
       ->writeToFile($this->vendor.'/hh_autoload.php');
   }
 

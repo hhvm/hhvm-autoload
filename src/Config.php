@@ -18,4 +18,6 @@ type Config = shape(
   'includeVendor' => bool,
   'extraFiles' => ImmVector<string>,
   'parser' => Parser,
+  'failureHandler' => ?string,
+  'devFailureHandler' => ?string,
 );

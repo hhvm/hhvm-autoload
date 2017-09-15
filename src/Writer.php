@@ -16,6 +16,12 @@ final class Writer {
   private ?AutoloadMap $map;
   private ?string $root;
   private bool $relativeAutoloadRoot = true;
+  private ?string $failureHandler;
+
+  public function setFailureHandler(?string $handler): this {
+    $this->failureHandler = $handler;
+    return $this;
+  }
 
   public function setFiles(ImmVector<string> $files): this {
     $this->files = $files;
@@ -80,7 +86,7 @@ final class Writer {
     );
 
     $map = array_map(
-      function ($sub_map): array<string, string> {
+      function ($sub_map): mixed {
         assert(is_array($sub_map));
         return array_map(
           $path ==> $this->relativePath($path),
@@ -89,15 +95,33 @@ final class Writer {
       },
       Shapes::toArray($map),
     );
+
+    $failure_handler = $this->failureHandler;
+    if ($failure_handler !== null) {
+      if (substr($failure_handler, 0, 1) !== '\\') {
+        $failure_handler = '\\'.$failure_handler;
+      }
+      $map['failure'] = $failure_handler.'::handleFailure';
+    }
+
+    $build_id = var_export(
+      date(\DateTime::ATOM).'!'.bin2hex(random_bytes(16)),
+      true,
+    );
+
     $map = var_export($map, true);
     $code = <<<EOF
 <?hh
 
 /// Generated file, do not edit by hand ///
 
+namespace Facebook\AutoloadMap\Generated;
+
+const string BUILD_ID = $build_id;
+
 $requires
 
-HH\autoload_set_paths($map, $root);
+\HH\autoload_set_paths($map, $root);
 EOF;
     file_put_contents(
       $destination_file,

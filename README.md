@@ -53,6 +53,22 @@ The following settings are optional:
  - `"parser": "ext-factparse"|"definition-finder"` - how to parse files. FactParse is an HHVM extension in 3.18 and above, while DefinitionFinder is a library supporting older versions of HHVM.
  - `"devRoots": [ "path/", ...]` - additional roots to only include in dev mode, not when installed as a dependency.
  - `"relativeAutoloadRoot": false` - do not use a path relative to `__DIR__` for autoloading. Instead, use the path to the folder containing `hh_autoload.json` when building the autoload map.
+ - `"failureHandler:" classname<Facebook\AutoloadMap\FailureHandler>` - use the specified class to handle definitions that aren't the Map. Your handler will not be invoked for functions or constants
+   that aren't in the autoload map and have the same name as a definition in the global namespace. Defaults to none.
+ - `"devFailureHandler": classname<Facebook\AutoloadMap\FailureHandler>` - use a different handler for development environments. Defaults to the same value as `failureHandler`.
+
+Development Workflow
+====================
+
+When you add, remove, or move definitions, there are several options available:
+
+ - run `composer dump-autoload` to regenerate the map
+ - run `vendor/bin/hh-autoload` to regenerate the map faster
+ - specify `devFailureHandler` as `Facebook\AutoloadMap\HHClientFallbackHandler`
+ - specify a custom subclass of `Facebook\AutoloadMap\FailureHandler`
+ - use a filesystem monitor such as
+   [watchman](https://facebook.github.io/watchman/) to invoke one of the above
+   commands when necessary
 
 How It Works
 ============

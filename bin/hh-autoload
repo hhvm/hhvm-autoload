@@ -87,11 +87,17 @@ final class GenerateScript {
         ? IncludedRoots::DEV_AND_PROD
         : IncludedRoots::PROD_ONLY,
     );
+
+    $handler = $options['dev']
+      ? ($importer->getConfig()['devFailureHandler'] ?? null)
+      : ($importer->getConfig()['failureHandler'] ?? null);
+
     $file = getcwd().'/vendor/hh_autoload.php';
     (new Writer())
       ->setBuilder($importer)
       ->setRoot(getcwd())
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
+      ->setFailureHandler($handler)
       ->writeToFile($file);
     print($file."\n");
   }
