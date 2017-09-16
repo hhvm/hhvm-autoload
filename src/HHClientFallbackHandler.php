@@ -19,43 +19,83 @@ namespace Facebook\AutoloadMap;
 final class HHClientFallbackHandler extends FailureHandler {
   private AutoloadMap $map;
   private bool $dirty = false;
+  const type TCache = shape(
+    'build_id' => string,
+    'map' => AutoloadMap,
+  );
 
   public function __construct() {
     $this->map = Generated\map();
   }
 
-  public function initialize(): void {
+  private function getCache(): ?self::TCache{
+    $key = __CLASS__.'!cache';
+    if (\apc_exists($key)) {
+      $success = false;
+      $data = \apc_fetch($key, $success);
+      if (!$success) {
+        return null;
+      }
+      return $data;
+    }
     $file = $this->getCacheFilePath();
     if (!\file_exists($file)) {
+      return null;
+    }
+
+    $data = \json_decode(
+      \file_get_contents($file),
+      /* as array = */ true,
+    );
+    if ($data === null) {
+      $this->dirty = true;
+      \unlink($file);
+      return null;
+    }
+
+    return $data;
+  }
+
+  private function storeCache(self::TCache $data): void {
+    \apc_store(__CLASS__.'!cache', $data);
+
+    if (!\is_writable(Generated\root())) {
       return;
     }
-    $data = \json_decode(\file_get_contents($file), /* as array = */ true);
+
+    \file_put_contents(
+      $this->getCacheFilePath(),
+      \json_encode($data, JSON_PRETTY_PRINT),
+    );
+  }
+
+  public function initialize(): void {
+    $data = $this->getCache();
     if ($data === null) {
-      \unlink($file);
       return;
     }
     if ($data['build_id'] !== Generated\build_id()) {
-      \unlink($file);
+      $this->dirty = true;
       return;
     }
     $map = $data['map'];
     $this->map = $map;
     $map['failure'] = inst_meth($this, 'handleFailure');
-    \HH\autoload_set_paths($map, Generated\root());
+    \HH\autoload_set_paths(
+      /* HH_IGNORE_ERROR[4110] shape as array */ $map,
+      Generated\root(),
+    );
   }
 
   public function __destruct() {
     if (!$this->dirty) {
       return;
     }
-
-    file_put_contents(
-      $this->getCacheFilePath(),
-      json_encode([
-        'build_id' => Generated\build_id(),
-        'map' => $this->map,
-      ], JSON_PRETTY_PRINT),
+    $data = shape(
+      'build_id' => Generated\build_id(),
+      'map' => $this->map,
     );
+    $this->storeCache($data);
   }
 
   private function getCacheFilePath(): string {
