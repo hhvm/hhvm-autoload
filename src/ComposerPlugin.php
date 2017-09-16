@@ -59,8 +59,8 @@ final class ComposerPlugin
     );
 
     $handler = $event->isDevMode()
-      ? Shapes::idx($importer->getConfig(), 'devFailureHandler', null)
-      : Shapes::idx($importer->getConfig(), 'failureHandler', null);
+      ? $importer->getConfig()['devFailureHandler']
+      : $importer->getConfig()['failureHandler'];
 
     $this->debugMessage("Writing hh_autoload.php");
     (new Writer())
