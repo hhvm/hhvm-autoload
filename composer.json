@@ -1,5 +1,8 @@
 {
-  "name": "facebook/hhvm-autoload",
+  "name": "hhvm/hhvm-autoload",
+  "replace": {
+    "facebook/hhvm-autoload": "1.*"
+  },
   "type": "composer-plugin",
   "bin": [ "bin/hh-autoload" ],
   "require": {
