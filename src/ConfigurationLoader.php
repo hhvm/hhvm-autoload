@@ -11,24 +11,9 @@
 
 namespace Facebook\AutoloadMap;
 
-use Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeAssert
-};
+use Facebook\AutoloadMap\__Private\TypeAssert;
 
 abstract final class ConfigurationLoader {
-
-  const type TJSONConfig = shape(
-    'roots' => array<string>,
-    'devRoots' => ?array<string>,
-    'autoloadFilesBehavior' => ?AutoloadFilesBehavior,
-    'relativeAutoloadRoot' => ?bool,
-    'includeVendor' => ?bool,
-    'extraFiles' => ?array<string>,
-    'parser' => ?Parser,
-    'failureHandler' => ?string,
-    'devFailureHandler' => ?string,
-  );
 
   public static function fromFile(string $path): Config {
     invariant(
@@ -56,42 +41,54 @@ abstract final class ConfigurationLoader {
     array<string, mixed> $data,
     string $path,
   ): Config {
-    try {
-      $config = TypeAssert::matchesTypeStructure(
-        type_structure(self::class, 'TJSONConfig'),
-        $data,
-      );
-    } catch (IncorrectTypeException $_) {
-      invariant_violation("Configuration file does not match expected shape");
-    }
+    $failure_handler = TypeAssert\is_nullable_string(
+      $data['failureHandler'] ?? null,
+      'failureHandler',
+    );
 
     return shape(
-      'roots' => new ImmVector($config['roots']),
-      'devRoots' => self::maybeArrayToImmVector(
-        $config['devRoots'] ?? null,
+      'roots' => new ImmVector(
+        TypeAssert\is_array_of_strings(
+          $data['roots'] ?? null,
+          'roots',
+        ),
       ),
-      'autoloadFilesBehavior' => $config['autoloadFilesBehavior']
-        ?? AutoloadFilesBehavior::FIND_DEFINITIONS,
-      'relativeAutoloadRoot' => $config['relativeAutoloadRoot'] ?? true,
-      'includeVendor' => $config['includeVendor'] ?? true,
-      'extraFiles' => self::maybeArrayToImmVector(
-        $config['extraFiles'] ?? null,
+      'devRoots' => new ImmVector(
+        TypeAssert\is_nullable_array_of_strings(
+          $data['devRoots'] ?? null,
+          'devRoots',
+        ) ?? [],
       ),
-      'parser' => $config['parser'] ?? self::getDefaultParser(),
-      'failureHandler' => $config['failureHandler'] ?? null,
-      'devFailureHandler' => $config['devFailureHandler']
-        ?? $config['failureHandler']
-        ?? null,
+      'autoloadFilesBehavior' => TypeAssert\is_nullable_enum(
+        AutoloadFilesBehavior::class,
+        $data['autoloadFilesBehavior'] ?? null,
+        'autoloadFilesbehavior',
+      ) ?? AutoloadFilesBehavior::FIND_DEFINITIONS,
+      'relativeAutoloadRoot' => TypeAssert\is_nullable_bool(
+        $data['relativeAutoloadRoot'] ?? null,
+        'relativerAutoloadRoot',
+      ) ?? true,
+      'includeVendor' => TypeAssert\is_nullable_bool(
+        $data['includeVendor'] ?? null,
+        'includeVendor',
+      ) ?? true,
+      'extraFiles' => new ImmVector(
+        TypeAssert\is_nullable_array_of_strings(
+          $data['extraFiles'] ?? null,
+          'extraFiles',
+        ) ?? [],
+      ),
+      'parser' => TypeAssert\is_nullable_enum(
+        Parser::class,
+        $data['parser'] ?? null,
+        'parser',
+      ) ?? self::getDefaultParser(),
+      'failureHandler' => $failure_handler,
+      'devFailureHandler' => TypeAssert\is_nullable_string(
+        $data['devFailureHandler'] ?? null,
+        'devFailureHandler',
+      ) ?? $failure_handler,
     );
-  }
-
-  private static function maybeArrayToImmVector<T>(
-    ?array<T> $in,
-  ): ImmVector<T> {
-    if ($in === null) {
-      return ImmVector { };
-    }
-    return new ImmVector($in);
   }
 
   private static function getDefaultParser(): Parser {

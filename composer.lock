@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7186ef55d9fa54dd4eb743ef1883935e",
+    "content-hash": "5aad472d1b885531deb65ba4352be080",
     "packages": [
         {
             "name": "facebook/definition-finder",
@@ -84,41 +84,6 @@
             ],
             "description": "Suppress HHVM's automatic conversion of typechecker errors to fatals.",
             "time": "2017-05-02T03:07:37+00:00"
-        },
-        {
-            "name": "hhvm/type-assert",
-            "version": "v2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hhvm/type-assert.git",
-                "reference": "fcd2cdc238302242b0da207fe395d6f7f2e8a2a6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/type-assert/zipball/fcd2cdc238302242b0da207fe395d6f7f2e8a2a6",
-                "reference": "fcd2cdc238302242b0da207fe395d6f7f2e8a2a6",
-                "shasum": ""
-            },
-            "require": {
-                "hhvm": "~3.12"
-            },
-            "require-dev": {
-                "91carriage/phpunit-hhi": "~5.1",
-                "phpunit/phpunit": "~5.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "Convert untyped data to typed data",
-            "keywords": [
-                "TypeAssert",
-                "hack"
-            ],
-            "time": "2017-08-29T21:00:54+00:00"
         }
     ],
     "packages-dev": [

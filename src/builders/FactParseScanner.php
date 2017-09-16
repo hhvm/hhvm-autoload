@@ -11,7 +11,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use Facebook\TypeAssert\TypeAssert;
+use Facebook\AutoloadMap\__Private\TypeAssert;
 
 final class FactParseScanner implements Builder {
   const type TFacts = array<string, shape(
@@ -22,6 +22,43 @@ final class FactParseScanner implements Builder {
     'functions' => array<string>,
     'typeAliases' => array<string>,
   )>;
+
+  private static function untyped_to_shape(
+    mixed $data,
+  ): self::TFacts {
+    invariant(
+      is_array($data),
+      'FactsParse did not give us an array',
+    );
+
+    $out = array();
+    foreach ($data as $file => $facts) {
+      invariant(
+        \is_string($file),
+        'FactsParse data is not string-keyed',
+      );
+
+      $out[$file] = shape(
+        'types' => TypeAssert\is_array_of_shapes_with_name_field(
+          $facts['types'] ?? null,
+          'FactParse types',
+        ),
+        'constants' => TypeAssert\is_array_of_strings(
+          $facts['constants'] ?? null,
+          'FactParse constants',
+        ),
+        'functions' => TypeAssert\is_array_of_strings(
+          $facts['functions'] ?? null,
+          'FactParse functions',
+        ),
+        'typeAliases' => TypeAssert\is_array_of_strings(
+          $facts['typeAliases'] ?? null,
+          'FactParse typeAliases',
+        ),
+      );
+    }
+    return $out;
+  }
 
   private function __construct(
     private string $root,
@@ -73,10 +110,7 @@ final class FactParseScanner implements Builder {
       /* force_hh = */ false,
       /* multithreaded = */ true,
     );
-    $facts = TypeAssert::matchesTypeStructure(
-      type_structure(self::class, 'TFacts'),
-      $facts,
-    );
+    $facts = self::untyped_to_shape($facts);
 
     $classes = [];
     $functions = [];
