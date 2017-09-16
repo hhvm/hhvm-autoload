@@ -108,14 +108,17 @@ final class Writer {
         "if (%s::isEnabled()) {\n".
         "  \HH\autoload_set_paths(map(), root());\n".
         "  \$handler = new %s();\n".
-        "  \$map['failure'] = inst_meth(\$handler, 'handleFailure');\n".
+        "  \$map['failure'] = [\$handler, 'handleFailure'];\n".
         "} else {\n".
         "  \$handler = null;\n".
-        "}\n",
+        "}",
         $failure_handler,
         $failure_handler,
       );
-      $init_failure_handler = "\$handler?->initialize();\n";
+      $init_failure_handler =
+        "if (\$handler !== null) {\n".
+        "  \$handler->initialize();\n".
+        "}";
     } else {
       $add_failure_handler = null;
       $init_failure_handler = null;
@@ -128,25 +131,20 @@ final class Writer {
 
     $map = var_export($map, true);
     $code = <<<EOF
-<?hh
+<?php
 
 /// Generated file, do not edit by hand ///
 
 namespace Facebook\AutoloadMap\Generated;
 
-use Facebook\AutoloadMap\AutoloadMap;
-
-/* HH_IGNORE_ERROR[2012] hhi conflict */
-function build_id(): string {
+function build_id() {
   return $build_id;
 }
 
-/* HH_IGNORE_ERROR[2012] hhi conflict */
-function root(): string {
+function root() {
   return $root;
 }
 
-/* HH_IGNORE_ERROR[2012] hhi conflict */
 function map() {
   return $map;
 }
@@ -157,7 +155,7 @@ $requires
 
 $add_failure_handler
 
-foreach (\spl_autoload_functions() as \$autoloader) {
+foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
   \spl_autoload_unregister(\$autoloader);
 }
 
