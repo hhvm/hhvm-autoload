@@ -57,8 +57,8 @@ The following settings are optional:
    that aren't in the autoload map and have the same name as a definition in the global namespace. Defaults to none.
  - `"devFailureHandler": classname<Facebook\AutoloadMap\FailureHandler>` - use a different handler for development environments. Defaults to the same value as `failureHandler`.
 
-Development Workflow
-====================
+Use In Development (Failure Handlers)
+=====================================
 
 When you add, remove, or move definitions, there are several options available:
 
@@ -70,7 +70,50 @@ When you add, remove, or move definitions, there are several options available:
    [watchman](https://facebook.github.io/watchman/) to invoke one of the above
    commands when necessary
 
-`Facebook\AutoloadMap\HHClientFallbackHandler` is probably the most convenient.
+`Facebook\AutoloadMap\HHClientFallbackHandler` is probably the most
+convenient for Hack development.
+
+For performance reasons, failure handler methods will not be invoked for
+namespaced functions or constants that have the same name as one in the
+global namespace. You will need to re-generate the map if you make changes
+to functions or constants that are affected by this restriction.
+
+HHClientFallbackHandler
+-----------------------
+
+If you are working in Hack, this handler will remove the need to manually
+rebuild the map in almost all circumstances.
+
+It asks `hh_client` for definitions that aren't in the map, and has the
+following additional behaviors:
+
+ - it is disabled if the `CI`, `CONTINUOUS_INTEGRATION`, or `TRAVIS`
+   environment variables are set to a Truthy value; this is because it
+   is not a recommended approach for production environments, and you
+   probably want your automated testing environment to reflect
+   production
+ - results are cached in both APC and a file in vendor/, if vendor/ is
+   writable
+
+You can override these behaviors in a subclass.
+
+As it is based on `hh_client`, it is unable to handle PHP definitions -
+however, if you're using composer, changes to your PHP dependencies will
+automatically trigger a map rebuild.
+
+Custom Handlers
+---------------
+
+Information you may need is available from:
+
+ - `Facebook\AutoloadMap\Generated\build_id()`: this is unique ID
+    regenerated every time the map is rebuilt; it includes the date,
+    time, and a long random hex string. If your failure handler has a
+    cache, it most likely should be invalidated when this changes, for
+    example, by including it in the cache key.
+ - `Facebook\AutoloadMap\Generated\map()`: the autoload map
+ - `Facebook\AutoloadMap\Generated\root()`: the directory containing the
+    project root, i.e. the parent directory of `vendor/`
 
 How It Works
 ============
