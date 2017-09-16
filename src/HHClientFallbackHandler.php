@@ -21,7 +21,7 @@ final class HHClientFallbackHandler extends FailureHandler {
   private bool $dirty = false;
 
   public function __construct() {
-    $this->map = /* HH_FIXME[4110] no shape constants in 3.18 */ Generated\MAP;
+    $this->map = Generated\map();
   }
 
   public function initialize(): void {
@@ -34,14 +34,14 @@ final class HHClientFallbackHandler extends FailureHandler {
       \unlink($file);
       return;
     }
-    if ($data['build_id'] !== Generated\BUILD_ID) {
+    if ($data['build_id'] !== Generated\build_id()) {
       \unlink($file);
       return;
     }
     $map = $data['map'];
     $this->map = $map;
     $map['failure'] = inst_meth($this, 'handleFailure');
-    \HH\autoload_set_paths($map, Generated\ROOT);
+    \HH\autoload_set_paths($map, Generated\root());
   }
 
   public function __destruct() {
@@ -52,14 +52,14 @@ final class HHClientFallbackHandler extends FailureHandler {
     file_put_contents(
       $this->getCacheFilePath(),
       json_encode([
-        'build_id' => Generated\BUILD_ID,
+        'build_id' => Generated\build_id(),
         'map' => $this->map,
       ], JSON_PRETTY_PRINT),
     );
   }
 
   private function getCacheFilePath(): string {
-    return Generated\ROOT.'/vendor/hh_autoload.hh-cache';
+    return Generated\root().'/vendor/hh_autoload.hh-cache';
   }
 
   <<__Memoize, __Override>>

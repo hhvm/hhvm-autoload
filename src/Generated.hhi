@@ -2,7 +2,6 @@
 
 namespace Facebook\AutoloadMap\Generated;
 
-const string BUILD_ID = '';
-const string ROOT = '';
-// Not using the shape because 3.18 doesn't allow shape constants
-const array<string, array<string, string>> MAP = array();
+function build_id(): string;
+function root(): string;
+function map(): \Facebook\AutoloadMap\AutoloadMap;
