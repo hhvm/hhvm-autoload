@@ -21,7 +21,7 @@ final class HHClientFallbackHandler extends FailureHandler {
   private bool $dirty = false;
 
   public function __construct() {
-    $this->map = Generated\MAP;
+    $this->map = /* HH_FIXME[4110] no shape constants in 3.18 */ Generated\MAP;
   }
 
   public function initialize(): void {

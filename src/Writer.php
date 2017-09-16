@@ -137,7 +137,7 @@ const string BUILD_ID = $build_id;
 const string ROOT = $root;
 
 /* HH_IGNORE_ERROR[2012] hhi conflict */
-const AutoloadMap MAP = /* HH_IGNORE_ERROR[4110] */ $map;
+const array<string, array<string, string>> MAP = $map;
 
 $requires
 
