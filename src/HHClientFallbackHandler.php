@@ -16,9 +16,54 @@ namespace Facebook\AutoloadMap;
  *
  * No op if CI, TRAVIS, or CONTINOUS_INTEGRATION is true.
  */
-abstract final class HHClientFallbackHandler extends FailureHandler {
+final class HHClientFallbackHandler extends FailureHandler {
+  private AutoloadMap $map;
+  private bool $dirty = false;
+
+  public function __construct() {
+    $this->map = Generated\MAP;
+  }
+
+  public function initialize(): void {
+    $file = $this->getCacheFilePath();
+    if (!\file_exists($file)) {
+      return;
+    }
+    $data = \json_decode(\file_get_contents($file), /* as array = */ true);
+    if ($data === null) {
+      \unlink($file);
+      return;
+    }
+    if ($data['build_id'] !== Generated\BUILD_ID) {
+      \unlink($file);
+      return;
+    }
+    $map = $data['map'];
+    $this->map = $map;
+    $map['failure'] = inst_meth($this, 'handleFailure');
+    \HH\autoload_set_paths($map, Generated\ROOT);
+  }
+
+  public function __destruct() {
+    if (!$this->dirty) {
+      return;
+    }
+
+    file_put_contents(
+      $this->getCacheFilePath(),
+      json_encode([
+        'build_id' => Generated\BUILD_ID,
+        'map' => $this->map,
+      ], JSON_PRETTY_PRINT),
+    );
+  }
+
+  private function getCacheFilePath(): string {
+    return Generated\ROOT.'/vendor/hh_autoload.hh-cache';
+  }
+
   <<__Memoize, __Override>>
-  public static function isEnabled(): bool {
+  public function isEnabled(): bool {
     $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
@@ -29,52 +74,70 @@ abstract final class HHClientFallbackHandler extends FailureHandler {
     return false;
   }
 
-  public static function handleFailedType(string $name): void {
-    $file = self::lookupPath('class', $name);
+  public function handleFailedType(string $name): void {
+    $file = $this->lookupPath('class', $name);
     if ($file === null) {
-      $file = self::lookupPath('typedef', $name);
+      $file = $this->lookupPath('typedef', $name);
     }
 
-    if ($file === null) {
-      return;
-    }
-
-    self::requireFile($file);
-  }
-
-  public static function handleFailedFunction(string $name): void {
-    $file = self::lookupPath('function', $name);
     if ($file === null) {
       return;
     }
 
-    self::requireFile($file);
+    $this->requireFile($file);
   }
 
-  public static function handleFailedConstant(string $name): void {
-    $file = self::lookupPath('constant', $name);
+  public function handleFailedFunction(string $name): void {
+    $file = $this->lookupPath('function', $name);
     if ($file === null) {
       return;
     }
 
-    self::requireFile($file);
+    $this->requireFile($file);
   }
 
-  private static function lookupPath(string $kind, string $name): ?string {
-    $key = __CLASS__.'!'.$kind.'!'.$name.'!'.self::getBuildID();
-    if (\apc_exists($key)) {
-      $file = \apc_fetch($key)[1];
-      if (\file_exists($file)) {
-        return $file;
-      }
-      \apc_delete($key);
+  public function handleFailedConstant(string $name): void {
+    $file = $this->lookupPath('constant', $name);
+    if ($file === null) {
+      return;
     }
-    $path = self::lookupPathImpl($kind, $name);
-    \apc_store($key, ['I_AM_NOT_FALSEY', $path]);
+
+    $this->requireFile($file);
+  }
+
+  private function lookupPath(string $kind, string $name): ?string {
+    static $cache = Map {};
+    $key = $kind.'!'.$name;
+    if ($cache->containsKey($key)) {
+      return $cache[$key];
+    }
+
+    $path = $this->lookupPathImpl($kind, $name);
+    $cache[$key] = $path;
+
+    if ($path === null) {
+      return $path;
+    }
+
+    switch ($kind) {
+      case 'class':
+        $this->map['class'][\strtolower($name)] = $path;
+        break;
+      case 'type':
+        $this->map['type'][\strtolower($name)] = $path;
+        break;
+      case 'function':
+        $this->map['function'][\strtolower($name)] = $path;
+        break;
+      case 'constant':
+        $this->map['constant'][$name] = $path;
+        break;
+    }
+    $this->dirty = true;
     return $path;
   }
 
-  private static function lookupPathImpl(string $kind, string $name): ?string {
+  private function lookupPathImpl(string $kind, string $name): ?string {
     $cmd = (ImmVector { 'hh_client', '--json', '--search-'.$kind, $name })->map(
       $x ==> \escapeshellarg($x),
     );
@@ -103,7 +166,7 @@ abstract final class HHClientFallbackHandler extends FailureHandler {
     return null;
   }
 
-  private static function requireFile(string $path): void {
+  private function requireFile(string $path): void {
     /* HH_IGNORE_ERROR[1002] */
     require ($path);
   }

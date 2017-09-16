@@ -20,4 +20,5 @@ type Config = shape(
   'parser' => Parser,
   'failureHandler' => ?string,
   'devFailureHandler' => ?string,
+  'relativeAutoloadRoot' => bool,
 );

@@ -70,6 +70,8 @@ When you add, remove, or move definitions, there are several options available:
    [watchman](https://facebook.github.io/watchman/) to invoke one of the above
    commands when necessary
 
+`Facebook\AutoloadMap\HHClientFallbackHandler` is probably the most convenient.
+
 How It Works
 ============
 

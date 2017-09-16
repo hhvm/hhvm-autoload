@@ -101,7 +101,19 @@ final class Writer {
       if (substr($failure_handler, 0, 1) !== '\\') {
         $failure_handler = '\\'.$failure_handler;
       }
-      $map['failure'] = $failure_handler.'::handleFailure';
+    }
+
+    if ($failure_handler !== null) {
+      $add_failure_handler = sprintf(
+        "\HH\autoload_set_paths(MAP, ROOT);\n".
+        "\$handler = new %s();\n".
+        "\$map['failure'] = inst_meth(\$handler, 'handleFailure');\n",
+        $failure_handler,
+      );
+      $init_failure_handler = "\$handler->initialize();\n";
+    } else {
+      $add_failure_handler = null;
+      $init_failure_handler = null;
     }
 
     $build_id = var_export(
@@ -117,11 +129,22 @@ final class Writer {
 
 namespace Facebook\AutoloadMap\Generated;
 
+use Facebook\AutoloadMap\AutoloadMap;
+
 const string BUILD_ID = $build_id;
+const string ROOT = $root;
+
+const AutoloadMap MAP = /* HH_IGNORE_ERROR[4110] */ $map;
 
 $requires
 
-\HH\autoload_set_paths($map, $root);
+\$map = MAP;
+
+$add_failure_handler
+
+\HH\autoload_set_paths(\$map, ROOT);
+
+$init_failure_handler
 EOF;
     file_put_contents(
       $destination_file,

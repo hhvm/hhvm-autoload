@@ -11,36 +11,32 @@
 
 namespace Facebook\AutoloadMap;
 
+<<__ConsistentConstruct>>
 abstract class FailureHandler {
-  /** If you implement any caching, please include this in the cache keys so that
-   * re-building the map invalidates the cache. */
-  <<__Memoize>>
-  protected static function getBuildID(): string {
-    $constant = 'Facebook\\AutoloadMap\\Generated\\BUILD_ID';
-    if (\defined($constant)) {
-      return \constant($constant);
-    }
-    return 'UNDEFINED!'.\bin2hex(\random_bytes(32));
+  /**
+   * Called exactly once, once the autoload map has been set.
+   */
+  public function initialize(): void {
   }
 
   /** If the handler should be used.
    * If you have a fallback method (e.g. HHClientFallbackHandler), you might
    * want to return false if running in CI.
    */
-  public static function isEnabled(): bool {
+  public function isEnabled(): bool {
     return true;
   }
 
   /** Any class, typedef, etc */
-  abstract public static function handleFailedType(string $name): void;
+  abstract public function handleFailedType(string $name): void;
 
-  abstract public static function handleFailedFunction(string $name): void;
+  abstract public function handleFailedFunction(string $name): void;
 
-  abstract public static function handleFailedConstant(string $name): void;
+  abstract public function handleFailedConstant(string $name): void;
 
-  final public static function handleFailure(string $kind, string $name): void {
+  final public function handleFailure(string $kind, string $name): void {
     if ($kind === 'class') {
-      static::handleFailedType($name);
+     $this->handleFailedType($name);
       return;
     }
     if ($kind === 'function') {
@@ -51,7 +47,7 @@ abstract class FailureHandler {
           return;
         }
       }
-      static::handleFailedFunction($name);
+     $this->handleFailedFunction($name);
       return;
     }
     if ($kind === 'constant') {
@@ -62,7 +58,7 @@ abstract class FailureHandler {
           return;
         }
       }
-      static::handleFailedConstant($name);
+     $this->handleFailedConstant($name);
       return;
     }
   }

@@ -26,6 +26,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
     $this->assertEmpty($importer->getFiles());
@@ -59,6 +60,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
 
@@ -92,6 +94,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
 
@@ -137,6 +140,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
 
@@ -171,6 +175,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
     $this->assertSame(
@@ -207,6 +212,7 @@ final class ComposerImporterTest extends BaseTestCase {
         'roots' => ImmVector { $root },
         'devRoots' => ImmVector { },
         'parser' => $parser,
+        'relativeAutoloadRoot' => true,
       ),
     );
 
