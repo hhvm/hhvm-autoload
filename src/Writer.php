@@ -105,12 +105,17 @@ final class Writer {
 
     if ($failure_handler !== null) {
       $add_failure_handler = sprintf(
-        "\HH\autoload_set_paths(map(), root());\n".
-        "\$handler = new %s();\n".
-        "\$map['failure'] = inst_meth(\$handler, 'handleFailure');\n",
+        "if (%s::isEnabled()) {\n".
+        "  \HH\autoload_set_paths(map(), root());\n".
+        "  \$handler = new %s();\n".
+        "  \$map['failure'] = inst_meth(\$handler, 'handleFailure');\n".
+        "} else {\n".
+        "  \$handler = null;\n".
+        "}\n",
+        $failure_handler,
         $failure_handler,
       );
-      $init_failure_handler = "\$handler->initialize();\n";
+      $init_failure_handler = "\$handler?->initialize();\n";
     } else {
       $add_failure_handler = null;
       $init_failure_handler = null;

@@ -62,16 +62,16 @@ final class HHClientFallbackHandler extends FailureHandler {
     return Generated\root().'/vendor/hh_autoload.hh-cache';
   }
 
-  <<__Memoize, __Override>>
-  public function isEnabled(): bool {
+  <<__Override>>
+  public static function isEnabled(): bool {
     $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   public function handleFailedType(string $name): void {

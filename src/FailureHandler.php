@@ -23,7 +23,7 @@ abstract class FailureHandler {
    * If you have a fallback method (e.g. HHClientFallbackHandler), you might
    * want to return false if running in CI.
    */
-  public function isEnabled(): bool {
+  public static function isEnabled(): bool {
     return true;
   }
 
