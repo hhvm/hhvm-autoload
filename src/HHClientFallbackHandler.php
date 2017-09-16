@@ -69,6 +69,7 @@ class HHClientFallbackHandler extends FailureHandler {
     );
   }
 
+  <<__Override>>
   public function initialize(): void {
     $data = $this->getCache();
     if ($data === null) {

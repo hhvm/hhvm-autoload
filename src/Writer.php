@@ -106,22 +106,16 @@ final class Writer {
     if ($failure_handler !== null) {
       $add_failure_handler = sprintf(
         "if (%s::isEnabled()) {\n".
-        "  \HH\autoload_set_paths(map(), root());\n".
         "  \$handler = new %s();\n".
         "  \$map['failure'] = [\$handler, 'handleFailure'];\n".
-        "} else {\n".
-        "  \$handler = null;\n".
+        "  \HH\autoload_set_paths(\$map, root());\n".
+        "  \$handler->initialize();\n".
         "}",
         $failure_handler,
         $failure_handler,
       );
-      $init_failure_handler =
-        "if (\$handler !== null) {\n".
-        "  \$handler->initialize();\n".
-        "}";
     } else {
       $add_failure_handler = null;
-      $init_failure_handler = null;
     }
 
     $build_id = var_export(
@@ -153,15 +147,12 @@ $requires
 
 \$map = map();
 
-$add_failure_handler
-
+\HH\autoload_set_paths(\$map, root());
 foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
   \spl_autoload_unregister(\$autoloader);
 }
 
-\HH\autoload_set_paths(\$map, root());
-
-$init_failure_handler
+$add_failure_handler
 EOF;
     file_put_contents(
       $destination_file,
