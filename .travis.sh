@@ -15,3 +15,5 @@ if [ $(hhvm --php -r 'echo HHVM_VERSION_ID;' 2>/dev/null) -ge 32002 ]; then
 fi
 bin/hh-autoload
 hh_server --check $(pwd)
+hhvm -d hhvm.jit=0 vendor/bin/phpunit \
+  --bootstrap=vendor/hh_autoload.php tests/
