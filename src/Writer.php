@@ -157,6 +157,10 @@ $requires
 
 $add_failure_handler
 
+foreach (\spl_autoload_functions() as \$autoloader) {
+  \spl_autoload_unregister(\$autoloader);
+}
+
 \HH\autoload_set_paths(\$map, root());
 
 $init_failure_handler
