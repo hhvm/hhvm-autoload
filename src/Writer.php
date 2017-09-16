@@ -105,7 +105,7 @@ final class Writer {
 
     if ($failure_handler !== null) {
       $add_failure_handler = sprintf(
-        "\HH\autoload_set_paths(MAP, ROOT);\n".
+        "\HH\autoload_set_paths(map(), root());\n".
         "\$handler = new %s();\n".
         "\$map['failure'] = inst_meth(\$handler, 'handleFailure');\n",
         $failure_handler,
@@ -142,8 +142,7 @@ function root(): string {
 }
 
 /* HH_IGNORE_ERROR[2012] hhi conflict */
-function map(): AutoloadMap {
-  /* HH_IGNORE_ERROR[4110] array vs shape */
+function map() {
   return $map;
 }
 
@@ -153,7 +152,7 @@ $requires
 
 $add_failure_handler
 
-\HH\autoload_set_paths(\$map, ROOT);
+\HH\autoload_set_paths(\$map, root());
 
 $init_failure_handler
 EOF;
