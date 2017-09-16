@@ -131,9 +131,12 @@ namespace Facebook\AutoloadMap\Generated;
 
 use Facebook\AutoloadMap\AutoloadMap;
 
+/* HH_IGNORE_ERROR[2012] hhi conflict */
 const string BUILD_ID = $build_id;
+/* HH_IGNORE_ERROR[2012] hhi conflict */
 const string ROOT = $root;
 
+/* HH_IGNORE_ERROR[2012] hhi conflict */
 const AutoloadMap MAP = /* HH_IGNORE_ERROR[4110] */ $map;
 
 $requires
