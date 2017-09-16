@@ -16,7 +16,7 @@ namespace Facebook\AutoloadMap;
  *
  * No op if CI, TRAVIS, or CONTINOUS_INTEGRATION is true.
  */
-final class HHClientFallbackHandler extends FailureHandler {
+class HHClientFallbackHandler extends FailureHandler {
   private AutoloadMap $map;
   private bool $dirty = false;
   const type TCache = shape(
@@ -28,7 +28,7 @@ final class HHClientFallbackHandler extends FailureHandler {
     $this->map = Generated\map();
   }
 
-  private function getCache(): ?self::TCache{
+  protected function getCache(): ?self::TCache{
     $key = __CLASS__.'!cache';
     if (\apc_exists($key)) {
       $success = false;
@@ -56,7 +56,7 @@ final class HHClientFallbackHandler extends FailureHandler {
     return $data;
   }
 
-  private function storeCache(self::TCache $data): void {
+  protected function storeCache(self::TCache $data): void {
     \apc_store(__CLASS__.'!cache', $data);
 
     if (!\is_writable(Generated\root())) {
@@ -98,7 +98,7 @@ final class HHClientFallbackHandler extends FailureHandler {
     $this->storeCache($data);
   }
 
-  private function getCacheFilePath(): string {
+  protected function getCacheFilePath(): string {
     return Generated\root().'/vendor/hh_autoload.hh-cache';
   }
 
