@@ -16,6 +16,11 @@ We actively welcome your pull requests.
 5. Make sure your code lints.
 6. If you haven't already, complete the Contributor License Agreement ("CLA").
 
+We are unlikely to accept pull requests that add additional dependencies;
+this is because if `hhvm-autoload` depends on something, it effectively
+pins the ecosystem to the current major version of that dependency, and
+upgrading becomes extremely difficult.
+
 ## Contributor License Agreement ("CLA")
 In order to accept your pull request, we need you to submit a CLA. You only need
 to do this once to work on any of Facebook's open source projects.
