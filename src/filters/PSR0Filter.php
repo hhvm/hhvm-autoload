@@ -18,6 +18,6 @@ final class PSR0Filter extends BasePSRFilter {
     string $prefix,
     string $root,
   ): string {
-    return $root.strtr($class_name, "\\", '/');
+    return $root.strtr($class_name, "\\_", '//');
   }
 }
