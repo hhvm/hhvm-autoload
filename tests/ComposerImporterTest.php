@@ -232,4 +232,39 @@ final class ComposerImporterTest extends BaseTestCase {
       ),
     );
   }
+
+  /**
+   * @dataProvider getParsers
+   */
+  public function testPSR0ImportUnderscores(Parser $parser): void {
+    $root = realpath(__DIR__.'/fixtures/psr-0');
+    $composer = $root.'/composer.json';
+    $this->assertTrue(file_exists($composer));
+
+    $composer_config= json_decode(
+      file_get_contents($composer),
+      /* as array = */ true,
+    );
+
+    $importer = new ComposerImporter(
+      $composer,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'includeVendor' => false,
+        'extraFiles' => ImmVector { },
+        'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
+        'parser' => $parser,
+        'relativeAutoloadRoot' => true,
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src-with-underscores/PSR0_Test_With_Underscores/Foo/Bar.php',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr0_test_with_underscores\\foo_bar',
+      ),
+    );
+  }
 }
