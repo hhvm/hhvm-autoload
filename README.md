@@ -27,7 +27,7 @@ Usage
 =====
 
 1. Add an `hh_autoload.json` file (see section below) and optionally remove your configuration from composer.json
-2. `composer require facebook/hhvm-autoload`
+2. `composer require hhvm/hhvm-autoload`
 3. Replace any references to `vendor/autoload.php` with  `vendor/hh_autoload.php`
 4. If you are using PHPUnit, you will need to add `vendor/hh_autoload.php` to your `bootstrap.php`, or to `phpunit.xml` as a `bootstrap` file if you don't already have one. This is because PHPUnit automatically loads `vendor/autoload.php`, but is not aware of `vendor/hh_autoload.php`
 5. To re-generate the map, run `vendor/bin/hh-autoload`, `composer dump-autoload`, or any other command that generates the map
