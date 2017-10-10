@@ -27,6 +27,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
     $this->assertEmpty($importer->getFiles());
@@ -61,6 +63,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
 
@@ -95,6 +99,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
 
@@ -141,6 +147,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
 
@@ -176,6 +184,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
     $this->assertSame(
@@ -213,6 +223,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
 
@@ -256,6 +268,8 @@ final class ComposerImporterTest extends BaseTestCase {
         'devRoots' => ImmVector { },
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
       ),
     );
 

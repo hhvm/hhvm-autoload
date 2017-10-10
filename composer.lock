@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "facebook/definition-finder",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/definition-finder.git",
-                "reference": "3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8"
+                "reference": "38f37b3eafec26fd5030c0f9f3584fc6493c9a9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8",
-                "reference": "3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8",
+                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/38f37b3eafec26fd5030c0f9f3584fc6493c9a9b",
+                "reference": "38f37b3eafec26fd5030c0f9f3584fc6493c9a9b",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2017-08-25T16:56:25+00:00"
+            "time": "2017-10-10T23:29:38+00:00"
         },
         {
             "name": "fredemmott/hack-error-suppressor",
