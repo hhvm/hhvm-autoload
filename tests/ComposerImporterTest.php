@@ -253,7 +253,7 @@ final class ComposerImporterTest extends BaseTestCase {
     $composer = $root.'/composer.json';
     $this->assertTrue(file_exists($composer));
 
-    $composer_config= json_decode(
+    $composer_config = json_decode(
       file_get_contents($composer),
       /* as array = */ true,
     );
@@ -263,9 +263,9 @@ final class ComposerImporterTest extends BaseTestCase {
       shape(
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
         'includeVendor' => false,
-        'extraFiles' => ImmVector { },
+        'extraFiles' => ImmVector {},
         'roots' => ImmVector { $root },
-        'devRoots' => ImmVector { },
+        'devRoots' => ImmVector {},
         'parser' => $parser,
         'relativeAutoloadRoot' => true,
         'failureHandler' => null,

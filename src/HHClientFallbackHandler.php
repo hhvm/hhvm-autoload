@@ -119,7 +119,8 @@ class HHClientFallbackHandler extends FailureHandler {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
       if (substr($name, 0, 4) === 'xhp_') {
-        $xhp_name = ':'.str_replace(array('__', '_'), array(':', '-'), substr($name, 4));
+        $xhp_name =
+          ':'.str_replace(array('__', '_'), array(':', '-'), substr($name, 4));
         $file = $this->lookupPath('class', $xhp_name);
       }
 

@@ -23,12 +23,11 @@ final class PSR0Filter extends BasePSRFilter {
     // Underscores in namespace parts must be ignored, but those in the class
     // name need to be converted.
     $namespace = '';
-    if(($last_namespace_sep = strrpos($class_name, '/')) !== false) {
+    if (($last_namespace_sep = strrpos($class_name, '/')) !== false) {
       $namespace = substr($class_name, 0, $last_namespace_sep + 1);
       $class_name = substr($class_name, $last_namespace_sep + 1);
     }
 
-    return
-      $root . $namespace . strtr($class_name, '_', '/');
+    return $root.$namespace.strtr($class_name, '_', '/');
   }
 }
