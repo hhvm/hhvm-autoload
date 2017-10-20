@@ -17,7 +17,7 @@ final class Writer {
   private ?string $root;
   private bool $relativeAutoloadRoot = true;
   private ?string $failureHandler;
-  private ?bool $isDev;
+  private bool $isDev = true;
 
   public function setIsDev(bool $is_dev): this {
     $this->isDev = $is_dev;
