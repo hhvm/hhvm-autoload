@@ -51,6 +51,7 @@ final class RootImporterTest extends BaseTestCase {
       ->setBuilder($builder)
       ->setRoot($root)
       ->setRelativeAutoloadRoot($relative_root)
+      ->setIsDev(true)
       ->writeToFile($tempfile);
 
     $cmd = (Vector {
