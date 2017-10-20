@@ -98,6 +98,7 @@ final class GenerateScript {
       ->setRoot(getcwd())
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
       ->setFailureHandler($handler)
+      ->setIsDev($options['dev'])
       ->writeToFile($file);
     print($file."\n");
   }

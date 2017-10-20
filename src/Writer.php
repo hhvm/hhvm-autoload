@@ -17,6 +17,12 @@ final class Writer {
   private ?string $root;
   private bool $relativeAutoloadRoot = true;
   private ?string $failureHandler;
+  private ?bool $isDev;
+
+  public function setIsDev(bool $is_dev): this {
+    $this->isDev = $is_dev;
+    return $this;
+  }
 
   public function setFailureHandler(?string $handler): this {
     $this->failureHandler = $handler;
@@ -54,6 +60,7 @@ final class Writer {
   ): this {
     $files = $this->files;
     $map = $this->map;
+    $is_dev = $this->isDev;
 
     if ($files === null) {
       throw new Exception('Call setFiles() before writeToFile()');
@@ -61,6 +68,10 @@ final class Writer {
     if ($map === null) {
       throw new Exception('Call setAutoloadMap() before writeToFile()');
     }
+    if ($is_dev === null) {
+      throw new Exception('Call setIsDev() before writeToFile()');
+    }
+    $is_dev = $is_dev ? 'true' : 'false';
 
     if ($this->relativeAutoloadRoot) {
       $root = '__DIR__.\'/../\'';
@@ -137,6 +148,10 @@ function build_id() {
 
 function root() {
   return $root;
+}
+
+function is_dev() {
+  return $is_dev;
 }
 
 function map() {

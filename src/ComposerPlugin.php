@@ -68,6 +68,7 @@ final class ComposerPlugin
       ->setRoot($this->root)
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
       ->setFailureHandler($handler)
+      ->setIsDev($event->isDevMode())
       ->writeToFile($this->vendor.'/hh_autoload.php');
   }
 
