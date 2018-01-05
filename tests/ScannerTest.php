@@ -125,8 +125,8 @@ final class ScannerTest extends BaseTestCase {
       $expected = $def_finder[$type];
       /* HH_IGNORE_ERROR[4051] */
       $actual = $fact_parse[$type];
-      ksort($expected);
-      ksort($actual);
+      ksort(&$expected);
+      ksort(&$actual);
       $this->assertEquals(
         array_filter($expected, $path ==> strpos($path, '/test') === false),
         array_filter($actual, $path ==> strpos($path, '/test') === false),

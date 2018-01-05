@@ -32,7 +32,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $key = __CLASS__.'!cache';
     if (\apc_exists($key)) {
       $success = false;
-      $data = \apc_fetch($key, $success);
+      $data = \apc_fetch($key, &$success);
       if (!$success) {
         return null;
       }
@@ -194,7 +194,7 @@ class HHClientFallbackHandler extends FailureHandler {
 
     $exit_code = null;
     $output = array();
-    $last = \exec($cmd, $output, $exit_code);
+    $last = \exec($cmd, &$output, &$exit_code);
     if ($exit_code !== 0) {
       return null;
     }

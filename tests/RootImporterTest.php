@@ -64,7 +64,7 @@ final class RootImporterTest extends BaseTestCase {
 
     $output = [];
     $exit_code = null;
-    $result = exec($cmd, $output, $exit_code);
+    $result = exec($cmd, &$output, &$exit_code);
 
     $contents = file_get_contents($tempfile);
     unlink($tempfile);
