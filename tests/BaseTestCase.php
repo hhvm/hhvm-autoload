@@ -13,12 +13,8 @@ namespace Facebook\AutoloadMap;
 
 abstract class BaseTestCase extends \PHPUnit\Framework\TestCase {
   public function getParsers(): array<(Parser, classname<Builder>)> {
-    if (extension_loaded('factparse')) {
-      return [
-        tuple(Parser::DEFINITION_FINDER, DefinitionFinderScanner::class),
-        tuple(Parser::EXT_FACTPARSE, FactParseScanner::class),
-      ];
-    }
-    return [tuple(Parser::DEFINITION_FINDER, DefinitionFinderScanner::class)];
+    return [
+      tuple(Parser::EXT_FACTPARSE, FactParseScanner::class),
+    ];
   }
 }

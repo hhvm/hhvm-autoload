@@ -92,9 +92,10 @@ abstract final class ConfigurationLoader {
   }
 
   private static function getDefaultParser(): Parser {
-    if (extension_loaded('factparse')) {
-      return Parser::EXT_FACTPARSE;
-    }
-    return Parser::DEFINITION_FINDER;
+    invariant(
+      extension_loaded('factparse'),
+      'ext_factparse is now required',
+    );
+    return Parser::EXT_FACTPARSE;
   }
 }

@@ -12,6 +12,5 @@
 namespace Facebook\AutoloadMap;
 
 enum Parser: string {
-  DEFINITION_FINDER = 'definition-finder';
   EXT_FACTPARSE = 'ext-factparse';
 }

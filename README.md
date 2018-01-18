@@ -50,7 +50,6 @@ The following settings are optional:
  - `"extraFiles": ["file1.php"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/hh_autoload.php`. This should be needed much less frequently than under Composer
  - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/hh_autoload.php`
  - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/hh_autoload.php` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
- - `"parser": "ext-factparse"|"definition-finder"` - how to parse files. FactParse is an HHVM extension in 3.18 and above, while DefinitionFinder is a library supporting older versions of HHVM.
  - `"devRoots": [ "path/", ...]` - additional roots to only include in dev mode, not when installed as a dependency.
  - `"relativeAutoloadRoot": false` - do not use a path relative to `__DIR__` for autoloading. Instead, use the path to the folder containing `hh_autoload.json` when building the autoload map.
  - `"failureHandler:" classname<Facebook\AutoloadMap\FailureHandler>` - use the specified class to handle definitions that aren't the Map. Your handler will not be invoked for functions or constants

@@ -8,7 +8,6 @@
   "require": {
     "composer-plugin-api": "^1.0",
     "hhvm": "^3.23",
-    "facebook/definition-finder": "~1.6.4",
     "fredemmott/hack-error-suppressor": "^1.0"
   },
   "require-dev": {

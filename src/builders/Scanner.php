@@ -17,8 +17,6 @@ abstract final class Scanner {
     Parser $parser,
   ): Builder {
     switch ($parser) {
-      case Parser::DEFINITION_FINDER:
-        return DefinitionFinderScanner::fromFile($path);
       case Parser::EXT_FACTPARSE:
         return FactParseScanner::fromFile($path);
     }
@@ -29,8 +27,6 @@ abstract final class Scanner {
     Parser $parser,
   ): Builder {
     switch ($parser) {
-      case Parser::DEFINITION_FINDER:
-        return DefinitionFinderScanner::fromTree($path);
       case Parser::EXT_FACTPARSE:
         return FactParseScanner::fromTree($path);
     }
