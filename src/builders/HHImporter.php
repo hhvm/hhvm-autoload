@@ -21,6 +21,34 @@ final class HHImporter implements Builder {
     IncludedRoots $included_roots,
   ) {
     $config_file = $root.'/hh_autoload.json';
+    if (!\file_exists($config_file)) {
+      $roots = (ImmVector { 'src', 'lib' })
+        ->filter($x ==> \is_dir($root.'/'.$x));
+      $dev_roots = (ImmVector { 'test', 'tests', 'examples', 'example' })
+        ->filter($x ==> \is_dir($root.'/'.$x));
+      \file_put_contents(
+        $config_file,
+        \json_encode(
+          shape(
+            'roots' => $roots,
+            'devRoots' => $dev_roots,
+            'devFailureHandler' => HHClientFallbackHandler::class,
+          ),
+          JSON_PRETTY_PRINT,
+        )."\n",
+      );
+      \fprintf(
+        STDERR,
+        "An hh_autoload.json is required; a skeleton has been written to %s.\n".
+        "If changes are needed, run vendor/bin/hh-autoload after editing.\n".
+        "\n".
+        "*** WARNING ***\n".
+        "This project will not work correctly unless vendor/hh_autoload.php is required.\n".
+        "*** WARNING ***\n".
+        "\n",
+        $config_file,
+      );
+    }
     $config = ConfigurationLoader::fromFile($config_file);
     $this->config = $config;
 
