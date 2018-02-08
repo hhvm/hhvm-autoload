@@ -42,7 +42,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
    */
   public function testJSONLoader(array<string, mixed> $data): void {
     $config = ConfigurationLoader::fromJSON(
-      json_encode($data),
+      \json_encode($data),
       '/dev/null',
     );
     $this->assertGoodConfig($data, $config);
@@ -52,16 +52,16 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
    * @dataProvider goodTestCases
    */
   public function testFileLoader(array<string, mixed> $data): void {
-    $fname = tempnam(sys_get_temp_dir(), 'testjson');
+    $fname = \tempnam(\sys_get_temp_dir(), 'testjson');
     try {
-      file_put_contents(
+      \file_put_contents(
         $fname,
-        json_encode($data),
+        \json_encode($data),
       );
       $config = ConfigurationLoader::fromFile($fname);
       $this->assertGoodConfig($data, $config);
     } finally {
-      unlink($fname);
+      \unlink($fname);
     }
   }
 

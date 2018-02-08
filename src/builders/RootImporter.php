@@ -27,8 +27,8 @@ final class RootImporter implements Builder {
       return;
     }
 
-    foreach (glob($root.'/vendor/*/*/') as $dependency) {
-      if (file_exists($dependency.'/hh_autoload.json')) {
+    foreach (\glob($root.'/vendor/*/*/') as $dependency) {
+      if (\file_exists($dependency.'/hh_autoload.json')) {
         $this->builders[] = new HHImporter(
           $dependency,
           IncludedRoots::PROD_ONLY,
@@ -36,7 +36,7 @@ final class RootImporter implements Builder {
         continue;
       }
       $composer_json = $dependency.'/composer.json';
-      if (file_exists($composer_json)) {
+      if (\file_exists($composer_json)) {
         $this->builders[] = new ComposerImporter($composer_json, $config);
         continue;
       }

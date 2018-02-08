@@ -17,8 +17,8 @@ final class PSR4Filter extends BasePSRFilter {
     string $prefix,
     string $root,
   ): string {
-    $local_part = str_ireplace($prefix, '', $class_name);
-    $expected = $root.strtr($local_part, "\\", '/');
+    $local_part = \str_ireplace($prefix, '', $class_name);
+    $expected = $root.\strtr($local_part, "\\", '/');
     return $expected;
   }
 }

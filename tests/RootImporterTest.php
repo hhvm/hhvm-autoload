@@ -13,17 +13,17 @@ namespace Facebook\AutoloadMap;
 
 final class RootImporterTest extends BaseTestCase {
   public function testSelf(): void {
-    $root = realpath(__DIR__.'/../');
+    $root = \realpath(__DIR__.'/../');
     $importer = new RootImporter($root, IncludedRoots::PROD_ONLY);
     $map = $importer->getAutoloadMap();
     $this->assertContains(
       'facebook\autoloadmap\exception',
-      array_keys($map['class']),
+      \array_keys($map['class']),
     );
 
     $this->assertContains(
       'phpunit_framework_testcase',
-      array_keys($map['class']),
+      \array_keys($map['class']),
     );
     $this->assertEmpty($importer->getFiles());
   }
@@ -45,8 +45,8 @@ final class RootImporterTest extends BaseTestCase {
   ): void {
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root, $included_roots);
-    $tempdir = $relative_root ? $root.'/vendor' : sys_get_temp_dir();
-    $tempfile = tempnam($tempdir, 'hh_autoload');
+    $tempdir = $relative_root ? $root.'/vendor' : \sys_get_temp_dir();
+    $tempfile = \tempnam($tempdir, 'hh_autoload');
     (new Writer())
       ->setBuilder($builder)
       ->setRoot($root)
@@ -55,21 +55,21 @@ final class RootImporterTest extends BaseTestCase {
       ->writeToFile($tempfile);
 
     $cmd = (Vector {
-      PHP_BINARY,
+      \PHP_BINARY,
       '-v', 'Eval.Jit=0',
       __DIR__.'/fixtures/hh-only/'.$test_file,
       $tempfile,
-    })->map($x ==> escapeshellarg($x));
-    $cmd = implode(' ', $cmd);
+    })->map($x ==> \escapeshellarg($x));
+    $cmd = \implode(' ', $cmd);
 
     $output = [];
     $exit_code = null;
-    $result = exec($cmd, &$output, &$exit_code);
+    $result = \exec($cmd, &$output, &$exit_code);
 
-    $contents = file_get_contents($tempfile);
-    unlink($tempfile);
+    $contents = \file_get_contents($tempfile);
+    \unlink($tempfile);
 
-    $this->assertSame(0, $exit_code, implode("\n", $output));
+    $this->assertSame(0, $exit_code, \implode("\n", $output));
     $this->assertSame($result, 'OK!');
 
     if ($relative_root) {

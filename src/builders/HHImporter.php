@@ -34,11 +34,11 @@ final class HHImporter implements Builder {
             'devRoots' => $dev_roots,
             'devFailureHandler' => HHClientFallbackHandler::class,
           ),
-          JSON_PRETTY_PRINT,
+          \JSON_PRETTY_PRINT,
         )."\n",
       );
       \fprintf(
-        STDERR,
+        \STDERR,
         "An hh_autoload.json is required; a skeleton has been written to %s.\n".
         "If changes are needed, run vendor/bin/hh-autoload after editing.\n".
         "\n".

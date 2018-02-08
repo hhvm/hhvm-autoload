@@ -20,6 +20,6 @@ class Exception extends \Exception {
     /* HH_FIXME[4027] - the typechecker's printf support doesn't allow
      * passing it along to something else that has validated format
      * strings */
-    parent::__construct(sprintf($format, ...$args));
+    parent::__construct(\sprintf($format, ...$args));
   }
 }

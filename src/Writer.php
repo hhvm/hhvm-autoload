@@ -46,7 +46,7 @@ final class Writer {
   }
 
   public function setRoot(string $root): this {
-    $this->root = realpath($root);
+    $this->root = \realpath($root);
     return $this;
   }
 
@@ -76,30 +76,30 @@ final class Writer {
     if ($this->relativeAutoloadRoot) {
       $root = '__DIR__.\'/../\'';
       $requires = $files->map(
-        $file ==> '__DIR__.'.var_export(
+        $file ==> '__DIR__.'.\var_export(
           '/../'.$this->relativePath($file),
           true,
         ),
       );
     } else {
-      $root = var_export($this->root.'/', true);
+      $root = \var_export($this->root.'/', true);
       $requires = $files->map(
-        $file ==> var_export(
+        $file ==> \var_export(
           $this->root.'/'.$this->relativePath($file),
           true,
         ),
       );
     }
 
-    $requires = implode(
+    $requires = \implode(
       "\n",
       $requires->map($require ==> 'require_once('.$require.');'),
     );
 
-    $map = array_map(
+    $map = \array_map(
       function ($sub_map): mixed {
         assert(is_array($sub_map));
-        return array_map(
+        return \array_map(
           $path ==> $this->relativePath($path),
           $sub_map,
         );
@@ -109,13 +109,13 @@ final class Writer {
 
     $failure_handler = $this->failureHandler;
     if ($failure_handler !== null) {
-      if (substr($failure_handler, 0, 1) !== '\\') {
+      if (\substr($failure_handler, 0, 1) !== '\\') {
         $failure_handler = '\\'.$failure_handler;
       }
     }
 
     if ($failure_handler !== null) {
-      $add_failure_handler = sprintf(
+      $add_failure_handler = \sprintf(
         "if (%s::isEnabled()) {\n".
         "  \$handler = new %s();\n".
         "  \$map['failure'] = [\$handler, 'handleFailure'];\n".
@@ -129,12 +129,12 @@ final class Writer {
       $add_failure_handler = null;
     }
 
-    $build_id = var_export(
-      date(\DateTime::ATOM).'!'.bin2hex(random_bytes(16)),
+    $build_id = \var_export(
+      \date(\DateTime::ATOM).'!'.\bin2hex(\random_bytes(16)),
       true,
     );
 
-    $map = var_export($map, true);
+    $map = \var_export($map, true);
     $code = <<<EOF
 <?php
 
@@ -169,7 +169,7 @@ foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
 
 $add_failure_handler
 EOF;
-    file_put_contents(
+    \file_put_contents(
       $destination_file,
       $code,
     );
@@ -185,14 +185,14 @@ EOF;
     if ($root === null) {
       throw new Exception('Call setRoot() before writeToFile()');
     }
-    $path = realpath($path);
-    if (strpos($path, $root) !== 0) {
+    $path = \realpath($path);
+    if (\strpos($path, $root) !== 0) {
       throw new Exception(
         "%s is outside root %s",
         $path,
         $root,
       );
     }
-    return substr($path, strlen($root) + 1);
+    return \substr($path, \strlen($root) + 1);
   }
 }

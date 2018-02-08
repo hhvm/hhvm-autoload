@@ -65,7 +65,7 @@ class HHClientFallbackHandler extends FailureHandler {
 
     \file_put_contents(
       $this->getCacheFilePath(),
-      \json_encode($data, JSON_PRETTY_PRINT),
+      \json_encode($data, \JSON_PRETTY_PRINT),
     );
   }
 
@@ -118,9 +118,9 @@ class HHClientFallbackHandler extends FailureHandler {
   public function handleFailedType(string $name): void {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
-      if (substr($name, 0, 4) === 'xhp_') {
+      if (\substr($name, 0, 4) === 'xhp_') {
         $xhp_name =
-          ':'.str_replace(array('__', '_'), array(':', '-'), substr($name, 4));
+          ':'.\str_replace(array('__', '_'), array(':', '-'), \substr($name, 4));
         $file = $this->lookupPath('class', $xhp_name);
       }
 

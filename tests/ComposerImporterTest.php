@@ -16,7 +16,7 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testRootImportWithScannedFiles(Parser $parser): void {
-    $root = realpath(__DIR__.'/../');
+    $root = \realpath(__DIR__.'/../');
     $importer = new ComposerImporter(
       $root.'/composer.json',
       shape(
@@ -52,7 +52,7 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testRootImportWithRequiredFiles(Parser $parser): void {
-    $root = realpath(__DIR__.'/../');
+    $root = \realpath(__DIR__.'/../');
     $importer = new ComposerImporter(
       $root.'/composer.json',
       shape(
@@ -80,12 +80,12 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR4Import(Parser $parser): void {
-    $root = realpath(__DIR__.'/fixtures/psr-4');
+    $root = \realpath(__DIR__.'/fixtures/psr-4');
     $composer = $root.'/composer.json';
-    $this->assertTrue(file_exists($composer));
+    $this->assertTrue(\file_exists($composer));
 
-    $composer_config = json_decode(
-      file_get_contents($composer),
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
       /* as array = */ true,
     );
 
@@ -125,12 +125,12 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR4ImportNoTrailingSlash(Parser $parser): void {
-    $root = realpath(__DIR__.'/fixtures/psr-4');
+    $root = \realpath(__DIR__.'/fixtures/psr-4');
     $composer = $root.'/composer.json';
-    $this->assertTrue(file_exists($composer));
+    $this->assertTrue(\file_exists($composer));
 
-    $composer_config = json_decode(
-      file_get_contents($composer),
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
       /* as array = */ true,
     );
     $this->assertNotEmpty(
@@ -165,12 +165,12 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR0Import(Parser $parser): void {
-    $root = realpath(__DIR__.'/fixtures/psr-0');
+    $root = \realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
-    $this->assertTrue(file_exists($composer));
+    $this->assertTrue(\file_exists($composer));
 
-    $composer_config= json_decode(
-      file_get_contents($composer),
+    $composer_config= \json_decode(
+      \file_get_contents($composer),
       /* as array = */ true,
     );
 
@@ -201,12 +201,12 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR0ImportNoTrailingSlash(Parser $parser): void {
-    $root = realpath(__DIR__.'/fixtures/psr-0');
+    $root = \realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
-    $this->assertTrue(file_exists($composer));
+    $this->assertTrue(\file_exists($composer));
 
-    $composer_config = json_decode(
-      file_get_contents($composer),
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
       /* as array = */ true,
     );
     $this->assertNotEmpty(
@@ -249,12 +249,12 @@ final class ComposerImporterTest extends BaseTestCase {
    * @dataProvider getParsers
    */
   public function testPSR0ImportUnderscores(Parser $parser): void {
-    $root = realpath(__DIR__.'/fixtures/psr-0');
+    $root = \realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
-    $this->assertTrue(file_exists($composer));
+    $this->assertTrue(\file_exists($composer));
 
-    $composer_config = json_decode(
-      file_get_contents($composer),
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
       /* as array = */ true,
     );
 

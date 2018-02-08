@@ -21,15 +21,15 @@ final class ComposerImporter implements Builder {
     string $path,
     private Config $config,
   ) {
-    if (!file_exists($path)) {
+    if (!\file_exists($path)) {
       throw new Exception(
         '%s does not exist',
         $path,
       );
     }
-    $this->root = dirname($path);
-    $composer_json = file_get_contents($path);
-    $composer_config = json_decode(
+    $this->root = \dirname($path);
+    $composer_json = \file_get_contents($path);
+    $composer_config = \json_decode(
       $composer_json,
       /* as array = */ true,
     );
@@ -87,7 +87,7 @@ final class ComposerImporter implements Builder {
     foreach ($roots as $root) {
       $path = $this->root.'/'.$root;
       try {
-        if (is_dir($path)) {
+        if (\is_dir($path)) {
           $scanner = Scanner::fromTree($path, $this->config['parser']);
         } else {
           $scanner = Scanner::fromFile($path, $this->config['parser']);

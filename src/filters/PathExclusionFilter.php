@@ -35,11 +35,11 @@ final class PathExclusionFilter implements Builder {
   private function filter(
     array<string, string> $map,
   ): array<string, string> {
-    return array_filter(
+    return \array_filter(
       $map,
       function(string $path): bool {
         foreach ($this->prefixes as $prefix) {
-          if (strpos($path, $prefix) === 0) {
+          if (\strpos($path, $prefix) === 0) {
             return false;
           }
         }

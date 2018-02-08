@@ -17,19 +17,19 @@ abstract final class ConfigurationLoader {
 
   public static function fromFile(string $path): Config {
     invariant(
-      is_readable($path),
+      \is_readable($path),
       'Tried to load configuration file %s, but it is not readable.',
       $path,
     );
-    return self::fromJSON(file_get_contents($path), $path);
+    return self::fromJSON(\file_get_contents($path), $path);
   }
 
   public static function fromJSON(string $json, string $path): Config {
-    $decoded = json_decode($json, /* as array = */ true);
+    $decoded = \json_decode($json, /* as array = */ true);
     invariant(
       is_array($decoded),
       'Expected configuration file to contain a JSON object, got %s',
-      gettype($decoded),
+      \gettype($decoded),
     );
     return self::fromData(
       $decoded,
@@ -93,7 +93,7 @@ abstract final class ConfigurationLoader {
 
   private static function getDefaultParser(): Parser {
     invariant(
-      extension_loaded('factparse'),
+      \extension_loaded('factparse'),
       'ext_factparse is now required',
     );
     return Parser::EXT_FACTPARSE;

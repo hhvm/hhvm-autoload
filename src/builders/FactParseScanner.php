@@ -64,7 +64,7 @@ final class FactParseScanner implements Builder {
     private string $root,
     private ImmVector<string> $paths,
   ) {
-    $version = (int) phpversion('factparse');
+    $version = (int) \phpversion('factparse');
     invariant(
       $version === 3,
       'Factparse version 3 is required, got %d',
@@ -118,16 +118,16 @@ final class FactParseScanner implements Builder {
     $constants = [];
     foreach ($facts as $file => $file_facts) {
       foreach ($file_facts['types'] as $type) {
-        $classes[strtolower($type['name'])] = $file;
+        $classes[\strtolower($type['name'])] = $file;
       }
       foreach ($file_facts['constants'] as $const) {
         $constants[$const] = $file;
       }
       foreach ($file_facts['functions'] as $func) {
-        $functions[strtolower($func)] = $file;
+        $functions[\strtolower($func)] = $file;
       }
       foreach ($file_facts['typeAliases'] as $alias) {
-        $types[strtolower($alias)] = $file;
+        $types[\strtolower($alias)] = $file;
       }
     }
     return shape(

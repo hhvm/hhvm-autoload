@@ -24,7 +24,7 @@ abstract class BasePSRFilter implements Builder {
     private string $root,
     private Builder $source,
   ) {
-    $this->root = rtrim($this->root, '/').'/';
+    $this->root = \rtrim($this->root, '/').'/';
   }
 
   public function getFiles(): ImmVector<string> {
@@ -36,7 +36,7 @@ abstract class BasePSRFilter implements Builder {
       (new Map($this->source->getAutoloadMap()['class']))
       ->filterWithKey(
         function(string $class_name, string $file): bool {
-          if (stripos($class_name, $this->prefix) !== 0) {
+          if (\stripos($class_name, $this->prefix) !== 0) {
             return false;
           }
           $expected = static::getExpectedPathWithoutExtension(
@@ -44,8 +44,8 @@ abstract class BasePSRFilter implements Builder {
             $this->prefix,
             $this->root,
           );
-          $expected = strtolower($expected);
-          $file = strtolower($file);
+          $expected = \strtolower($expected);
+          $file = \strtolower($file);
           return ($file === $expected.'.hh' || $file === $expected.'.php');
         }
       );

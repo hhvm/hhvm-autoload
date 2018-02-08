@@ -69,7 +69,7 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC,
       $parser,
     );
-    $this->assertSame($class, get_class($builder));
+    $this->assertSame($class, \get_class($builder));
   }
 
   /**
@@ -83,7 +83,7 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC.'/constant.php',
       $parser,
     );
-    $this->assertSame($class, get_class($builder));
+    $this->assertSame($class, \get_class($builder));
     $map = $builder->getAutoloadMap();
     $this->assertEmpty($map['class']);
     $this->assertEmpty($map['function']);
@@ -104,7 +104,7 @@ final class ScannerTest extends BaseTestCase {
     foreach ($expected as $name => $file) {
       $a = self::HH_ONLY_SRC.'/'.$file;
       $b =
-        idx($actual, strtolower(self::FIXTURES_PREFIX.$name))
+        idx($actual, \strtolower(self::FIXTURES_PREFIX.$name))
         ?: idx($actual, self::FIXTURES_PREFIX.$name)
         ?: idx($actual, $name);
 
