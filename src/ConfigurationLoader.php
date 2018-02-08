@@ -32,7 +32,7 @@ abstract final class ConfigurationLoader {
       \gettype($decoded),
     );
     return self::fromData(
-      $decoded,
+      /* HH_IGNORE_ERROR[4110] */ $decoded,
       $path,
     );
   }
