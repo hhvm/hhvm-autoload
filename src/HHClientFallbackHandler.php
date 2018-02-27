@@ -86,9 +86,11 @@ class HHClientFallbackHandler extends FailureHandler {
       /* HH_IGNORE_ERROR[4110] shape as array */ $map,
       Generated\root(),
     );
+
+    \register_shutdown_function(() ==> $this->storeCacheIfDirtyDirty());
   }
 
-  public function __destruct() {
+  private function storeCacheIfDirtyDirty(): void {
     if (!$this->dirty) {
       return;
     }
