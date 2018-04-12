@@ -131,4 +131,4 @@ We welcome GitHub issues and pull requests - please see CONTRIBUTING.md for deta
 License
 =======
 
-hhvm-autoload is [BSD-licensed](LICENSE). We also provide an additional [patent grant](PATENTS).
+hhvm-autoload is [MIT-licensed](LICENSE).
