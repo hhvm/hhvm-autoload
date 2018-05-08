@@ -57,6 +57,9 @@ final class FactParseScanner implements Builder {
           ),
         );
       } catch (\Exception $e) {
+        if (@\filesize($file) === 0) {
+          continue;
+        }
         throw new \Exception(
           "Failed to parse '".$file.'"',
           $e->getCode(),
