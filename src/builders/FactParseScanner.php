@@ -37,24 +37,32 @@ final class FactParseScanner implements Builder {
         'FactsParse data is not string-keyed',
       );
 
-      $out[$file] = shape(
-        'types' => TypeAssert\is_array_of_shapes_with_name_field(
-          $facts['types'] ?? null,
-          'FactParse types',
-        ),
-        'constants' => TypeAssert\is_array_of_strings(
-          $facts['constants'] ?? null,
-          'FactParse constants',
-        ),
-        'functions' => TypeAssert\is_array_of_strings(
-          $facts['functions'] ?? null,
-          'FactParse functions',
-        ),
-        'typeAliases' => TypeAssert\is_array_of_strings(
-          $facts['typeAliases'] ?? null,
-          'FactParse typeAliases',
-        ),
-      );
+      try {
+        $out[$file] = shape(
+          'types' => TypeAssert\is_array_of_shapes_with_name_field(
+            $facts['types'] ?? null,
+            'FactParse types',
+          ),
+          'constants' => TypeAssert\is_array_of_strings(
+            $facts['constants'] ?? null,
+            'FactParse constants',
+          ),
+          'functions' => TypeAssert\is_array_of_strings(
+            $facts['functions'] ?? null,
+            'FactParse functions',
+          ),
+          'typeAliases' => TypeAssert\is_array_of_strings(
+            $facts['typeAliases'] ?? null,
+            'FactParse typeAliases',
+          ),
+        );
+      } catch (\Exception $e) {
+        throw new \Exception(
+          "Failed to parse '".$file.'"',
+          $e->getCode(),
+          $e,
+        );
+      }
     }
     return $out;
   }
