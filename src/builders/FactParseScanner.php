@@ -22,7 +22,7 @@ final class FactParseScanner implements Builder {
     'typeAliases' => array<string>,
   )>;
 
-  private static function untyped_to_shape(
+  private static function untypedToShape(
     mixed $data,
   ): self::TFacts {
     invariant(
@@ -120,7 +120,7 @@ final class FactParseScanner implements Builder {
       /* force_hh = */ false,
       /* multithreaded = */ true,
     );
-    $facts = self::untyped_to_shape($facts);
+    $facts = self::untypedToShape($facts);
 
     $classes = [];
     $functions = [];

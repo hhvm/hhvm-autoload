@@ -11,6 +11,7 @@
 namespace Facebook\AutoloadMap;
 
 final class PSR4Filter extends BasePSRFilter {
+  <<__Override>>
   protected static function getExpectedPathWithoutExtension(
     string $class_name,
     string $prefix,

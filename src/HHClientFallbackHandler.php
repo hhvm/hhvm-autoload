@@ -116,6 +116,7 @@ class HHClientFallbackHandler extends FailureHandler {
     return true;
   }
 
+  <<__Override>>
   public function handleFailedType(string $name): void {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
@@ -137,6 +138,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->requireFile($file);
   }
 
+  <<__Override>>
   public function handleFailedFunction(string $name): void {
     $file = $this->lookupPath('function', $name);
     if ($file === null) {
@@ -146,6 +148,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->requireFile($file);
   }
 
+  <<__Override>>
   public function handleFailedConstant(string $name): void {
     $file = $this->lookupPath('constant', $name);
     if ($file === null) {
