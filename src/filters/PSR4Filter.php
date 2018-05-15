@@ -10,6 +10,8 @@
 
 namespace Facebook\AutoloadMap;
 
+/** A filter exposing any definitions from a source builder that
+ * are compliant with PSR-4 */
 final class PSR4Filter extends BasePSRFilter {
   <<__Override>>
   protected static function getExpectedPathWithoutExtension(

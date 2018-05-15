@@ -10,7 +10,10 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Create a `Builder` by scanning file contents.
+ */
 abstract final class Scanner {
+  /** Construct a builder for a single file */
   public static function fromFile(
     string $path,
     Parser $parser,
@@ -21,6 +24,7 @@ abstract final class Scanner {
     }
   }
 
+  /** Construct a builder for a tree */
   public static function fromTree(
     string $path,
     Parser $parser,

@@ -10,7 +10,13 @@
 
 namespace Facebook\AutoloadMap;
 
+/**
+ * Base interface for everything that exposes an autoload map.
+ */
 interface Builder {
+  /** Returns the actual autoload map created by this builder */
   public function getAutoloadMap(): AutoloadMap;
+  /** Returns any additional files that should be explicitly required on
+   * start */
   public function getFiles(): ImmVector<string>;
 }

@@ -12,6 +12,7 @@ namespace Facebook\AutoloadMap;
 
 use Facebook\AutoloadMap\__Private\TypeAssert;
 
+/** Create an autoload map from a directory using `ext_factparse`. */
 final class FactParseScanner implements Builder {
   const type TFacts = array<string, shape(
     'types' => array<shape(
