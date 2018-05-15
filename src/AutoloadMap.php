@@ -10,6 +10,10 @@
 
 namespace Facebook\AutoloadMap;
 
+/** The main shape of an autoload map.
+ *
+ * Must match `\HH\autoload_set_paths()`
+ */
 type AutoloadMap = shape(
   'class' => array<string, string>,
   'function' => array<string, string>,

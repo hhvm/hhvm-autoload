@@ -10,7 +10,10 @@
 
 namespace Facebook\AutoloadMap;
 
+/** How to autoload files that composer is told to always require. */
 enum AutoloadFilesBehavior: string {
+  /** Scan the files for autoloadable definitions */
   FIND_DEFINITIONS = 'scan';
+  /** Always require the files */
   EXEC_FILES = 'exec';
 }
