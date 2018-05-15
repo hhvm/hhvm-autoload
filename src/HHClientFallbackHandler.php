@@ -11,9 +11,12 @@
 namespace Facebook\AutoloadMap;
 
 /**
- * If a class/function/type isn't in the map, ask hh_client where it is.
+ * If a class/function/type isn't in the map, ask `hh_client` where it is.
  *
- * No op if CI, TRAVIS, or CONTINOUS_INTEGRATION is true.
+ * This caches the results in APC (falling back to a file) to provide fast
+ * workflows.
+ *
+ * Does nothing if CI, TRAVIS, or CONTINOUS_INTEGRATION is true.
  */
 class HHClientFallbackHandler extends FailureHandler {
   private AutoloadMap $map;
@@ -27,6 +30,11 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->map = Generated\map();
   }
 
+  /** Retrieve the cached autoload map.
+   *
+   * This will try to retrieve a cached map from APC, and if that fails,
+   * a cache file.
+   */
   protected function getCache(): ?self::TCache{
     $key = __CLASS__.'!cache';
     if (\apc_exists($key)) {
@@ -55,10 +63,14 @@ class HHClientFallbackHandler extends FailureHandler {
     return $data;
   }
 
+  /** Store a cached map in APC and file.
+   *
+   * If the file is not writable, it will only be stored in APC.
+   */
   protected function storeCache(self::TCache $data): void {
     \apc_store(__CLASS__.'!cache', $data);
 
-    if (!\is_writable(Generated\root())) {
+    if (!\is_writable(\dirname($this->getCacheFilePath()))) {
       return;
     }
 
@@ -100,10 +112,15 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->storeCache($data);
   }
 
+  /** Where to store the file cache */
   protected function getCacheFilePath(): string {
     return Generated\root().'/vendor/hh_autoload.hh-cache';
   }
 
+  /** Whether or not to use `hh_client`.
+   *
+   * Defaults to true, unless we're on a common CI platform.
+   */
   <<__Override>>
   public static function isEnabled(): bool {
     $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
