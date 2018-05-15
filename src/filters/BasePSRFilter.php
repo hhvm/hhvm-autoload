@@ -10,14 +10,32 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Base class for only removing non-PSR-compliant definitions from another
+ * builder.
+ *
+ * @see `PSR0Filter` and `PSR4Filter`
+ */
 abstract class BasePSRFilter implements Builder {
 
+  /** Return the path of the file that is expected to contain the specified
+   * a class.
+   *
+   * @param $classname the fully-qualified classname
+   * @param $prefix the prefix/namespace for this PSR configuration
+   * @param $root the root directory for classes with the specified prefix
+   */
   abstract protected static function getExpectedPathWithoutExtension(
     string $classname,
     string $prefix,
     string $root,
-  ): string ;
+  ): string;
 
+  /** Create a new `BasePSRFilter`
+   *
+   * @param $prefix the prefix/namespace for this PSR configuration
+   * @param $root the root directory for classes with the specified prefix
+   * @param $source a `Builder` containing definitions that will be filtered
+   */
   final public function __construct(
     private string $prefix,
     private string $root,
@@ -27,13 +45,12 @@ abstract class BasePSRFilter implements Builder {
   }
 
   public function getFiles(): ImmVector<string> {
-    return ImmVector { };
+    return ImmVector {};
   }
 
   public function getAutoloadMap(): AutoloadMap {
     $classes =
-      (new Map($this->source->getAutoloadMap()['class']))
-      ->filterWithKey(
+      (new Map($this->source->getAutoloadMap()['class']))->filterWithKey(
         function(string $class_name, string $file): bool {
           if (\stripos($class_name, $this->prefix) !== 0) {
             return false;
@@ -46,7 +63,7 @@ abstract class BasePSRFilter implements Builder {
           $expected = \strtolower($expected);
           $file = \strtolower($file);
           return ($file === $expected.'.hh' || $file === $expected.'.php');
-        }
+        },
       );
 
     return shape(

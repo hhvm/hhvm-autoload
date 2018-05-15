@@ -10,28 +10,24 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Create an autoload map for a directory based on the `composer.json` in that
+ * directory.
+ *
+ * This is used by default for projects in `vendor/` that do not have an
+ * `hh_autoload.json` */
 final class ComposerImporter implements Builder {
   private string $root;
-  private Vector<Builder> $builders = Vector { };
-  private Set<string> $excludes = Set { };
-  private Vector<string> $files = Vector { };
+  private Vector<Builder> $builders = Vector {};
+  private Set<string> $excludes = Set {};
+  private Vector<string> $files = Vector {};
 
-  public function __construct(
-    string $path,
-    private Config $config,
-  ) {
+  public function __construct(string $path, private Config $config) {
     if (!\file_exists($path)) {
-      throw new Exception(
-        '%s does not exist',
-        $path,
-      );
+      throw new Exception('%s does not exist', $path);
     }
     $this->root = \dirname($path);
     $composer_json = \file_get_contents($path);
-    $composer_config = \json_decode(
-      $composer_json,
-      /* as array = */ true,
-    );
+    $composer_config = \json_decode($composer_json, /* as array = */ true);
     $composer_autoload = idx($composer_config, 'autoload');
     if ($composer_autoload === null) {
       return;
@@ -72,16 +68,18 @@ final class ComposerImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders
-      ->map(
-        $builder ==> new PathExclusionFilter($builder, $this->excludes)
-      )
-      ->map(
-        $builder ==> $builder->getAutoloadMap()
-      )
+      $this->builders->map(
+        $builder ==> new PathExclusionFilter(
+          $builder,
+          $this->excludes->immutable(),
+        ),
+      )->map($builder ==> $builder->getAutoloadMap()),
     );
   }
 
+  /** Composer supports detecting classes inside files for given subtrees; this
+   * does the same for any directories configured that way.
+   */
   private function importClassmap(array<string> $roots): void {
     foreach ($roots as $root) {
       $path = $this->root.'/'.$root;
@@ -105,13 +103,15 @@ final class ComposerImporter implements Builder {
     foreach ($roots as $prefix => $prefix_roots) {
       foreach ($prefix_roots as $root) {
         try {
-          $scanner = Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
+          $scanner =
+            Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
         } catch (\UnexpectedValueException $e) {
           // Incorrectly configured configured path.
           continue;
         }
 
-        $this->builders[] = new PSR4Filter($prefix, $this->root.'/'.$root, $scanner);
+        $this->builders[] =
+          new PSR4Filter($prefix, $this->root.'/'.$root, $scanner);
       }
     }
   }
@@ -121,13 +121,15 @@ final class ComposerImporter implements Builder {
     foreach ($roots as $prefix => $prefix_roots) {
       foreach ($prefix_roots as $root) {
         try {
-          $scanner = Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
+          $scanner =
+            Scanner::fromTree($this->root.'/'.$root, $this->config['parser']);
         } catch (\UnexpectedValueException $e) {
           // Incorrectly configured configured path.
           continue;
         }
 
-        $this->builders[] = new PSR0Filter($prefix, $this->root.'/'.$root, $scanner);
+        $this->builders[] =
+          new PSR0Filter($prefix, $this->root.'/'.$root, $scanner);
       }
     }
   }
@@ -151,12 +153,11 @@ final class ComposerImporter implements Builder {
   private function importFiles(array<string> $files): void {
     foreach ($files as $file) {
       $file = $this->root.'/'.$file;
-      if (
-        $this->config['autoloadFilesBehavior']
-        === AutoloadFilesBehavior::FIND_DEFINITIONS
-      ) {
+      if ($this->config['autoloadFilesBehavior'] ===
+          AutoloadFilesBehavior::FIND_DEFINITIONS) {
         try {
-          $this->builders[] = Scanner::fromFile($file, $this->config['parser']);
+          $this->builders[] =
+            Scanner::fromFile($file, $this->config['parser']);
         } catch (\UnexpectedValueException $e) {
           // Incorrectly configured configured path.
         }

@@ -10,10 +10,13 @@
 
 namespace Facebook\AutoloadMap;
 
+/**
+ * Remove any definitions from files that aren't in a specified prefix.
+ */
 final class PathExclusionFilter implements Builder {
   public function __construct(
     private Builder $source,
-    private Set<string> $prefixes,
+    private ImmSet<string> $prefixes,
   ) {
   }
 

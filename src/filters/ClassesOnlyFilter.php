@@ -10,7 +10,12 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Filter out all definitions except for classes, interfaces, etc. */
 final class ClassesOnlyFilter implements Builder {
+  /** Create a new `ClassesOnlyFilter`
+   *
+   * @param $source the builder containing class definitions
+   */
   public function __construct(
     private Builder $source,
   ) {

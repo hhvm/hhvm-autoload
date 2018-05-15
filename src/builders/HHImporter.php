@@ -10,6 +10,12 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Create an autoload map for a directory that contains an
+ * `hh_autoload.json`.
+ *
+ * This may be used for the project root, and for any projects in
+ * `vendor/` that are designed for use with `hhvm-autoload`.
+ */
 final class HHImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
   private Vector<string> $files = Vector { };

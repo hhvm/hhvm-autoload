@@ -10,6 +10,13 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Build an autoload map for the project root.
+ *
+ * This will:
+ * - create an `HHImporter` for the current directory
+ * - create `ComposerImporter`s or `HHImporter`s for every project under
+ *   `vendor/`
+ */
 final class RootImporter implements Builder {
   private Vector<Builder> $builders = Vector { };
   private HHImporter $hh_importer;
