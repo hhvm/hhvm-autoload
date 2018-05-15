@@ -10,7 +10,18 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Class for merging multiple autoload maps.
+ *
+ * For example, we may merge:
+ * - the root autoload map
+ * - additional autoload maps for each vendored dependency
+ * - in the case of composer, a psr0, psr4, and classmap
+ */
 abstract final class Merger {
+  /** Return a new map containing all the entries from the input maps.
+   *
+   * In the case of duplicates, the last definition is used.
+   */
   public static function merge(
     \ConstVector<AutoloadMap> $maps,
   ): AutoloadMap {

@@ -10,6 +10,7 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Which parser to use to scan file contents */
 enum Parser: string {
   EXT_FACTPARSE = 'ext-factparse';
 }

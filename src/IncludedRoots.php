@@ -10,7 +10,10 @@
 
 namespace Facebook\AutoloadMap;
 
+/** What root directories to include */
 enum IncludedRoots: int {
+  /** Only include prod-suitable directories (e.g. `src/`) */
   PROD_ONLY = 0;
+  /** Additionally include development-only directories (e.g. `test/`) */
   DEV_AND_PROD = 1;
 }
