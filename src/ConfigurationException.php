@@ -10,5 +10,6 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Exception raised when the configuration file is invalid. */
 final class ConfigurationException extends Exception {
 }

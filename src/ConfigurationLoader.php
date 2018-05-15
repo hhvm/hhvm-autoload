@@ -12,8 +12,9 @@ namespace Facebook\AutoloadMap;
 
 use Facebook\AutoloadMap\__Private\TypeAssert;
 
+/** Load configuration from JSON */
 abstract final class ConfigurationLoader {
-
+  /** Load configuration from a JSON file */
   public static function fromFile(string $path): Config {
     invariant(
       \is_readable($path),
@@ -23,6 +24,10 @@ abstract final class ConfigurationLoader {
     return self::fromJSON(\file_get_contents($path), $path);
   }
 
+  /** Load configuration from a JSON string
+   *
+   * @param $path arbitrary string - used to create clearer error messages
+   */
   public static function fromJSON(string $json, string $path): Config {
     $decoded = \json_decode($json, /* as array = */ true);
     invariant(
@@ -36,6 +41,10 @@ abstract final class ConfigurationLoader {
     );
   }
 
+  /** Load configuration from decoded data.
+   *
+   * @param $path arbitrary string - used to create clearer error messages
+   */
   public static function fromData(
     array<string, mixed> $data,
     string $path,

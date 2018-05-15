@@ -8,6 +8,10 @@
  *
  */
 
+/**************************************/
+/***** THIS FILE IS PHP, NOT HACK *****/
+/**************************************/
+
 namespace Facebook\AutoloadMap;
 
 use Composer\Composer;
@@ -17,6 +21,9 @@ use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 
+/** Plugin for PHP composer to automatically update the autoload map whenever
+ * dependencies are changed or updated.
+ */
 final class ComposerPlugin
   implements PluginInterface, EventSubscriberInterface {
 
@@ -24,6 +31,7 @@ final class ComposerPlugin
   private $root;
   private $io;
 
+  /** Initialize members */
   public function activate(Composer $composer, IOInterface $io) {
     $this->io = $io;
     $vendor = $composer->getConfig()->get('vendor-dir', '/');
@@ -32,6 +40,10 @@ final class ComposerPlugin
     $this->root = dirname($vendor);
   }
 
+  /** Tell composer what events we're interested in.
+   *
+   * In this case, we want to run whenever composer's own autoload map is updated.
+   */
   public static function getSubscribedEvents() {
     return [
       ScriptEvents::POST_AUTOLOAD_DUMP => [
@@ -40,6 +52,10 @@ final class ComposerPlugin
     ];
   }
 
+  /** Callback for after the main composer autoload map has been updated.
+   *
+   * Here we update our autoload map.
+   */
   public function onPostAutoloadDump(Event $event) {
     $this->debugMessage("Disabling AutoTypecheck");
     require_once($this->vendor.'/fredemmott/hack-error-suppressor/src/HackErrorSuppressor.php');

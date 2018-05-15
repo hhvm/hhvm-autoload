@@ -10,6 +10,7 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Base class for all exceptions thrown by `hhvm-autoload` */
 class Exception extends \Exception {
   public function __construct(
     \HH\FormatString<\PlainSprintf> $format,

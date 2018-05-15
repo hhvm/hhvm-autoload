@@ -10,6 +10,7 @@
 
 namespace Facebook\AutoloadMap;
 
+/** Shape of `hh_autoload.json` */
 type Config = shape(
   'roots' => ImmVector<string>,
   'devRoots' => ImmVector<string>,
