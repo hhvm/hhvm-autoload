@@ -104,8 +104,8 @@ final class ScannerTest extends BaseTestCase {
       $a = self::HH_ONLY_SRC.'/'.$file;
       $b =
         idx($actual, \strtolower(self::FIXTURES_PREFIX.$name))
-        ?: idx($actual, self::FIXTURES_PREFIX.$name)
-        ?: idx($actual, $name);
+        ?? idx($actual, self::FIXTURES_PREFIX.$name)
+        ?? idx($actual, $name);
 
       $this->assertSame($a, $b);
     }
