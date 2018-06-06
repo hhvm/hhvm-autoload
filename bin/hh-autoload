@@ -51,7 +51,7 @@ final class GenerateScript {
     $options = shape(
       'dev' => true,
     );
-    $bin = array_shift($argv);
+    $bin = array_shift(&$argv);
     foreach ($argv as $arg) {
       if ($arg === '--no-dev') {
         $options['dev'] = false;
