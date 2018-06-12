@@ -21,8 +21,6 @@ namespace Facebook\AutoloadMap;
 class HHClientFallbackHandler extends FailureHandler {
   private AutoloadMap $map;
   private bool $dirty = false;
-  private static ?bool $enabled = null;
-
   const type TCache = shape(
     'build_id' => string,
     'map' => AutoloadMap,
@@ -119,32 +117,20 @@ class HHClientFallbackHandler extends FailureHandler {
     return Generated\root().'/vendor/hh_autoload.hh-cache';
   }
 
-  final public static function forceEnable(): void {
-    self::$enabled = true;
-  }
-
-  final public static function forceDisable(): void {
-    self::$enabled = false;
-  }
-
   /** Whether or not to use `hh_client`.
    *
    * Defaults to true, unless we're on a common CI platform.
    */
   <<__Override>>
   public static function isEnabled(): bool {
-    if (self::$enabled !== null) {
-      return self::$enabled;
-    }
-
     $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
-        return self::$enabled = false;
+        return false;
       }
     }
-    return self::$enabled = true;
+    return true;
   }
 
   <<__Override>>
