@@ -1,4 +1,4 @@
-<phpunit colors="true" bootstrap="vendor/hh_autoload.php">
+<phpunit colors="true">
   <testsuites>
     <testsuite>
       <directory>tests</directory>

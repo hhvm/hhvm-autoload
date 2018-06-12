@@ -13,6 +13,11 @@ namespace Facebook\AutoloadMap;
 use function Facebook\FBExpect\expect;
 
 final class FallbackHandlerTest extends \PHPUnit_Framework_TestCase {
+  public function setup(): void {
+    if (!\function_exists('Facebook\\AutoloadMap\\Generated\\build_id')) {
+      $this->markTestSkipped("Does not work with composer's autoloader");
+    }
+  }
   
   public function testFunction(): void {
     expect(TestData\MixedCaseFunction())->toBeSame(
