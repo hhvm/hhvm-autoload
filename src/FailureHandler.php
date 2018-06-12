@@ -45,7 +45,7 @@ abstract class FailureHandler {
    * in `HH\autoload_set_paths()`.
    */
   final public function handleFailure(string $kind, string $name): void {
-    if ($kind === 'class') {
+    if ($kind === 'class' || $kind === 'type') {
       $this->handleFailedType($name);
       return;
     }
