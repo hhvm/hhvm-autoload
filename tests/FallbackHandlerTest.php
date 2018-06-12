@@ -17,6 +17,7 @@ final class FallbackHandlerTest extends \PHPUnit_Framework_TestCase {
     if (!\function_exists('Facebook\\AutoloadMap\\Generated\\build_id')) {
       $this->markTestSkipped("Does not work with composer's autoloader");
     }
+    HHClientFallbackHandler::forceEnable();
   }
   
   public function testFunction(): void {
