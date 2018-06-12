@@ -123,6 +123,14 @@ class HHClientFallbackHandler extends FailureHandler {
    */
   <<__Override>>
   public static function isEnabled(): bool {
+    $force = \getenv('ENABLE_HH_CLIENT_AUTOLOAD');
+    if ($force === 'true' || $force === '1') {
+      return true;
+    }
+    if ($force === 'false' || $force === '0') {
+      return false;
+    }
+
     $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
