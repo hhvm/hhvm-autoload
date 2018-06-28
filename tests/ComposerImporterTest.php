@@ -10,6 +10,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use function Facebook\FBExpect\expect;
+
 final class ComposerImporterTest extends BaseTestCase {
   /**
    * @dataProvider getParsers
@@ -166,15 +168,13 @@ final class ComposerImporterTest extends BaseTestCase {
   public function testPSR4ImportWithoutPrefix(Parser $parser): void {
     $root = \realpath(__DIR__.'/fixtures/psr-4');
     $composer = $root.'/composer.json';
-    $this->assertTrue(\file_exists($composer));
+    expect(\file_exists($composer))->toBeTrue();
 
     $composer_config = \json_decode(
       \file_get_contents($composer),
       /* as array = */ true,
     );
-    $this->assertNotEmpty(
-      $composer_config['autoload']['psr-4'],
-    );
+    expect($composer_config['autoload']['psr-4'])->toNotBeEmpty();
 
     $importer = new ComposerImporter(
       $composer,
@@ -191,12 +191,13 @@ final class ComposerImporterTest extends BaseTestCase {
       ),
     );
 
-    $this->assertSame(
-      $root.'/src-without-prefix/PSR4/TestWithoutPrefix/PSR4Test.php',
+    expect(
       idx(
         $importer->getAutoloadMap()['class'],
         'psr4\testwithoutprefix\psr4test',
       ),
+    )->toBeSame(
+      $root.'/src-without-prefix/PSR4/TestWithoutPrefix/PSR4Test.php',
     );
   }
 
@@ -327,12 +328,13 @@ final class ComposerImporterTest extends BaseTestCase {
   public function testPSR0ImportWithoutPrefix(Parser $parser): void {
     $root = \realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
-    $this->assertTrue(\file_exists($composer));
+    expect(\file_exists($composer))->toBeTrue();
 
     $composer_config = \json_decode(
       \file_get_contents($composer),
       /* as array = */ true,
     );
+    expect($composer_config['autoload']['psr-0'])->toNotBeEmpty();
 
     $importer = new ComposerImporter(
       $composer,
@@ -349,12 +351,13 @@ final class ComposerImporterTest extends BaseTestCase {
       ),
     );
 
-    $this->assertSame(
-      $root.'/src-without-prefix/PSR0TestWithoutPrefix.php',
+    expect(
       idx(
         $importer->getAutoloadMap()['class'],
         'psr0testwithoutprefix',
       ),
+    )->toBeSame(
+      $root.'/src-without-prefix/PSR0TestWithoutPrefix.php',
     );
   }
 }
