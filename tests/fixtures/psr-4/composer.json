@@ -1,6 +1,7 @@
 {
   "autoload": {
     "psr-4": {
+      "": "src-without-prefix",
       "PSR4\\Test\\": "src",
       "PSR4\\TestWithSlash\\": "src-with-slash/"
     }
