@@ -163,6 +163,46 @@ final class ComposerImporterTest extends BaseTestCase {
   /**
    * @dataProvider getParsers
    */
+  public function testPSR4ImportWithoutPrefix(Parser $parser): void {
+    $root = \realpath(__DIR__.'/fixtures/psr-4');
+    $composer = $root.'/composer.json';
+    $this->assertTrue(\file_exists($composer));
+
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
+      /* as array = */ true,
+    );
+    $this->assertNotEmpty(
+      $composer_config['autoload']['psr-4'],
+    );
+
+    $importer = new ComposerImporter(
+      $composer,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'includeVendor' => false,
+        'extraFiles' => ImmVector { },
+        'roots' => ImmVector { $root },
+        'devRoots' => ImmVector { },
+        'parser' => $parser,
+        'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src-without-prefix/PSR4/TestWithoutPrefix/PSR4Test.php',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr4\testwithoutprefix\psr4test',
+      ),
+    );
+  }
+
+  /**
+   * @dataProvider getParsers
+   */
   public function testPSR0Import(Parser $parser): void {
     $root = \realpath(__DIR__.'/fixtures/psr-0');
     $composer = $root.'/composer.json';
@@ -277,6 +317,43 @@ final class ComposerImporterTest extends BaseTestCase {
       idx(
         $importer->getAutoloadMap()['class'],
         'psr0_test_with_underscores\\foo_bar',
+      ),
+    );
+  }
+
+  /**
+   * @dataProvider getParsers
+   */
+  public function testPSR0ImportWithoutPrefix(Parser $parser): void {
+    $root = \realpath(__DIR__.'/fixtures/psr-0');
+    $composer = $root.'/composer.json';
+    $this->assertTrue(\file_exists($composer));
+
+    $composer_config = \json_decode(
+      \file_get_contents($composer),
+      /* as array = */ true,
+    );
+
+    $importer = new ComposerImporter(
+      $composer,
+      shape(
+        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'includeVendor' => false,
+        'extraFiles' => ImmVector {},
+        'roots' => ImmVector { $root },
+        'devRoots' => ImmVector {},
+        'parser' => $parser,
+        'relativeAutoloadRoot' => true,
+        'failureHandler' => null,
+        'devFailureHandler' => null,
+      ),
+    );
+
+    $this->assertSame(
+      $root.'/src-without-prefix/PSR0TestWithoutPrefix.php',
+      idx(
+        $importer->getAutoloadMap()['class'],
+        'psr0testwithoutprefix',
       ),
     );
   }
