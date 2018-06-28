@@ -20,7 +20,7 @@ final class RootImporterTest extends BaseTestCase {
       \array_keys($map['class']),
     );
 
-    $this->assertNotContains(
+    $this->assertContains(
       'phpunit_framework_testcase',
       \array_keys($map['class']),
     );
