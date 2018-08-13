@@ -9,6 +9,7 @@
  */
 
 namespace Facebook\AutoloadMap;
+use function Facebook\FBExpect\expect;
 
 final class ScannerTest extends BaseTestCase {
   const string FIXTURES = __DIR__.'/fixtures';
@@ -68,7 +69,7 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC,
       $parser,
     );
-    $this->assertSame($class, \get_class($builder));
+    expect(\get_class($builder))->toBeSame($class);
   }
 
   /**
@@ -82,11 +83,11 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC.'/constant.php',
       $parser,
     );
-    $this->assertSame($class, \get_class($builder));
+    expect(\get_class($builder))->toBeSame($class);
     $map = $builder->getAutoloadMap();
-    $this->assertEmpty($map['class']);
-    $this->assertEmpty($map['function']);
-    $this->assertEmpty($map['type']);
+    expect($map['class'])->toBeEmpty();
+    expect($map['function'])->toBeEmpty();
+    expect($map['type'])->toBeEmpty();
     $this->assertMapMatches(
       [
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
@@ -107,7 +108,7 @@ final class ScannerTest extends BaseTestCase {
         ?? idx($actual, self::FIXTURES_PREFIX.$name)
         ?? idx($actual, $name);
 
-      $this->assertSame($a, $b);
+      expect($b)->toBeSame($a);
     }
   }
 }
