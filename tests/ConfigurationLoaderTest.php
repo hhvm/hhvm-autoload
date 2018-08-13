@@ -9,6 +9,7 @@
  */
 
 namespace Facebook\AutoloadMap;
+use function Facebook\FBExpect\expect;
 
 final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
   public function goodTestCases(
@@ -68,22 +69,18 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     array<string, mixed> $data,
     Config $config,
   ): void {
-    $this->assertEquals(
-      $data['roots'],
-      $config['roots']->toArray(),
-    );
+    expect($config['roots']->toArray())->toBePHPEqual($data['roots']);
 
-    $this->assertNotNull(
-      AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
-    );
+    expect(AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior']))
+      ->toNotBeNull();
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if (is_array($value)) {
         $value = new ImmVector($value);
-        $this->assertEquals($value, $config[$key]);
+        expect($config[$key])->toBePHPEqual($value);
       } else {
-        $this->assertSame($value, $config[$key]);
+        expect($config[$key])->toBeSame($value);
       }
     }
   }
