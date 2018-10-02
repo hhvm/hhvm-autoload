@@ -10,7 +10,7 @@
 
 namespace Facebook\AutoloadMap;
 
-abstract class BaseTestCase extends \PHPUnit\Framework\TestCase {
+abstract class BaseTest extends \Facebook\HackTest\HackTest {
   public function getParsers(): array<(Parser, classname<Builder>)> {
     return [
       tuple(Parser::EXT_FACTPARSE, FactParseScanner::class),

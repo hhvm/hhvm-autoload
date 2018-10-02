@@ -9,16 +9,15 @@
  */
 
 namespace Facebook\AutoloadMap;
+use function Facebook\FBExpect\expect;
 
-final class ScannerTest extends BaseTestCase {
+final class ScannerTest extends BaseTest {
   const string FIXTURES = __DIR__.'/fixtures';
   const string HH_ONLY_SRC = self::FIXTURES.'/hh-only/src';
   const string FIXTURES_PREFIX =
     "Facebook\\AutoloadMap\\TestFixtures\\";
 
-  /**
-   * @dataProvider getParsers
-   */
+  <<DataProvider('getParsers')>>
   public function testHHOnly(Parser $parser): void {
     $map = Scanner::fromTree(
       self::HH_ONLY_SRC,
@@ -57,9 +56,7 @@ final class ScannerTest extends BaseTestCase {
     );
   }
 
-  /**
-   * @dataProvider getParsers
-   */
+  <<DataProvider('getParsers')>>
   public function testFromTree(
     Parser $parser,
     classname<Builder> $class,
@@ -68,12 +65,10 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC,
       $parser,
     );
-    $this->assertSame($class, \get_class($builder));
+    expect(\get_class($builder))->toBeSame($class);
   }
 
-  /**
-   * @dataProvider getParsers
-   */
+  <<DataProvider('getParsers')>>
   public function testFromFile(
     Parser $parser,
     classname<Builder> $class,
@@ -82,11 +77,11 @@ final class ScannerTest extends BaseTestCase {
       self::HH_ONLY_SRC.'/constant.php',
       $parser,
     );
-    $this->assertSame($class, \get_class($builder));
+    expect(\get_class($builder))->toBeSame($class);
     $map = $builder->getAutoloadMap();
-    $this->assertEmpty($map['class']);
-    $this->assertEmpty($map['function']);
-    $this->assertEmpty($map['type']);
+    expect($map['class'])->toBeEmpty();
+    expect($map['function'])->toBeEmpty();
+    expect($map['type'])->toBeEmpty();
     $this->assertMapMatches(
       [
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
@@ -107,7 +102,7 @@ final class ScannerTest extends BaseTestCase {
         ?? idx($actual, self::FIXTURES_PREFIX.$name)
         ?? idx($actual, $name);
 
-      $this->assertSame($a, $b);
+      expect($b)->toBeSame($a);
     }
   }
 }

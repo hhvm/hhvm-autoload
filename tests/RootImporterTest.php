@@ -9,22 +9,21 @@
  */
 
 namespace Facebook\AutoloadMap;
+use function Facebook\FBExpect\expect;
 
-final class RootImporterTest extends BaseTestCase {
+final class RootImporterTest extends BaseTest {
   public function testSelf(): void {
     $root = \realpath(__DIR__.'/../');
     $importer = new RootImporter($root, IncludedRoots::PROD_ONLY);
     $map = $importer->getAutoloadMap();
-    $this->assertContains(
+    expect(\array_keys($map['class']))->toContain(
       'facebook\autoloadmap\exception',
-      \array_keys($map['class']),
     );
 
-    $this->assertContains(
-      'phpunit_framework_testcase',
-      \array_keys($map['class']),
+    expect(\array_keys($map['class']))->toContain(
+      'facebook\\hacktest\\hacktest',
     );
-    $this->assertEmpty($importer->getFiles());
+    expect($importer->getFiles())->toBeEmpty();
   }
 
   public function provideTestModes(): array<(IncludedRoots, string, bool)> {
@@ -36,7 +35,7 @@ final class RootImporterTest extends BaseTestCase {
     ];
   }
 
-  /** @dataProvider provideTestModes */
+  <<DataProvider('provideTestModes')>>
   public function testImportTree(
     IncludedRoots $included_roots,
     string $test_file,
@@ -53,12 +52,15 @@ final class RootImporterTest extends BaseTestCase {
       ->setIsDev(true)
       ->writeToFile($tempfile);
 
-    $cmd = (Vector {
-      \PHP_BINARY,
-      '-v', 'Eval.Jit=0',
-      __DIR__.'/fixtures/hh-only/'.$test_file,
-      $tempfile,
-    })->map($x ==> \escapeshellarg($x));
+    $cmd = (
+      Vector {
+        \PHP_BINARY,
+        '-v',
+        'Eval.Jit=0',
+        __DIR__.'/fixtures/hh-only/'.$test_file,
+        $tempfile,
+      }
+    )->map($x ==> \escapeshellarg($x));
     $cmd = \implode(' ', $cmd);
 
     $output = [];
@@ -68,19 +70,13 @@ final class RootImporterTest extends BaseTestCase {
     $contents = \file_get_contents($tempfile);
     \unlink($tempfile);
 
-    $this->assertSame(0, $exit_code, \implode("\n", $output));
-    $this->assertSame($result, 'OK!');
+    expect($exit_code)->toBeSame(0, \implode("\n", $output));
+    expect('OK!')->toBeSame($result);
 
     if ($relative_root) {
-      $this->assertContains(
-        "__DIR__.'/../extrafile.php'",
-        $contents,
-      );
+      expect($contents)->toContain("__DIR__.'/../extrafile.php'");
     } else {
-      $this->assertContains(
-        '\''.$root.'/extrafile.php\'',
-        $contents,
-      );
+      expect($contents)->toContain('\''.$root.'/extrafile.php\'');
     }
   }
 
@@ -90,6 +86,6 @@ final class RootImporterTest extends BaseTestCase {
     // suppporting it.
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root);
-    $this->assertNotNull($builder);
+    expect($builder)->toNotBeNull();
   }
 }

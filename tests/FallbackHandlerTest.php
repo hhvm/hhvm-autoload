@@ -12,13 +12,13 @@ namespace Facebook\AutoloadMap;
 
 use function Facebook\FBExpect\expect;
 
-final class FallbackHandlerTest extends \PHPUnit_Framework_TestCase {
-  public function setup(): void {
+final class FallbackHandlerTest extends \Facebook\HackTest\HackTest {
+  public async function beforeEachTestAsync(): Awaitable<void> {
     if (!\function_exists('Facebook\\AutoloadMap\\Generated\\build_id')) {
-      $this->markTestSkipped("Does not work with composer's autoloader");
+      static::markTestSkipped("Does not work with composer's autoloader");
     }
     if (!HHClientFallbackHandler::isEnabled()) {
-      $this->markTestSkipped("Fallback handler is not enabled");
+      static::markTestSkipped("Fallback handler is not enabled");
     }
   }
   

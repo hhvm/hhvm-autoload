@@ -9,8 +9,9 @@
  */
 
 namespace Facebook\AutoloadMap;
+use function Facebook\FBExpect\expect;
 
-final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
+final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   public function goodTestCases(
   ): array<string, array<array<string, mixed>>> {
     return [
@@ -28,17 +29,13 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     ];
   }
 
-  /**
-   * @dataProvider goodTestCases
-   */
+  <<DataProvider('goodTestCases')>>
   public function testDataLoader(array<string, mixed> $data): void {
     $config = ConfigurationLoader::fromData($data, '/dev/null');
     $this->assertGoodConfig($data, $config);
   }
 
-  /**
-   * @dataProvider goodTestCases
-   */
+  <<DataProvider('goodTestCases')>>
   public function testJSONLoader(array<string, mixed> $data): void {
     $config = ConfigurationLoader::fromJSON(
       \json_encode($data),
@@ -47,9 +44,7 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     $this->assertGoodConfig($data, $config);
   }
 
-  /**
-   * @dataProvider goodTestCases
-   */
+  <<DataProvider('goodTestCases')>>
   public function testFileLoader(array<string, mixed> $data): void {
     $fname = \tempnam(\sys_get_temp_dir(), 'testjson');
     try {
@@ -68,22 +63,21 @@ final class ConfigurationLoaderTest extends \PHPUnit_Framework_TestCase {
     array<string, mixed> $data,
     Config $config,
   ): void {
-    $this->assertEquals(
-      $data['roots'],
-      $config['roots']->toArray(),
-    );
+    expect(      $config['roots']->toArray(),
+)->toBePHPEqual(
+      $data['roots']    );
 
-    $this->assertNotNull(
-      AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
+    expect(      AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
+)->toNotBeNull(
     );
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if (is_array($value)) {
         $value = new ImmVector($value);
-        $this->assertEquals($value, $config[$key]);
+        expect($config[$key])->toBePHPEqual($value);
       } else {
-        $this->assertSame($value, $config[$key]);
+        expect($config[$key])->toBeSame($value);
       }
     }
   }
