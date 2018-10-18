@@ -10,6 +10,7 @@
 
 namespace Facebook\AutoloadMap;
 
+use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 final class ComposerImporterTest extends BaseTest {

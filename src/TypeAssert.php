@@ -16,7 +16,7 @@ function is_string(
   string $field,
 ): string {
   invariant(
-    \is_string($value),
+    $value is string,
     '%s should be a string',
     $field,
   );
@@ -31,7 +31,7 @@ function is_nullable_string(
     return null;
   }
   invariant(
-    \is_string($value),
+    $value is string,
     '%s should be a ?string',
     $field,
   );
@@ -46,7 +46,7 @@ function is_nullable_bool(
     return null;
   }
   invariant(
-    \is_bool($value),
+    $value is bool,
     '%s should be a ?bool',
     $field,
   );
@@ -65,7 +65,7 @@ function is_array_of_strings(
   $out = [];
   foreach ($value as $it) {
     invariant(
-      \is_string($it),
+      $it is string,
       '%s should be an array<string>',
       $field,
     );
@@ -90,7 +90,7 @@ function is_nullable_array_of_strings(
   $out = [];
   foreach ($value as $it) {
     invariant(
-      \is_string($it),
+      $it is string,
       '%s should be an ?array<string>',
       $field,
     );
@@ -129,7 +129,7 @@ function is_array_of_shapes_with_name_field(
   foreach ($value as $it) {
     invariant(\is_array($it), '%s', $msg);
     $name = $it['name'] ?? null;
-    invariant(\is_string($name), '%s', $msg);
+    invariant($name is string, '%s', $msg);
     $out[] = shape('name' => $name);
   }
   return $out;
