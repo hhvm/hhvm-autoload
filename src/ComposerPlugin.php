@@ -79,7 +79,7 @@ final class ComposerPlugin
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
       ->setFailureHandler($handler)
       ->setIsDev($event->isDevMode())
-      ->writeToFile($this->vendor.'/hh_autoload.php');
+      ->writeToFile($this->vendor.'/hh_autoload.hh');
   }
 
   private function debugMessage(\HH\string $message) {

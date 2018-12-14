@@ -91,7 +91,7 @@ final class GenerateScript {
       ? ($importer->getConfig()['devFailureHandler'] ?? null)
       : ($importer->getConfig()['failureHandler'] ?? null);
 
-    $file = getcwd().'/vendor/hh_autoload.php';
+    $file = getcwd().'/vendor/hh_autoload.hh';
     (new Writer())
       ->setBuilder($importer)
       ->setRoot(getcwd())

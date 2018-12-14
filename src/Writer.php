@@ -163,27 +163,33 @@ final class Writer {
       true,
     );
 
-    $map = \var_export($map, true);
+    $map = \var_export($map, true)
+      |> \str_replace('array (', 'darray[', $$)
+      |> \str_replace(')', ']', $$);
+    $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.php', true);
     $code = <<<EOF
-<?php
+<?hh
 
 /// Generated file, do not edit by hand ///
 
 namespace Facebook\AutoloadMap\Generated;
 
-function build_id() {
+require_once($autoload_map_typedef);
+
+function build_id(): string {
   return $build_id;
 }
 
-function root() {
+function root(): string {
   return $root;
 }
 
-function is_dev() {
+function is_dev(): bool {
   return $is_dev;
 }
 
-function map() {
+function map(): \Facebook\AutoloadMap\AutoloadMap {
+  /* HH_IGNORE_ERROR[4110] invalid return type */
   return $map;
 }
 
@@ -201,6 +207,14 @@ EOF;
     \file_put_contents(
       $destination_file,
       $code,
+    );
+
+    $legacy_file =
+      \dirname($destination_file).'/'.\basename($destination_file, '.hh').'.php';
+    $relative_file = \basename($destination_file);
+    \file_put_contents(
+      $legacy_file,
+      "<?hh\nrequire_once(__DIR__.'/$relative_file');\n",
     );
 
     return $this;
