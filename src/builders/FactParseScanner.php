@@ -103,7 +103,7 @@ final class FactParseScanner implements Builder {
         continue;
       }
       $ext = $info->getExtension();
-      if ($ext !== 'php' && $ext !== 'hh' && $ext !== 'xhp') {
+      if (!\in_array($ext, ['php', 'hh', 'hack', 'xhp', 'hck'])) {
         continue;
       }
       $paths[] = $info->getPathname();
