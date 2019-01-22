@@ -34,7 +34,7 @@ final class ComposerPlugin
   /** Initialize members */
   public function activate(Composer $composer, IOInterface $io) {
     $this->io = $io;
-    $vendor = $composer->getConfig()->get('vendor-dir', '/');
+    $vendor = $composer->getConfig()->get('vendor-dir');
 
     $this->vendor = $vendor;
     $this->root = dirname($vendor);
@@ -57,34 +57,7 @@ final class ComposerPlugin
    * Here we update our autoload map.
    */
   public function onPostAutoloadDump(Event $event) {
-    $this->debugMessage("Loading composer autoload");
-    require_once($this->vendor.'/autoload.php');
-
-    $this->debugMessage("Parsing tree");
-    $importer = new RootImporter(
-      $this->root,
-      $event->isDevMode()
-        ? IncludedRoots::DEV_AND_PROD
-        : IncludedRoots::PROD_ONLY
-    );
-
-    $handler = $event->isDevMode()
-      ? $importer->getConfig()['devFailureHandler']
-      : $importer->getConfig()['failureHandler'];
-
-    $this->debugMessage("Writing hh_autoload.php");
-    (new Writer())
-      ->setBuilder($importer)
-      ->setRoot($this->root)
-      ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
-      ->setFailureHandler($handler)
-      ->setIsDev($event->isDevMode())
-      ->writeToFile($this->vendor.'/hh_autoload.hh');
-  }
-
-  private function debugMessage(\HH\string $message) {
-    if ($this->io->isDebug()) {
-      $this->io->write('hhvm-autoload: '.$message);
-    }
+    $args = $event->isDevMode() ? '' : ' --no-dev';
+    shell_exec('hhvm '.escapeshellarg($this->vendor.'/bin/hh-autoload').$args);
   }
 }
