@@ -20,6 +20,8 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Composer\Util\ProcessExecutor;
+use Symfony\Component\Process\ExecutableFinder;
 
 /** Plugin for PHP composer to automatically update the autoload map whenever
  * dependencies are changed or updated.
@@ -58,6 +60,10 @@ final class ComposerPlugin
    */
   public function onPostAutoloadDump(Event $event) {
     $args = $event->isDevMode() ? '' : ' --no-dev';
-    shell_exec('hhvm '.escapeshellarg($this->vendor.'/bin/hh-autoload').$args);
+    $finder = new ExecutableFinder();
+    $hhvm = $finder->find('hhvm', 'hhvm');
+    $executor = new ProcessExecutor($this->io);
+    $command = $hhvm . ' ' . ProcessExecutor::escape($this->vendor.'/bin/hh-autoload') . $args;
+    $executor->execute($command);
   }
 }
