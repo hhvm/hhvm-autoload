@@ -166,7 +166,12 @@ final class Writer {
     $map = \var_export($map, true)
       |> \str_replace('array (', 'darray[', $$)
       |> \str_replace(')', ']', $$);
-    $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.php', true);
+
+    if ($this->relativeAutoloadRoot) {
+      $autoload_map_typedef = '__DIR__.\'/../\'.'.\var_export($this->relativePath(__DIR__.'/AutoloadMap.php'), true);
+    } else {
+      $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.php', true);
+    }
     $code = <<<EOF
 <?hh
 
