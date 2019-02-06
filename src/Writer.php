@@ -77,6 +77,20 @@ final class Writer {
     return $this;
   }
 
+  public function writeToDirectory(string $directory): this {
+    $this->writeToFile($directory.'/autoload.hack');
+    foreach (keyset['hh_autoload.php', 'hh_autoload.hh'] as $legacy_file) {
+      \file_put_contents(
+        $directory.'/'.$legacy_file,
+        "<?hh\n".
+        "require_once(__DIR__.'/autoload.hack');\n".
+        "Facebook\AutoloadMap\initialize();\n",
+      );
+    }
+
+    return $this;
+  }
+
   /** Write the file to disk.
    *
    * You will need to call these first:
@@ -148,7 +162,7 @@ final class Writer {
         "if (%s::isEnabled()) {\n".
         "  \$handler = new %s();\n".
         "  \$map['failure'] = [\$handler, 'handleFailure'];\n".
-        "  \HH\autoload_set_paths(\$map, root());\n".
+        "  \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());\n".
         "  \$handler->initialize();\n".
         "}",
         $failure_handler,
@@ -173,13 +187,16 @@ final class Writer {
       $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.php', true);
     }
     $code = <<<EOF
-<?hh
-
 /// Generated file, do not edit by hand ///
 
-namespace Facebook\AutoloadMap\Generated;
+namespace {
 
 require_once($autoload_map_typedef);
+$requires
+
+}
+
+namespace Facebook\AutoloadMap\Generated {
 
 function build_id(): string {
   return $build_id;
@@ -198,28 +215,31 @@ function map(): \Facebook\AutoloadMap\AutoloadMap {
   return $map;
 }
 
-$requires
+} // Generated\
 
-\$map = map();
+namespace Facebook\AutoloadMap {
 
-\HH\autoload_set_paths(\$map, root());
-foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
-  \spl_autoload_unregister(\$autoloader);
+function initialize(): void {
+  static \$first_time = true;
+  if (!\$first_time) {
+    return;
+  }
+  \$first_time = false;
+  \$map = Generated\\map();
+
+  \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());
+  foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
+    \spl_autoload_unregister(\$autoloader);
+  }
+
+  $add_failure_handler
 }
 
-$add_failure_handler
+}
 EOF;
     \file_put_contents(
       $destination_file,
       $code,
-    );
-
-    $legacy_file =
-      \dirname($destination_file).'/'.\basename($destination_file, '.hh').'.php';
-    $relative_file = \basename($destination_file);
-    \file_put_contents(
-      $legacy_file,
-      "<?hh\nrequire_once(__DIR__.'/$relative_file');\n",
     );
 
     return $this;

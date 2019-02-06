@@ -118,15 +118,14 @@ final class GenerateScript {
       ? ($importer->getConfig()['devFailureHandler'] ?? null)
       : ($importer->getConfig()['failureHandler'] ?? null);
 
-    $file = \getcwd().'/vendor/hh_autoload.hh';
     (new Writer())
       ->setBuilder($importer)
       ->setRoot(\getcwd())
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
       ->setFailureHandler(/* HH_IGNORE_ERROR[4110] */ $handler)
       ->setIsDev($options['dev'])
-      ->writeToFile($file);
-    print($file."\n");
+      ->writeToDirectory(\getcwd().'/vendor/');
+    print(\getcwd().'/vendor/autoload.hack');
   }
 
   private static function printUsage(
