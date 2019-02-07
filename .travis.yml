@@ -1,6 +1,5 @@
 language: php
 php:
- - hhvm
  - hhvm-nightly
 script:
  - ./.travis.sh
