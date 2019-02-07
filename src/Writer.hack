@@ -184,7 +184,7 @@ final class Writer {
       $autoload_map_typedef =
         '__DIR__.\'/../\'.'.\var_export($this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
     } else {
-      $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.php', true);
+      $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.hack', true);
     }
     $code = <<<EOF
 /// Generated file, do not edit by hand ///
