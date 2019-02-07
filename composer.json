@@ -17,19 +17,8 @@
     "facebook/fbexpect": "^2.1"
   },
   "autoload": {
-    "classmap": [
-      "src/Writer.php",
-      "src/"
-    ],
     "files": [
-      "src/AutoloadMap.php",
-      "src/Config.php",
-      "src/TypeAssert.php"
-    ]
-  },
-  "autoload-dev": {
-    "classmap": [
-      "tests/"
+      "src/ComposerPlugin.php"
     ]
   },
   "extra": {

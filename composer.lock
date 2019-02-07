@@ -43,21 +43,21 @@
         },
         {
             "name": "facebook/fbexpect",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/fbexpect.git",
-                "reference": "22b9d59d9ab5e22a07e66fe1d07ba8d0472ae49b"
+                "reference": "9b3dd2ac8ff5031583459a1d129ad80e3ef8b284"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/22b9d59d9ab5e22a07e66fe1d07ba8d0472ae49b",
-                "reference": "22b9d59d9ab5e22a07e66fe1d07ba8d0472ae49b",
+                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/9b3dd2ac8ff5031583459a1d129ad80e3ef8b284",
+                "reference": "9b3dd2ac8ff5031583459a1d129ad80e3ef8b284",
                 "shasum": ""
             },
             "require": {
                 "facebook/difflib": "^1.0.0",
-                "hhvm": "^3.28",
+                "hhvm": "^3.28|^4.0",
                 "hhvm/hacktest": "^1.0",
                 "hhvm/hhvm-autoload": "^1.6",
                 "hhvm/hsl": "^3.26"
@@ -68,7 +68,7 @@
                 "MIT"
             ],
             "description": "Unit test helpers for Facebook projects",
-            "time": "2018-11-29T21:04:58+00:00"
+            "time": "2019-02-06T21:14:37+00:00"
         },
         {
             "name": "facebook/hh-clilib",
