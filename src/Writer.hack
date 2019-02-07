@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Str;
+
 /** Class to write `autoload.hack`.
  *
  * This includes:
@@ -181,8 +183,13 @@ final class Writer {
       |> \str_replace(')', ']', $$);
 
     if ($this->relativeAutoloadRoot) {
-      $autoload_map_typedef =
-        '__DIR__.\'/../\'.'.\var_export($this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
+      try {
+        $autoload_map_typedef =
+          '__DIR__.\'/../'.\var_export($this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
+      } catch (\Exception $_) {
+        // Our unit tests need to load it, and are rooted in the tests/ subdir
+        $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.hack', true);
+      }
     } else {
       $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.hack', true);
     }
@@ -254,13 +261,13 @@ EOF;
       throw new Exception('Call setRoot() before writeToFile()');
     }
     $path = \realpath($path);
-    if (\strpos($path, $root) !== 0) {
-      throw new Exception(
-        "%s is outside root %s",
-        $path,
-        $root,
-      );
+    if (Str\starts_with($path, $root)) {
+      return Str\slice($path, Str\length($root) + 1);
     }
-    return \substr($path, \strlen($root) + 1);
+    throw new Exception(
+      "%s is outside root %s",
+      $path,
+      $root,
+    );
   }
 }

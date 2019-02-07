@@ -46,7 +46,7 @@ final class RootImporterTest extends BaseTest {
     $root = __DIR__.'/fixtures/hh-only';
     $builder = new RootImporter($root, $included_roots);
     $tempdir = $relative_root ? $root.'/vendor' : \sys_get_temp_dir();
-    $tempfile = \tempnam($tempdir, 'hh_autoload');
+    $tempfile = \tempnam($tempdir, 'hh_autoload.tmp.').'.hack';
     (new Writer())
       ->setBuilder($builder)
       ->setRoot($root)

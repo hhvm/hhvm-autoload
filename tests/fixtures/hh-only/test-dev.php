@@ -11,6 +11,7 @@
 namespace Facebook\AutoloadMap\TestFixtures;
 
 require($argv[1]);
+\Facebook\AutoloadMap\initialize();
 
 $x = new ExampleClass();
 example_function();

@@ -32,17 +32,6 @@ final class ComposerImporterTest extends BaseTest {
       ),
     );
     expect($importer->getFiles())->toBeEmpty();
-
-    $map = $importer->getAutoloadMap();
-    expect(idx($map['class'], 'facebook\autoloadmap\exception'))->toBeSame(
-      $root.'/src/Exception.php',
-    );
-    expect(idx($map['class'], 'facebook\autoloadmap\writer'))->toBeSame(
-      $root.'/src/Writer.php',
-    );
-    expect(idx($map['type'], 'facebook\autoloadmap\config'))->toBeSame(
-      $root.'/src/Config.php',
-    );
   }
 
   <<DataProvider('getParsers')>>
@@ -65,7 +54,7 @@ final class ComposerImporterTest extends BaseTest {
 
     $map = $importer->getAutoloadMap();
     expect($map['type'])->toBeEmpty();
-    expect($importer->getFiles())->toContain($root.'/src/AutoloadMap.php');
+    expect($importer->getFiles())->toContain($root.'/src/ComposerPlugin.php');
   }
 
   <<DataProvider('getParsers')>>
