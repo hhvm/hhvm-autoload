@@ -1,4 +1,3 @@
-<?hh // strict
 /*
  *  Copyright (c) 2015-present, Facebook, Inc.
  *  All rights reserved.
@@ -10,6 +9,10 @@
 
 namespace Facebook\AutoloadMap;
 
-/** Exception raised when the configuration file is invalid. */
-final class ConfigurationException extends Exception {
+/** How to autoload files that composer is told to always require. */
+enum AutoloadFilesBehavior: string {
+  /** Scan the files for autoloadable definitions */
+  FIND_DEFINITIONS = 'scan';
+  /** Always require the files */
+  EXEC_FILES = 'exec';
 }
