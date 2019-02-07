@@ -125,7 +125,7 @@ final class GenerateScript {
       ->setFailureHandler(/* HH_IGNORE_ERROR[4110] */ $handler)
       ->setIsDev($options['dev'])
       ->writeToDirectory(\getcwd().'/vendor/');
-    print(\getcwd().'/vendor/autoload.hack');
+    print(\getcwd()."/vendor/autoload.hack\n");
   }
 
   private static function printUsage(
