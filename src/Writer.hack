@@ -185,7 +185,7 @@ final class Writer {
     if ($this->relativeAutoloadRoot) {
       try {
         $autoload_map_typedef =
-          '__DIR__.\'/../'.\var_export($this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
+          '__DIR__.'.\var_export('/../'.$this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
       } catch (\Exception $_) {
         // Our unit tests need to load it, and are rooted in the tests/ subdir
         $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.hack', true);
