@@ -17,7 +17,7 @@
     "facebook/fbexpect": "^2.1"
   },
   "autoload": {
-    "files": [
+    "classmap": [
       "src/ComposerPlugin.php"
     ]
   },
@@ -26,7 +26,7 @@
       "Facebook\\AutoloadMap\\ComposerPlugin"
     ],
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "2.x-dev"
     }
   }
 }
