@@ -54,7 +54,9 @@ final class ComposerImporterTest extends BaseTest {
 
     $map = $importer->getAutoloadMap();
     expect($map['type'])->toBeEmpty();
-    expect($importer->getFiles())->toContain($root.'/src/ComposerPlugin.php');
+    expect($importer->getAutoloadMap()['class'])->toContainKey(
+      "facebook\\autoloadmap\\composerplugin",
+    );
   }
 
   <<DataProvider('getParsers')>>
