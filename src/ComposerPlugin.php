@@ -63,7 +63,7 @@ final class ComposerPlugin
     $finder = new ExecutableFinder();
     $hhvm = $finder->find('hhvm', 'hhvm');
     $executor = new ProcessExecutor($this->io);
-    $command = $hhvm . ' ' . ProcessExecutor::escape($this->vendor.'/bin/hh-autoload') . $args;
+    $command = $hhvm . ' ' . ProcessExecutor::escape($this->vendor.'/bin/hh-autoload.hack') . $args;
     $executor->execute($command);
   }
 }
