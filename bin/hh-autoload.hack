@@ -19,9 +19,28 @@ final class GenerateScript {
 
   private static function initBootstrapAutoloader(): void {
     // NO HSL HERE - autoloader is not yet initialized
+    $hsl_root = \getcwd().'/vendor/hhvm/hsl';
+    if (!file_exists($hsl_root)) {
+      // the HSL uses hhvm-autoload, but then the HSL is the root project,
+      // not in vendor/
+      $hsl_root = \getcwd();
+    }
+    $have_hsl = \file_get_contents($hsl_root.'/composer.json')
+      |> \json_decode(
+        $$,
+        /* assoc = */ true,
+        /* depth = */ 10,
+        \JSON_FB_HACK_ARRAYS,
+      )
+      |> $$['name'] ?? null
+      |> $$ === 'hhvm/hsl';
+    if (!$have_hsl) {
+      \fwrite(\STDERR, "Unable to find the Hack Standard Library");
+      exit(1);
+    }
     $roots = vec[
-      \realpath(__DIR__.'/..//src'),
-      \getcwd().'/vendor/hhvm/hsl/src',
+      \realpath(__DIR__.'/../src'),
+      $hsl_root.'/src',
     ];
     $paths = varray[];
     foreach ($roots as $root) {
