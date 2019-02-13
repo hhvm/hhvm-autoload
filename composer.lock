@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db799a53985bc6d56d7186f353a29e4b",
-    "packages": [],
+    "content-hash": "c8c6b26252098ca28018d908d3a8c780",
+    "packages": [
+        {
+            "name": "hhvm/hsl",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/hsl.git",
+                "reference": "862e91698a121f6d57786dafa7ccdbfdd50ea3c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/862e91698a121f6d57786dafa7ccdbfdd50ea3c2",
+                "reference": "862e91698a121f6d57786dafa7ccdbfdd50ea3c2",
+                "shasum": ""
+            },
+            "require": {
+                "hhvm": "^4.0"
+            },
+            "require-dev": {
+                "facebook/fbexpect": "^2.0.0",
+                "hhvm/hacktest": "^1.0",
+                "hhvm/hhvm-autoload": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Hack Standard Library",
+            "time": "2019-02-08T21:25:25+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "facebook/difflib",
@@ -149,41 +185,6 @@
             ],
             "description": "The Hack Test Library",
             "time": "2019-02-09T02:45:13+00:00"
-        },
-        {
-            "name": "hhvm/hsl",
-            "version": "v4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hhvm/hsl.git",
-                "reference": "862e91698a121f6d57786dafa7ccdbfdd50ea3c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hsl/zipball/862e91698a121f6d57786dafa7ccdbfdd50ea3c2",
-                "reference": "862e91698a121f6d57786dafa7ccdbfdd50ea3c2",
-                "shasum": ""
-            },
-            "require": {
-                "hhvm": "^4.0"
-            },
-            "require-dev": {
-                "facebook/fbexpect": "^2.0.0",
-                "hhvm/hacktest": "^1.0",
-                "hhvm/hhvm-autoload": "^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "The Hack Standard Library",
-            "time": "2019-02-08T21:25:25+00:00"
         },
         {
             "name": "hhvm/hsl-experimental",

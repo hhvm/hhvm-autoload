@@ -10,7 +10,8 @@
   ],
   "require": {
     "composer-plugin-api": "^1.0",
-    "hhvm": "^4.0"
+    "hhvm": "^4.0",
+    "hhvm/hsl": "^4.0"
   },
   "require-dev": {
     "hhvm/hacktest": "^1.0",
