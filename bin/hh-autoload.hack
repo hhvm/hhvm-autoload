@@ -20,7 +20,7 @@ final class GenerateScript {
   private static function initBootstrapAutoloader(): void {
     // NO HSL HERE - autoloader is not yet initialized
     $hsl_root = \getcwd().'/vendor/hhvm/hsl';
-    if (!file_exists($hsl_root)) {
+    if (!\file_exists($hsl_root)) {
       // the HSL uses hhvm-autoload, but then the HSL is the root project,
       // not in vendor/
       $hsl_root = \getcwd();
