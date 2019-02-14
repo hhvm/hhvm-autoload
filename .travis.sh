@@ -16,4 +16,4 @@ cat vendor/autoload.hack
 hh_client
 hhvm vendor/bin/hacktest tests/*.hack
 ENABLE_HH_CLIENT_AUTOLOAD=true hhvm vendor/bin/hacktest \
-  tests/FallbackHandlerTest.php
+  tests/FallbackHandlerTest.hack
