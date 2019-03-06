@@ -83,7 +83,7 @@ final class Writer {
     foreach (keyset['hh_autoload.php', 'hh_autoload.hh'] as $legacy_file) {
       \file_put_contents(
         $directory.'/'.$legacy_file,
-        "<?hh\n".
+        "<?hh // partial\n".
         "require_once(__DIR__.'/autoload.hack');\n".
         "Facebook\AutoloadMap\initialize();\n",
       );
