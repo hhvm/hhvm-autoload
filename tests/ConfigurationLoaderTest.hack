@@ -13,8 +13,7 @@ use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
-  public function goodTestCases(
-  ): array<string, array<array<string, mixed>>> {
+  public function goodTestCases(): array<string, array<array<string, mixed>>> {
     return [
       'fully specified' => [[
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
@@ -24,9 +23,7 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
         'roots' => ['foo/', 'bar/'],
         'parser' => 'ext-factparse',
       ]],
-      'just roots' => [[
-        'roots' => ['foo/', 'bar/'],
-      ]],
+      'just roots' => [['roots' => ['foo/', 'bar/']]],
     ];
   }
 
@@ -38,10 +35,7 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
 
   <<DataProvider('goodTestCases')>>
   public function testJSONLoader(array<string, mixed> $data): void {
-    $config = ConfigurationLoader::fromJSON(
-      \json_encode($data),
-      '/dev/null',
-    );
+    $config = ConfigurationLoader::fromJSON(\json_encode($data), '/dev/null');
     $this->assertGoodConfig($data, $config);
   }
 
@@ -49,10 +43,7 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   public function testFileLoader(array<string, mixed> $data): void {
     $fname = \tempnam(\sys_get_temp_dir(), 'testjson');
     try {
-      \file_put_contents(
-        $fname,
-        \json_encode($data),
-      );
+      \file_put_contents($fname, \json_encode($data));
       $config = ConfigurationLoader::fromFile($fname);
       $this->assertGoodConfig($data, $config);
     } finally {
@@ -64,17 +55,14 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
     array<string, mixed> $data,
     Config $config,
   ): void {
-    expect(      $config['roots']->toArray(),
-)->toBePHPEqual(
-      $data['roots']    );
+    expect($config['roots']->toArray())->toBePHPEqual($data['roots']);
 
-    expect(      AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior'])
-)->toNotBeNull(
-    );
+    expect(AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior']))
+      ->toNotBeNull();
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
-      if (is_array($value)) {
+      if (\is_array($value)) {
         $value = new ImmVector($value);
         expect($config[$key])->toBePHPEqual($value);
       } else {

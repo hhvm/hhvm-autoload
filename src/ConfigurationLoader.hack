@@ -30,7 +30,7 @@ abstract final class ConfigurationLoader {
   public static function fromJSON(string $json, string $path): Config {
     $decoded = \json_decode($json, /* as array = */ true);
     invariant(
-      is_array($decoded),
+      \is_array($decoded),
       'Expected configuration file to contain a JSON object, got %s',
       \gettype($decoded),
     );

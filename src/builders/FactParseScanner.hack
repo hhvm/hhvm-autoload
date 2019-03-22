@@ -26,7 +26,7 @@ final class FactParseScanner implements Builder {
     mixed $data,
   ): self::TFacts {
     invariant(
-      is_array($data),
+      \is_array($data),
       'FactsParse did not give us an array',
     );
 

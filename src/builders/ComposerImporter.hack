@@ -138,9 +138,9 @@ final class ComposerImporter implements Builder {
   ): array<string, array<string>> {
     $out = [];
     foreach ($roots as $k => $v) {
-      if (is_string($v)) {
+      if ($v is string) {
         $out[$k][] = $v;
-      } else if (is_array($v)) {
+      } else if (\is_array($v)) {
         foreach ($v as $w) {
           $out[$k][] = $w;
         }
