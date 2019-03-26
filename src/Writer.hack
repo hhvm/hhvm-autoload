@@ -224,14 +224,19 @@ function map(): \Facebook\AutoloadMap\AutoloadMap {
 
 } // Generated\
 
+namespace Facebook\AutoloadMap\_Private {
+  final class GlobalState {
+    public static bool \$initialized = false;
+  }
+}
+
 namespace Facebook\AutoloadMap {
 
 function initialize(): void {
-  static \$first_time = true;
-  if (!\$first_time) {
+  if (_Private\GlobalState::\$initialized) {
     return;
   }
-  \$first_time = false;
+  _Private\GlobalState::\$initialized = true;
   \$map = Generated\\map();
 
   \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());

@@ -7,3 +7,4 @@ disallow_destruct = true
 disallow_stringish_magic = true
 disable_primitive_refinement = true
 user_attributes=
+disable_static_local_variables = true

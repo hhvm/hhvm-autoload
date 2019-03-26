@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\C;
+
 /**
  * If a class/function/type isn't in the map, ask `hh_client` where it is.
  *
@@ -182,15 +184,16 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->requireFile($file);
   }
 
+  static dict<string, ?string> $cache = dict[];
+
   private function lookupPath(string $kind, string $name): ?string {
-    static $cache = Map {};
     $key = $kind.'!'.$name;
-    if ($cache->containsKey($key)) {
-      return $cache[$key];
+    if (C\contains_key(static::$cache, $key)) {
+      return static::$cache[$key];
     }
 
     $path = $this->lookupPathImpl($kind, $name);
-    $cache[$key] = $path;
+    static::$cache[$key] = $path;
 
     if ($path === null) {
       return $path;
