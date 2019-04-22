@@ -1,3 +1,4 @@
 *.swp
 /vendor/
 hh_autoload.tmp.*
+composer.lock
