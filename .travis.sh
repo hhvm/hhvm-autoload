@@ -17,6 +17,6 @@ composer install
 bin/hh-autoload
 cat vendor/autoload.hack
 hh_client
-hhvm vendor/bin/hacktest tests/*.hack
-ENABLE_HH_CLIENT_AUTOLOAD=true hhvm vendor/bin/hacktest \
+vendor/bin/hacktest tests/*.hack
+ENABLE_HH_CLIENT_AUTOLOAD=true vendor/bin/hacktest \
   tests/FallbackHandlerTest.hack
