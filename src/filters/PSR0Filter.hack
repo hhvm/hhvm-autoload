@@ -25,7 +25,8 @@ final class PSR0Filter extends BasePSRFilter {
     // Underscores in namespace parts must be ignored, but those in the class
     // name need to be converted.
     $namespace = '';
-    if (($last_namespace_sep = \strrpos($class_name, '/')) !== false) {
+    $last_namespace_sep = \strrpos($class_name, '/');
+    if ($last_namespace_sep !== false) {
       $namespace = \substr($class_name, 0, $last_namespace_sep + 1);
       $class_name = \substr($class_name, $last_namespace_sep + 1);
     }
