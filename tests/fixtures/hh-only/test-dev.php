@@ -10,7 +10,7 @@
 
 namespace Facebook\AutoloadMap\TestFixtures;
 
-require($argv[1]);
+/* HH_FIXME[1002] HHAST: move to <<__EntryPoint>> function */ require($argv[1]);
 \Facebook\AutoloadMap\initialize();
 
 $x = new ExampleClass();

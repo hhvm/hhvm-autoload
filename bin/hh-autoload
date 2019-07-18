@@ -10,9 +10,11 @@
 
 namespace Facebook\AutoloadMap;
 
-require_once(__DIR__.'/hh-autoload.hack');
-
 <<__EntryPoint>>
 function cli_main_UNSAFE(): noreturn {
+  (() ==> {
+    // HHAST-generated to avoid pseudomain local leaks
+    require_once(__DIR__.'/hh-autoload.hack');
+  })();
   cli_main();
 }
