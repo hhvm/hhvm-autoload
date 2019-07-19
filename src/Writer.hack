@@ -196,13 +196,6 @@ final class Writer {
     $code = <<<EOF
 /// Generated file, do not edit by hand ///
 
-namespace {
-
-require_once($autoload_map_typedef);
-$requires
-
-}
-
 namespace Facebook\AutoloadMap\Generated {
 
 function build_id(): string {
@@ -228,6 +221,11 @@ namespace Facebook\AutoloadMap\_Private {
   final class GlobalState {
     public static bool \$initialized = false;
   }
+
+  function bootstrap(): void {
+    require_once($autoload_map_typedef);
+    $requires
+  }
 }
 
 namespace Facebook\AutoloadMap {
@@ -237,6 +235,7 @@ function initialize(): void {
     return;
   }
   _Private\GlobalState::\$initialized = true;
+  _Private\bootstrap();
   \$map = Generated\\map();
 
   \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());
