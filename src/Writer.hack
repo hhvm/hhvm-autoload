@@ -206,8 +206,13 @@ function root(): string {
   return $root;
 }
 
+<<__Memoize>>
 function is_dev(): bool {
-  return $is_dev;
+  \$override = \getenv('HH_FORCE_IS_DEV');
+  if (\$override === false) {
+    return $is_dev;
+  }
+  return (bool) \$override;
 }
 
 function map(): \Facebook\AutoloadMap\AutoloadMap {
