@@ -225,7 +225,7 @@ class HHClientFallbackHandler extends FailureHandler {
 
     $exit_code = null;
     $output = array();
-    $last = \exec($cmd, &$output, &$exit_code);
+    $last = \exec($cmd, inout $output, inout $exit_code);
     if ($exit_code !== 0) {
       return null;
     }

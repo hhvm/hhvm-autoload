@@ -66,7 +66,7 @@ final class RootImporterTest extends BaseTest {
 
     $output = [];
     $exit_code = null;
-    $result = \exec($cmd, &$output, &$exit_code);
+    $result = \exec($cmd, inout $output, inout $exit_code);
 
     $contents = \file_get_contents($tempfile);
     \unlink($tempfile);
