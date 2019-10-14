@@ -136,7 +136,7 @@ final class ComposerImporter implements Builder {
   private static function normalizePSRRoots(
     array<string, mixed> $roots,
   ): array<string, array<string>> {
-    $out = [];
+    $out = darray[];
     foreach ($roots as $k => $v) {
       if ($v is string) {
         $out[$k][] = $v;

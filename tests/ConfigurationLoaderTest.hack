@@ -14,16 +14,16 @@ use function Facebook\FBExpect\expect;
 
 final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   public function goodTestCases(): array<string, array<array<string, mixed>>> {
-    return [
-      'fully specified' => [[
+    return darray[
+      'fully specified' => varray[darray[
         'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
         'relativeAutoloadRoot' => false,
         'includeVendor' => false,
-        'extraFiles' => [],
-        'roots' => ['foo/', 'bar/'],
+        'extraFiles' => varray[],
+        'roots' => varray['foo/', 'bar/'],
         'parser' => 'ext-factparse',
       ]],
-      'just roots' => [['roots' => ['foo/', 'bar/']]],
+      'just roots' => varray[darray['roots' => varray['foo/', 'bar/']]],
     ];
   }
 

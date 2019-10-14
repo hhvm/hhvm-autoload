@@ -28,7 +28,7 @@ final class RootImporterTest extends BaseTest {
   }
 
   public function provideTestModes(): array<(IncludedRoots, string, bool)> {
-    return [
+    return varray[
       tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', true),
       tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', false),
       tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php', true),
@@ -64,7 +64,7 @@ final class RootImporterTest extends BaseTest {
     )->map($x ==> \escapeshellarg($x));
     $cmd = \implode(' ', $cmd);
 
-    $output = [];
+    $output = varray[];
     $exit_code = null;
     $result = \exec($cmd, inout $output, inout $exit_code);
 

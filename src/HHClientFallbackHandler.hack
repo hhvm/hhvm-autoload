@@ -148,7 +148,7 @@ class HHClientFallbackHandler extends FailureHandler {
     if ($file === null) {
       if (\substr($name, 0, 4) === 'xhp_') {
         $xhp_name =
-          ':'.\str_replace(array('__', '_'), array(':', '-'), \substr($name, 4));
+          ':'.\str_replace(varray['__', '_'], varray[':', '-'], \substr($name, 4));
         $file = $this->lookupPath('class', $xhp_name);
       }
 
@@ -224,7 +224,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $cmd = \implode(' ', $cmd);
 
     $exit_code = null;
-    $output = array();
+    $output = varray[];
     $last = \exec($cmd, inout $output, inout $exit_code);
     if ($exit_code !== 0) {
       return null;
