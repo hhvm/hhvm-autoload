@@ -162,7 +162,7 @@ final class Writer {
       $add_failure_handler = \sprintf(
         "if (%s::isEnabled()) {\n".
         "  \$handler = new %s();\n".
-        "  \$map['failure'] = [\$handler, 'handleFailure'];\n".
+        "  \$map['failure'] = varray[\$handler, 'handleFailure'];\n".
         "  \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());\n".
         "  \$handler->initialize();\n".
         "}",
@@ -244,7 +244,7 @@ function initialize(): void {
   \$map = Generated\\map();
 
   \HH\autoload_set_paths(/* HH_FIXME[4110] */ \$map, Generated\\root());
-  foreach (\spl_autoload_functions() ?: [] as \$autoloader) {
+  foreach (\spl_autoload_functions() ?: varray[] as \$autoloader) {
     \spl_autoload_unregister(\$autoloader);
   }
 
