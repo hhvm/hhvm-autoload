@@ -7,7 +7,7 @@ Usage
 
 1. Add an `hh_autoload.json` file (see section below) and optionally remove your configuration from composer.json
 2. `composer require hhvm/hhvm-autoload`
-3. Replace any references to `vendor/autoload.php` with  `vendor/hh_autoload.hack` and call `Facebook\AutoloadMap\initialize()`
+3. Replace any references to `vendor/autoload.php` with  `vendor/autoload.hack` and call `Facebook\AutoloadMap\initialize()`
 4. To re-generate the map, run `vendor/bin/hh-autoload`, `composer dump-autoload`, or any other command that generates the map
 
 Configuration (`hh_autoload.json`)
@@ -25,9 +25,9 @@ This will look for autoloadable definitions in `src/`, and also look in `vendor/
 
 The following settings are optional:
 
- - `"extraFiles": ["file1.hack"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/hh_autoload.hh`. This should be needed much less frequently than under Composer
- - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/hh_autoload.hh`
- - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/hh_autoload.hh` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
+ - `"extraFiles": ["file1.hack"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/autoload.hack`. This should be needed much less frequently than under Composer
+ - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/autoload.hack`
+ - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/autoload.hack` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
  - `"devRoots": [ "path/", ...]` - additional roots to only include in dev mode, not when installed as a dependency.
  - `"relativeAutoloadRoot": false` - do not use a path relative to `__DIR__` for autoloading. Instead, use the path to the folder containing `hh_autoload.json` when building the autoload map.
  - `"failureHandler:" classname<Facebook\AutoloadMap\FailureHandler>` - use the specified class to handle definitions that aren't the Map. Your handler will not be invoked for functions or constants
