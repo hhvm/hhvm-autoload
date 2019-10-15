@@ -39,7 +39,7 @@ abstract final class Merger {
   private static function mergeImpl(
     Iterable<array<string, string>> $maps,
   ): array<string, string> {
-    $out = [];
+    $out = darray[];
     foreach ($maps as $map) {
       foreach ($map as $def => $file) {
         $out[$def] = $file;

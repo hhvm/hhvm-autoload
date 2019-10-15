@@ -64,7 +64,7 @@ abstract final class ConfigurationLoader {
         TypeAssert\is_nullable_array_of_strings(
           $data['devRoots'] ?? null,
           'devRoots',
-        ) ?? [],
+        ) ?? varray[],
       ),
       'autoloadFilesBehavior' => TypeAssert\is_nullable_enum(
         AutoloadFilesBehavior::class,
@@ -83,7 +83,7 @@ abstract final class ConfigurationLoader {
         TypeAssert\is_nullable_array_of_strings(
           $data['extraFiles'] ?? null,
           'extraFiles',
-        ) ?? [],
+        ) ?? varray[],
       ),
       'parser' => TypeAssert\is_nullable_enum(
         Parser::class,

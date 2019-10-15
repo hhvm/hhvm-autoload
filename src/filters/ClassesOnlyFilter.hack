@@ -27,9 +27,9 @@ final class ClassesOnlyFilter implements Builder {
   public function getAutoloadMap(): AutoloadMap {
     return shape(
       'class' => $this->source->getAutoloadMap()['class'],
-      'function' => [],
-      'type' => [],
-      'constant' => [],
+      'function' => darray[],
+      'type' => darray[],
+      'constant' => darray[],
     );
   }
 }

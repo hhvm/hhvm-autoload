@@ -26,7 +26,7 @@ final class ScannerTest extends BaseTest {
     )->getAutoloadMap();
 
     $this->assertMapMatches(
-      [
+      darray[
         'ExampleClassInHH' => 'class_in_hh.hh',
         'ExampleClass' => 'class.php',
         'ExampleEnum' => 'enum.php',
@@ -36,12 +36,12 @@ final class ScannerTest extends BaseTest {
     );
 
     $this->assertMapMatches(
-      [ 'example_function' => 'function.php' ],
+      darray[ 'example_function' => 'function.php' ],
       $map['function'],
     );
 
     $this->assertMapMatches(
-      [
+      darray[
         'ExampleType' => 'type.php',
         'ExampleNewtype' => 'newtype.php',
       ],
@@ -49,7 +49,7 @@ final class ScannerTest extends BaseTest {
     );
 
     $this->assertMapMatches(
-      [
+      darray[
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
           => 'constant.php',
       ],
@@ -84,7 +84,7 @@ final class ScannerTest extends BaseTest {
     expect($map['function'])->toBeEmpty();
     expect($map['type'])->toBeEmpty();
     $this->assertMapMatches(
-      [
+      darray[
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
           => 'constant.php',
       ],

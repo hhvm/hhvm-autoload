@@ -61,7 +61,7 @@ function is_array_of_strings(
     '%s should be an array<string>',
     $field,
   );
-  $out = [];
+  $out = varray[];
   foreach ($value as $it) {
     invariant(
       $it is string,
@@ -86,7 +86,7 @@ function is_nullable_array_of_strings(
     '%s should be an ?array<string>',
     $field,
   );
-  $out = [];
+  $out = varray[];
   foreach ($value as $it) {
     invariant(
       $it is string,
@@ -124,7 +124,7 @@ function is_array_of_shapes_with_name_field(
   $msg = $field.
     'should be an array<shape(\'name\' => string)>';
   invariant(\is_array($value), '%s', $msg);
-  $out = [];
+  $out = varray[];
   foreach ($value as $it) {
     invariant(\is_array($it), '%s', $msg);
     $name = $it['name'] ?? null;

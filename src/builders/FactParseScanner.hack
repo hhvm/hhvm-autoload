@@ -30,7 +30,7 @@ final class FactParseScanner implements Builder {
       'FactsParse did not give us an array',
     );
 
-    $out = array();
+    $out = darray[];
     foreach ($data as $file => $facts) {
       invariant(
         \is_string($file),
@@ -122,10 +122,10 @@ final class FactParseScanner implements Builder {
     );
     $facts = self::untypedToShape($facts);
 
-    $classes = [];
-    $functions = [];
-    $types = [];
-    $constants = [];
+    $classes = darray[];
+    $functions = darray[];
+    $types = darray[];
+    $constants = darray[];
     foreach ($facts as $file => $file_facts) {
       foreach ($file_facts['types'] as $type) {
         $classes[\strtolower($type['name'])] = $file;

@@ -67,9 +67,9 @@ abstract class BasePSRFilter implements Builder {
 
     return shape(
       'class' => $classes->toArray(),
-      'function' => [],
-      'type' => [],
-      'constant' => [],
+      'function' => darray[],
+      'type' => darray[],
+      'constant' => darray[],
     );
   }
 }
