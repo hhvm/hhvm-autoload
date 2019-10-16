@@ -16,19 +16,16 @@ namespace Facebook\AutoloadMap;
  * `vendor/` that are designed for use with `hhvm-autoload`.
  */
 final class HHImporter implements Builder {
-  private Vector<Builder> $builders = Vector { };
-  private Vector<string> $files = Vector { };
+  private Vector<Builder> $builders = Vector {};
+  private Vector<string> $files = Vector {};
   private Config $config;
 
-  public function __construct(
-    string $root,
-    IncludedRoots $included_roots,
-  ) {
+  public function __construct(string $root, IncludedRoots $included_roots) {
     $config_file = $root.'/hh_autoload.json';
     if (!\file_exists($config_file)) {
-      $roots = (ImmVector { 'src', 'lib' })
+      $roots = (ImmVector {'src', 'lib'})
         ->filter($x ==> \is_dir($root.'/'.$x));
-      $dev_roots = (ImmVector { 'test', 'tests', 'examples', 'example' })
+      $dev_roots = (ImmVector {'test', 'tests', 'examples', 'example'})
         ->filter($x ==> \is_dir($root.'/'.$x));
       \file_put_contents(
         $config_file,
@@ -39,7 +36,8 @@ final class HHImporter implements Builder {
             'devFailureHandler' => HHClientFallbackHandler::class,
           ),
           \JSON_PRETTY_PRINT,
-        )."\n",
+        ).
+        "\n",
       );
       \fprintf(
         \STDERR,
@@ -56,7 +54,7 @@ final class HHImporter implements Builder {
     $config = ConfigurationLoader::fromFile($config_file);
     $this->config = $config;
 
-    switch($included_roots) {
+    switch ($included_roots) {
       case IncludedRoots::PROD_ONLY:
         $roots = $config['roots'];
         break;
@@ -69,10 +67,7 @@ final class HHImporter implements Builder {
       if ($tree[0] !== '/') {
         $tree = $root.'/'.$tree;
       }
-      $this->builders[] = Scanner::fromTree(
-        $tree,
-        $config['parser'],
-      );
+      $this->builders[] = Scanner::fromTree($tree, $config['parser']);
     }
 
     foreach ($config['extraFiles'] as $file) {
@@ -85,12 +80,12 @@ final class HHImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders->map($builder ==> $builder->getAutoloadMap())
+      $this->builders->map($builder ==> $builder->getAutoloadMap()),
     );
   }
 
   public function getFiles(): ImmVector<string> {
-    $files = Vector { };
+    $files = Vector {};
     $files->addAll($this->files);
     foreach ($this->builders as $builder) {
       $files->addAll($builder->getFiles());

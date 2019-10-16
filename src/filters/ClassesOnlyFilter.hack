@@ -15,13 +15,11 @@ final class ClassesOnlyFilter implements Builder {
    *
    * @param $source the builder containing class definitions
    */
-  public function __construct(
-    private Builder $source,
-  ) {
+  public function __construct(private Builder $source) {
   }
 
   public function getFiles(): ImmVector<string> {
-    return ImmVector { };
+    return ImmVector {};
   }
 
   public function getAutoloadMap(): AutoloadMap {

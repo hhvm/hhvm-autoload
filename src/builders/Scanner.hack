@@ -13,10 +13,7 @@ namespace Facebook\AutoloadMap;
  */
 abstract final class Scanner {
   /** Construct a builder for a single file */
-  public static function fromFile(
-    string $path,
-    Parser $parser,
-  ): Builder {
+  public static function fromFile(string $path, Parser $parser): Builder {
     switch ($parser) {
       case Parser::EXT_FACTPARSE:
         return FactParseScanner::fromFile($path);
@@ -24,10 +21,7 @@ abstract final class Scanner {
   }
 
   /** Construct a builder for a tree */
-  public static function fromTree(
-    string $path,
-    Parser $parser,
-  ): Builder {
+  public static function fromTree(string $path, Parser $parser): Builder {
     switch ($parser) {
       case Parser::EXT_FACTPARSE:
         return FactParseScanner::fromTree($path);

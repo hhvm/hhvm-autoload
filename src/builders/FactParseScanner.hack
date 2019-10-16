@@ -22,20 +22,12 @@ final class FactParseScanner implements Builder {
     'typeAliases' => array<string>,
   )>;
 
-  private static function untypedToShape(
-    mixed $data,
-  ): self::TFacts {
-    invariant(
-      \is_array($data),
-      'FactsParse did not give us an array',
-    );
+  private static function untypedToShape(mixed $data): self::TFacts {
+    invariant(\is_array($data), 'FactsParse did not give us an array');
 
     $out = darray[];
     foreach ($data as $file => $facts) {
-      invariant(
-        \is_string($file),
-        'FactsParse data is not string-keyed',
-      );
+      invariant(\is_string($file), 'FactsParse data is not string-keyed');
 
       try {
         $out[$file] = shape(
@@ -60,11 +52,7 @@ final class FactParseScanner implements Builder {
         if (@\filesize($file) === 0) {
           continue;
         }
-        throw new \Exception(
-          "Failed to parse '".$file.'"',
-          $e->getCode(),
-          $e,
-        );
+        throw new \Exception("Failed to parse '".$file.'"', $e->getCode(), $e);
       }
     }
     return $out;
@@ -74,7 +62,7 @@ final class FactParseScanner implements Builder {
     private string $root,
     private ImmVector<string> $paths,
   ) {
-    $version = (int) \phpversion('factparse');
+    $version = (int)\phpversion('factparse');
     invariant(
       $version === 3,
       'Factparse version 3 is required, got %d',
@@ -82,16 +70,12 @@ final class FactParseScanner implements Builder {
     );
   }
 
-  public static function fromFile(
-    string $path,
-  ): Builder {
-    return new FactParseScanner('', ImmVector { $path });
+  public static function fromFile(string $path): Builder {
+    return new FactParseScanner('', ImmVector {$path});
   }
 
-  public static function fromTree(
-    string $root,
-  ): Builder {
-    $paths = Vector { };
+  public static function fromTree(string $root): Builder {
+    $paths = Vector {};
     $rdi = new \RecursiveDirectoryIterator($root);
     $rii = new \RecursiveIteratorIterator($rdi);
     foreach ($rii as $info) {
@@ -102,7 +86,13 @@ final class FactParseScanner implements Builder {
         continue;
       }
       $ext = $info->getExtension();
-      if ($ext !== 'php' && $ext !== 'hh' && $ext !== 'xhp' && $ext !== 'hack' && $ext !== 'hck') {
+      if (
+        $ext !== 'php' &&
+        $ext !== 'hh' &&
+        $ext !== 'xhp' &&
+        $ext !== 'hack' &&
+        $ext !== 'hck'
+      ) {
         continue;
       }
       $paths[] = $info->getPathname();
@@ -149,6 +139,6 @@ final class FactParseScanner implements Builder {
   }
 
   public function getFiles(): ImmVector<string> {
-    return ImmVector { };
+    return ImmVector {};
   }
 }

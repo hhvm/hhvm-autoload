@@ -21,18 +21,12 @@ abstract final class Merger {
    *
    * In the case of duplicates, the last definition is used.
    */
-  public static function merge(
-    \ConstVector<AutoloadMap> $maps,
-  ): AutoloadMap {
+  public static function merge(\ConstVector<AutoloadMap> $maps): AutoloadMap {
     return shape(
-      'class' =>
-        self::mergeImpl($maps->map($map ==> $map['class'])),
-      'function' =>
-        self::mergeImpl($maps->map($map ==> $map['function'])),
-      'type' =>
-        self::mergeImpl($maps->map($map ==> $map['type'])),
-      'constant' =>
-        self::mergeImpl($maps->map($map ==> $map['constant'])),
+      'class' => self::mergeImpl($maps->map($map ==> $map['class'])),
+      'function' => self::mergeImpl($maps->map($map ==> $map['function'])),
+      'type' => self::mergeImpl($maps->map($map ==> $map['type'])),
+      'constant' => self::mergeImpl($maps->map($map ==> $map['constant'])),
     );
   }
 
