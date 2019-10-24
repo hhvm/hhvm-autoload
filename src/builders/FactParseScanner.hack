@@ -33,7 +33,7 @@ final class FactParseScanner implements Builder {
     $out = darray[];
     foreach ($data as $file => $facts) {
       invariant(
-        \is_string($file),
+        $file is string,
         'FactsParse data is not string-keyed',
       );
 
