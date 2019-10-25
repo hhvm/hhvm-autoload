@@ -99,9 +99,7 @@ final class Writer {
    * - `setAutoloadMap()`
    * - `setIsDev()`
    */
-  public function writeToFile(
-    string $destination_file,
-  ): this {
+  public function writeToFile(string $destination_file): this {
     $files = $this->files;
     $map = $this->map;
     $is_dev = $this->isDev;
@@ -120,18 +118,13 @@ final class Writer {
     if ($this->relativeAutoloadRoot) {
       $root = '__DIR__.\'/../\'';
       $requires = $files->map(
-        $file ==> '__DIR__.'.\var_export(
-          '/../'.$this->relativePath($file),
-          true,
-        ),
+        $file ==>
+          '__DIR__.'.\var_export('/../'.$this->relativePath($file), true),
       );
     } else {
       $root = \var_export($this->root.'/', true);
       $requires = $files->map(
-        $file ==> \var_export(
-          $this->root.'/'.$this->relativePath($file),
-          true,
-        ),
+        $file ==> \var_export($this->root.'/'.$this->relativePath($file), true),
       );
     }
 
@@ -141,12 +134,9 @@ final class Writer {
     );
 
     $map = \array_map(
-      function ($sub_map): mixed {
+      function($sub_map): mixed {
         assert(\is_array($sub_map));
-        return \array_map(
-          $path ==> $this->relativePath($path),
-          $sub_map,
-        );
+        return \array_map($path ==> $this->relativePath($path), $sub_map);
       },
       Shapes::toArray($map),
     );
@@ -184,8 +174,11 @@ final class Writer {
 
     if ($this->relativeAutoloadRoot) {
       try {
-        $autoload_map_typedef =
-          '__DIR__.'.\var_export('/../'.$this->relativePath(__DIR__.'/AutoloadMap.hack'), true);
+        $autoload_map_typedef = '__DIR__.'.
+          \var_export(
+            '/../'.$this->relativePath(__DIR__.'/AutoloadMap.hack'),
+            true,
+          );
       } catch (\Exception $_) {
         // Our unit tests need to load it, and are rooted in the tests/ subdir
         $autoload_map_typedef = \var_export(__DIR__.'/AutoloadMap.hack', true);
@@ -253,18 +246,13 @@ function initialize(): void {
 
 }
 EOF;
-    \file_put_contents(
-      $destination_file,
-      $code,
-    );
+    \file_put_contents($destination_file, $code);
 
     return $this;
   }
 
   <<__Memoize>>
-  private function relativePath(
-    string $path,
-  ): string {
+  private function relativePath(string $path): string {
     $root = $this->root;
     if ($root === null) {
       throw new Exception('Call setRoot() before writeToFile()');
@@ -273,10 +261,6 @@ EOF;
     if (Str\starts_with($path, $root)) {
       return Str\slice($path, Str\length($root) + 1);
     }
-    throw new Exception(
-      "%s is outside root %s",
-      $path,
-      $root,
-    );
+    throw new Exception("%s is outside root %s", $path, $root);
   }
 }

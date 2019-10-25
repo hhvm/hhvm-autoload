@@ -47,11 +47,7 @@ final class ComposerPlugin
    * In this case, we want to run whenever composer's own autoload map is updated.
    */
   public static function getSubscribedEvents() {
-    return [
-      ScriptEvents::POST_AUTOLOAD_DUMP => [
-        ['onPostAutoloadDump', 0],
-      ],
-    ];
+    return [ScriptEvents::POST_AUTOLOAD_DUMP => [['onPostAutoloadDump', 0]]];
   }
 
   /** Callback for after the main composer autoload map has been updated.
@@ -63,7 +59,10 @@ final class ComposerPlugin
     $finder = new ExecutableFinder();
     $hhvm = $finder->find('hhvm', 'hhvm');
     $executor = new ProcessExecutor($this->io);
-    $command = $hhvm . ' ' . ProcessExecutor::escape($this->vendor.'/bin/hh-autoload.hack') . $args;
+    $command = $hhvm.
+      ' '.
+      ProcessExecutor::escape($this->vendor.'/bin/hh-autoload.hack').
+      $args;
     $executor->execute($command);
   }
 }

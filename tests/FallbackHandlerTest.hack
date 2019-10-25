@@ -20,7 +20,7 @@ final class FallbackHandlerTest extends \Facebook\HackTest\HackTest {
       static::markTestSkipped("Fallback handler is not enabled");
     }
   }
-  
+
   public function testFunction(): void {
     expect(TestData\MixedCaseFunction())->toBeSame(
       \realpath(__DIR__.'/../testdata/MixedCaseFunction.php'),

@@ -34,10 +34,7 @@ abstract final class ConfigurationLoader {
       'Expected configuration file to contain a JSON object, got %s',
       \gettype($decoded),
     );
-    return self::fromData(
-      /* HH_IGNORE_ERROR[4110] */ $decoded,
-      $path,
-    );
+    return self::fromData(/* HH_IGNORE_ERROR[4110] */ $decoded, $path);
   }
 
   /** Load configuration from decoded data.
@@ -55,54 +52,55 @@ abstract final class ConfigurationLoader {
 
     return shape(
       'roots' => new ImmVector(
-        TypeAssert\is_array_of_strings(
-          $data['roots'] ?? null,
-          'roots',
-        ),
+        TypeAssert\is_array_of_strings($data['roots'] ?? null, 'roots'),
       ),
       'devRoots' => new ImmVector(
         TypeAssert\is_nullable_array_of_strings(
           $data['devRoots'] ?? null,
           'devRoots',
-        ) ?? varray[],
+        ) ??
+          varray[],
       ),
       'autoloadFilesBehavior' => TypeAssert\is_nullable_enum(
         AutoloadFilesBehavior::class,
         $data['autoloadFilesBehavior'] ?? null,
         'autoloadFilesbehavior',
-      ) ?? AutoloadFilesBehavior::FIND_DEFINITIONS,
+      ) ??
+        AutoloadFilesBehavior::FIND_DEFINITIONS,
       'relativeAutoloadRoot' => TypeAssert\is_nullable_bool(
         $data['relativeAutoloadRoot'] ?? null,
         'relativerAutoloadRoot',
-      ) ?? true,
+      ) ??
+        true,
       'includeVendor' => TypeAssert\is_nullable_bool(
         $data['includeVendor'] ?? null,
         'includeVendor',
-      ) ?? true,
+      ) ??
+        true,
       'extraFiles' => new ImmVector(
         TypeAssert\is_nullable_array_of_strings(
           $data['extraFiles'] ?? null,
           'extraFiles',
-        ) ?? varray[],
+        ) ??
+          varray[],
       ),
       'parser' => TypeAssert\is_nullable_enum(
         Parser::class,
         $data['parser'] ?? null,
         'parser',
-      ) ?? self::getDefaultParser(),
+      ) ??
+        self::getDefaultParser(),
       'failureHandler' => $failure_handler,
       'devFailureHandler' => TypeAssert\is_nullable_string(
         $data['devFailureHandler'] ?? null,
         'devFailureHandler',
-      ) ?? $failure_handler,
+      ) ??
+        $failure_handler,
     );
   }
 
   private static function getDefaultParser(): Parser {
-    invariant(
-      \extension_loaded('factparse'),
-      'ext_factparse is now required',
-    );
+    invariant(\extension_loaded('factparse'), 'ext_factparse is now required');
     return Parser::EXT_FACTPARSE;
   }
 }
