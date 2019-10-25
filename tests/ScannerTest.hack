@@ -15,15 +15,11 @@ use function Facebook\FBExpect\expect;
 final class ScannerTest extends BaseTest {
   const string FIXTURES = __DIR__.'/fixtures';
   const string HH_ONLY_SRC = self::FIXTURES.'/hh-only/src';
-  const string FIXTURES_PREFIX =
-    "Facebook\\AutoloadMap\\TestFixtures\\";
+  const string FIXTURES_PREFIX = "Facebook\\AutoloadMap\\TestFixtures\\";
 
   <<DataProvider('getParsers')>>
   public function testHHOnly(Parser $parser): void {
-    $map = Scanner::fromTree(
-      self::HH_ONLY_SRC,
-      $parser,
-    )->getAutoloadMap();
+    $map = Scanner::fromTree(self::HH_ONLY_SRC, $parser)->getAutoloadMap();
 
     $this->assertMapMatches(
       darray[
@@ -36,7 +32,7 @@ final class ScannerTest extends BaseTest {
     );
 
     $this->assertMapMatches(
-      darray[ 'example_function' => 'function.php' ],
+      darray['example_function' => 'function.php'],
       $map['function'],
     );
 
@@ -50,8 +46,8 @@ final class ScannerTest extends BaseTest {
 
     $this->assertMapMatches(
       darray[
-        'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
-          => 'constant.php',
+        'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT' =>
+          'constant.php',
       ],
       $map['constant'],
     );
@@ -62,10 +58,7 @@ final class ScannerTest extends BaseTest {
     Parser $parser,
     classname<Builder> $class,
   ): void {
-    $builder = Scanner::fromTree(
-      self::HH_ONLY_SRC,
-      $parser,
-    );
+    $builder = Scanner::fromTree(self::HH_ONLY_SRC, $parser);
     expect(\get_class($builder))->toBeSame($class);
   }
 
@@ -74,10 +67,7 @@ final class ScannerTest extends BaseTest {
     Parser $parser,
     classname<Builder> $class,
   ): void {
-    $builder = Scanner::fromFile(
-      self::HH_ONLY_SRC.'/constant.php',
-      $parser,
-    );
+    $builder = Scanner::fromFile(self::HH_ONLY_SRC.'/constant.php', $parser);
     expect(\get_class($builder))->toBeSame($class);
     $map = $builder->getAutoloadMap();
     expect($map['class'])->toBeEmpty();
@@ -85,8 +75,8 @@ final class ScannerTest extends BaseTest {
     expect($map['type'])->toBeEmpty();
     $this->assertMapMatches(
       darray[
-        'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT'
-          => 'constant.php',
+        'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT' =>
+          'constant.php',
       ],
       $map['constant'],
     );
@@ -98,10 +88,9 @@ final class ScannerTest extends BaseTest {
   ): void {
     foreach ($expected as $name => $file) {
       $a = self::HH_ONLY_SRC.'/'.$file;
-      $b =
-        idx($actual, \strtolower(self::FIXTURES_PREFIX.$name))
-        ?? idx($actual, self::FIXTURES_PREFIX.$name)
-        ?? idx($actual, $name);
+      $b = idx($actual, \strtolower(self::FIXTURES_PREFIX.$name)) ??
+        idx($actual, self::FIXTURES_PREFIX.$name) ??
+        idx($actual, $name);
 
       expect($b)->toBeSame($a);
     }

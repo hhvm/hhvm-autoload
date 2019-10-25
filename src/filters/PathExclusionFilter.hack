@@ -20,7 +20,7 @@ final class PathExclusionFilter implements Builder {
   }
 
   public function getFiles(): ImmVector<string> {
-    return ImmVector { };
+    return ImmVector {};
   }
 
   public function getAutoloadMap(): AutoloadMap {
@@ -33,9 +33,7 @@ final class PathExclusionFilter implements Builder {
     );
   }
 
-  private function filter(
-    array<string, string> $map,
-  ): array<string, string> {
+  private function filter(array<string, string> $map): array<string, string> {
     return \array_filter(
       $map,
       function(string $path): bool {

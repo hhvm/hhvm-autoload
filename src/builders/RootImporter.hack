@@ -17,7 +17,7 @@ namespace Facebook\AutoloadMap;
  *   `vendor/`
  */
 final class RootImporter implements Builder {
-  private Vector<Builder> $builders = Vector { };
+  private Vector<Builder> $builders = Vector {};
   private HHImporter $hh_importer;
 
   public function __construct(
@@ -50,12 +50,12 @@ final class RootImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders->map($builder ==> $builder->getAutoloadMap())
+      $this->builders->map($builder ==> $builder->getAutoloadMap()),
     );
   }
 
   public function getFiles(): ImmVector<string> {
-    $files = Vector { };
+    $files = Vector {};
     foreach ($this->builders as $builder) {
       $files->addAll($builder->getFiles());
     }

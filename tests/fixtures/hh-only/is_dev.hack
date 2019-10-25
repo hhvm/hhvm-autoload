@@ -10,5 +10,5 @@ namespace Facebook\AutoloadMap\Tests\IsDevEntrypoint;
 
 <<__EntryPoint>>
 function main(): void {
-    \var_dump(\Facebook\AutoloadMap\Generated\is_dev());
+  \var_dump(\Facebook\AutoloadMap\Generated\is_dev());
 }

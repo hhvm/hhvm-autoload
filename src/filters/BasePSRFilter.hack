@@ -48,22 +48,25 @@ abstract class BasePSRFilter implements Builder {
   }
 
   public function getAutoloadMap(): AutoloadMap {
-    $classes =
-      (new Map($this->source->getAutoloadMap()['class']))->filterWithKey(
-        function(string $class_name, string $file): bool {
-          if ($this->prefix !== '' && \stripos($class_name, $this->prefix) !== 0) {
-            return false;
-          }
-          $expected = static::getExpectedPathWithoutExtension(
-            $class_name,
-            $this->prefix,
-            $this->root,
-          );
-          $expected = \strtolower($expected);
-          $file = \strtolower($file);
-          return ($file === $expected.'.hh' || $file === $expected.'.php');
-        },
-      );
+    $classes = (
+      new Map($this->source->getAutoloadMap()['class'])
+    )->filterWithKey(
+      function(string $class_name, string $file): bool {
+        if (
+          $this->prefix !== '' && \stripos($class_name, $this->prefix) !== 0
+        ) {
+          return false;
+        }
+        $expected = static::getExpectedPathWithoutExtension(
+          $class_name,
+          $this->prefix,
+          $this->root,
+        );
+        $expected = \strtolower($expected);
+        $file = \strtolower($file);
+        return ($file === $expected.'.hh' || $file === $expected.'.php');
+      },
+    );
 
     return shape(
       'class' => $classes->toArray(),

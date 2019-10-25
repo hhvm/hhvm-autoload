@@ -44,6 +44,7 @@ final class IsDevTest extends BaseTest {
     );
     expect($is_dev)->toBeSame('bool(false)');
 
+    //hackfmt-ignore auto-trailing comma false positive
     $is_dev = self::exec(
       '/bin/sh',
       '-c',

@@ -36,7 +36,7 @@ class HHClientFallbackHandler extends FailureHandler {
    * This will try to retrieve a cached map from APC, and if that fails,
    * a cache file.
    */
-  protected function getCache(): ?self::TCache{
+  protected function getCache(): ?self::TCache {
     $key = __CLASS__.'!cache';
     if (\apc_exists($key)) {
       $success = false;
@@ -132,7 +132,7 @@ class HHClientFallbackHandler extends FailureHandler {
       return false;
     }
 
-    $killswitches = ImmSet { 'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION' };
+    $killswitches = ImmSet {'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'};
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
@@ -147,8 +147,8 @@ class HHClientFallbackHandler extends FailureHandler {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
       if (\substr($name, 0, 4) === 'xhp_') {
-        $xhp_name =
-          ':'.\str_replace(varray['__', '_'], varray[':', '-'], \substr($name, 4));
+        $xhp_name = ':'.
+          \str_replace(varray['__', '_'], varray[':', '-'], \substr($name, 4));
         $file = $this->lookupPath('class', $xhp_name);
       }
 
@@ -218,7 +218,7 @@ class HHClientFallbackHandler extends FailureHandler {
   }
 
   private function lookupPathImpl(string $kind, string $name): ?string {
-    $cmd = (ImmVector { 'hh_client', '--json', '--search-'.$kind, $name })->map(
+    $cmd = (ImmVector {'hh_client', '--json', '--search-'.$kind, $name})->map(
       $x ==> \escapeshellarg($x),
     );
     $cmd = \implode(' ', $cmd);
