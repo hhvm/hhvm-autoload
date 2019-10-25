@@ -44,6 +44,7 @@ final class IsDevTest extends BaseTest {
     );
     expect($is_dev)->toBeSame('bool(false)');
 
+    //hackfmt-ignore auto-trailing comma false positive
     $is_dev = self::exec(
       '/bin/sh',
       '-c',
@@ -56,7 +57,7 @@ final class IsDevTest extends BaseTest {
         |> Vec\map($$, $a ==> \escapeshellarg($a))
         |> Str\join($$, ' ')
         |> \escapeshellcmd($$)
-        |> 'HH_FORCE_IS_DEV=1 '.$$,
+        |> 'HH_FORCE_IS_DEV=1 '.$$
     );
     expect($is_dev)->toBeSame('bool(true)');
 

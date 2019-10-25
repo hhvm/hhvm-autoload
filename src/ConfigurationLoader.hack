@@ -34,7 +34,11 @@ abstract final class ConfigurationLoader {
       'Expected configuration file to contain a JSON object, got %s',
       \gettype($decoded),
     );
-    return self::fromData(/* HH_IGNORE_ERROR[4110] */ $decoded, $path);
+    //hackfmt-ignore (else the comment applies to both arguments)
+    return self::fromData(
+        /* HH_IGNORE_ERROR[4110] */ $decoded, 
+        $path
+    );
   }
 
   /** Load configuration from decoded data.
