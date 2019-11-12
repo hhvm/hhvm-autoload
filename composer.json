@@ -14,7 +14,7 @@
     "hhvm/hsl": "^4.0"
   },
   "require-dev": {
-    "hhvm/hacktest": "^1.0",
+    "hhvm/hacktest": "^2.0",
     "facebook/fbexpect": "^2.1"
   },
   "autoload": {
