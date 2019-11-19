@@ -134,7 +134,7 @@ final class Writer {
     );
 
     $map = \array_map(
-      function($sub_map): mixed {
+      ($sub_map): mixed ==> {
         assert(\is_array($sub_map));
         return \array_map($path ==> $this->relativePath($path), $sub_map);
       },
