@@ -10,4 +10,3 @@ user_attributes=
 disable_static_local_variables = true
 disallow_array_literal = true
 disallow_silence = true
-error_php_lambdas = true
