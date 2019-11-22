@@ -51,7 +51,7 @@ abstract class BasePSRFilter implements Builder {
     $classes = (
       new Map($this->source->getAutoloadMap()['class'])
     )->filterWithKey(
-      function(string $class_name, string $file): bool {
+      (string $class_name, string $file): bool ==> {
         if (
           $this->prefix !== '' && \stripos($class_name, $this->prefix) !== 0
         ) {
