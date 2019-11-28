@@ -26,7 +26,7 @@ final class ComposerImporter implements Builder {
     }
     $this->root = \dirname($path);
     $composer_json = \file_get_contents($path);
-    $composer_config = \json_decode($composer_json, /* as array = */ true);
+    $composer_config = \json_decode($composer_json, /* assoc = */ true);
     $composer_autoload = idx($composer_config, 'autoload');
     if ($composer_autoload === null) {
       return;
@@ -145,13 +145,15 @@ final class ComposerImporter implements Builder {
 
   private static function normalizePSRRoots(
     array<string, mixed> $roots,
-  ): array<string, array<string>> {
+  ): darray<string, varray<string>> {
     $out = darray[];
     foreach ($roots as $k => $v) {
       if ($v is string) {
+        $out[$k] ??= varray[];
         $out[$k][] = $v;
       } else if (\is_array($v)) {
         foreach ($v as $w) {
+          $out[$k] ??= varray[];
           $out[$k][] = $w;
         }
       }
