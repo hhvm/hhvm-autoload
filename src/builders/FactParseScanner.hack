@@ -105,11 +105,9 @@ final class FactParseScanner implements Builder {
   }
 
   public function getAutoloadMap(): AutoloadMap {
-    /* HH_FIXME[2049] no HHI for \HH\facts_parse */
-    /* HH_FIXME[4107] no HHI for \HH|facts_parse */
     $facts = \HH\facts_parse(
       $this->root,
-      $this->paths->toArray(),
+      $this->paths->toValuesArray(),
       /* force_hh = */ false,
       /* multithreaded = */ true,
     );

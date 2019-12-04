@@ -30,15 +30,11 @@ abstract final class ConfigurationLoader {
   public static function fromJSON(string $json, string $path): Config {
     $decoded = \json_decode($json, /* as array = */ true);
     invariant(
-      \is_array($decoded),
+      $decoded is KeyedContainer<_, _>,
       'Expected configuration file to contain a JSON object, got %s',
       \gettype($decoded),
     );
-    //hackfmt-ignore (else the comment applies to both arguments)
-    return self::fromData(
-        /* HH_IGNORE_ERROR[4110] */ $decoded, 
-        $path
-    );
+    return self::fromData($decoded, $path);
   }
 
   /** Load configuration from decoded data.
@@ -46,7 +42,7 @@ abstract final class ConfigurationLoader {
    * @param $path arbitrary string - used to create clearer error messages
    */
   public static function fromData(
-    array<string, mixed> $data,
+    KeyedContainer<arraykey, mixed> $data,
     string $path,
   ): Config {
     $failure_handler = TypeAssert\is_nullable_string(
@@ -62,8 +58,7 @@ abstract final class ConfigurationLoader {
         TypeAssert\is_nullable_array_of_strings(
           $data['devRoots'] ?? null,
           'devRoots',
-        ) ??
-          varray[],
+        ),
       ),
       'autoloadFilesBehavior' => TypeAssert\is_nullable_enum(
         AutoloadFilesBehavior::class,
@@ -85,8 +80,7 @@ abstract final class ConfigurationLoader {
         TypeAssert\is_nullable_array_of_strings(
           $data['extraFiles'] ?? null,
           'extraFiles',
-        ) ??
-          varray[],
+        ),
       ),
       'parser' => TypeAssert\is_nullable_enum(
         Parser::class,

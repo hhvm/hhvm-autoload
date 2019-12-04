@@ -31,8 +31,8 @@ abstract final class Merger {
   }
 
   private static function mergeImpl(
-    Iterable<array<string, string>> $maps,
-  ): array<string, string> {
+    Traversable<darray<string, string>> $maps,
+  ): darray<string, string> {
     $out = darray[];
     foreach ($maps as $map) {
       foreach ($map as $def => $file) {

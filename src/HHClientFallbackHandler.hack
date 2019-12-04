@@ -95,7 +95,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->map = $map;
     $map['failure'] = inst_meth($this, 'handleFailure');
     \HH\autoload_set_paths(
-      /* HH_IGNORE_ERROR[4110] shape as array */ $map,
+      /* HH_IGNORE_ERROR[4110] incorrect hhi */ $map,
       Generated\root(),
     );
 
@@ -230,7 +230,7 @@ class HHClientFallbackHandler extends FailureHandler {
       return null;
     }
 
-    $data = \json_decode($last, /* arrays = */ true);
+    $data = \json_decode($last, /* assoc = */ true);
     if (!\is_array($data)) {
       return null;
     }
@@ -247,7 +247,6 @@ class HHClientFallbackHandler extends FailureHandler {
   }
 
   private function requireFile(string $path): void {
-    /* HH_IGNORE_ERROR[1002] */
-    require ($path);
+    require $path;
   }
 }
