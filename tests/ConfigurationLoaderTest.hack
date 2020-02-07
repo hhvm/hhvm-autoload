@@ -13,10 +13,12 @@ use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
+  const IGNORED_VALUE = '__ignore__';
+
   public function goodTestCases(): array<string, array<array<string, mixed>>> {
     return darray[
       'fully specified' => varray[darray[
-        'autoloadFilesBehavior' => AutoloadFilesBehavior::EXEC_FILES,
+        'autoloadFilesBehavior' => self::IGNORED_VALUE,
         'relativeAutoloadRoot' => false,
         'includeVendor' => false,
         'extraFiles' => varray[],
@@ -57,12 +59,11 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   ): void {
     expect($config['roots']->toArray())->toBePHPEqual($data['roots']);
 
-    expect(AutoloadFilesBehavior::coerce($config['autoloadFilesBehavior']))
-      ->toNotBeNull();
-
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
-      if (\is_array($value)) {
+      if ($value === self::IGNORED_VALUE) {
+        expect($config)->toNotContainKey($key);
+      } else if (\is_array($value)) {
         $value = new ImmVector($value);
         expect($config[$key])->toBePHPEqual($value);
       } else {

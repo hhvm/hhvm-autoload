@@ -13,7 +13,6 @@ namespace Facebook\AutoloadMap;
 type Config = shape(
   'roots' => ImmVector<string>,
   'devRoots' => ImmVector<string>,
-  'autoloadFilesBehavior' => AutoloadFilesBehavior,
   'includeVendor' => bool,
   'extraFiles' => ImmVector<string>,
   'parser' => Parser,
