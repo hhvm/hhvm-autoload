@@ -14,7 +14,6 @@ namespace Facebook\AutoloadMap;
  * For example, we may merge:
  * - the root autoload map
  * - additional autoload maps for each vendored dependency
- * - in the case of composer, a psr0, psr4, and classmap
  */
 abstract final class Merger {
   /** Return a new map containing all the entries from the input maps.

@@ -21,13 +21,15 @@ A minimal configuration file is:
 }
 ```
 
-This will look for autoloadable definitions in `src/`, and also look in `vendor/`. It will pay attention to the `autoload` sections of `composer.json` inside the `vendor/` directory.
+This will look for autoloadable definitions in `src/`, and also look in `vendor/`.
+Projects in `vendor/` are only processed if they also contain a `hh_autoload.json` file.
+
+Previously we also supported projects without `hh_autoload.json` by simulating Composer's autoload behavior, but we no longer do because that mostly applied to PHP files which HHVM can no longer parse.
 
 The following settings are optional:
 
  - `"extraFiles": ["file1.hack"]` - files that should not be autoloaded, but should be `require()`ed by `vendor/autoload.hack`. This should be needed much less frequently than under Composer
  - `"includeVendor": false` - do not include `vendor/` definitions in `vendor/autoload.hack`
- - `"autoloadFilesBehavior": "scan"|"exec"` - whether autoload `files` from vendor should be `scan`ned for definitions, or `exec`uted by `vendor/autoload.hack` - `scan` is the default, and generally favorable, but `exec` is needed if you have dependencies that need code to be executed on startup. `scan` is sufficient if your dependencies just use `files` because they need to define things that aren't classes, which is usually the case.
  - `"devRoots": [ "path/", ...]` - additional roots to only include in dev mode, not when installed as a dependency.
  - `"relativeAutoloadRoot": false` - do not use a path relative to `__DIR__` for autoloading. Instead, use the path to the folder containing `hh_autoload.json` when building the autoload map.
  - `"failureHandler:" classname<Facebook\AutoloadMap\FailureHandler>` - use the specified class to handle definitions that aren't the Map. Your handler will not be invoked for functions or constants
@@ -91,7 +93,7 @@ Information you may need is available from:
 How It Works
 ============
 
- - A parser (FactParse or DefinitionFinder) provides a list of all Hack definitions in the specified locations
+ - A parser (FactParse) provides a list of all Hack definitions in the specified locations
  - This is used to generate something similar to a classmap, except including other kinds of definitions
  - The map is provided to HHVM with [`HH\autoload_set_paths()`](https://docs.hhvm.com/hack/reference/function/HH.autoload_set_paths/)
 

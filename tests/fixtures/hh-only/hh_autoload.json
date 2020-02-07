@@ -7,5 +7,6 @@
   ],
   "extraFiles": [
     "extrafile.php"
-  ]
+  ],
+  "invalidKey": "should be ignored"
 }

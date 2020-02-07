@@ -13,8 +13,12 @@ namespace Facebook\AutoloadMap;
  *
  * This will:
  * - create an `HHImporter` for the current directory
- * - create `ComposerImporter`s or `HHImporter`s for every project under
- *   `vendor/`
+ * - create `HHImporter`s for every project under `vendor/` that has
+ *   `hh_autoload.json`
+ *
+ * Previously we also supported projects without `hh_autoload.json` by
+ * simulating Composer's autoload behavior, but we no longer do because that
+ * mostly applied to PHP files which HHVM can no longer parse.
  */
 final class RootImporter implements Builder {
   private Vector<Builder> $builders = Vector {};
@@ -38,12 +42,6 @@ final class RootImporter implements Builder {
           $dependency,
           IncludedRoots::PROD_ONLY,
         );
-        continue;
-      }
-      $composer_json = $dependency.'/composer.json';
-      if (\file_exists($composer_json)) {
-        $this->builders[] = new ComposerImporter($composer_json, $config);
-        continue;
       }
     }
   }

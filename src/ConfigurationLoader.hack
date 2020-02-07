@@ -60,12 +60,6 @@ abstract final class ConfigurationLoader {
           'devRoots',
         ),
       ),
-      'autoloadFilesBehavior' => TypeAssert\is_nullable_enum(
-        AutoloadFilesBehavior::class,
-        $data['autoloadFilesBehavior'] ?? null,
-        'autoloadFilesbehavior',
-      ) ??
-        AutoloadFilesBehavior::FIND_DEFINITIONS,
       'relativeAutoloadRoot' => TypeAssert\is_nullable_bool(
         $data['relativeAutoloadRoot'] ?? null,
         'relativerAutoloadRoot',
