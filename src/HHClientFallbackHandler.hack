@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use namespace HH\Lib\{C, Str};
+use namespace HH\Lib\{C, Str, Vec};
 
 /**
  * If a class/function/type isn't in the map, ask `hh_client` where it is.
@@ -132,7 +132,7 @@ class HHClientFallbackHandler extends FailureHandler {
       return false;
     }
 
-    $killswitches = ImmSet {'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'};
+    $killswitches = vec['CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'];
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
@@ -218,7 +218,8 @@ class HHClientFallbackHandler extends FailureHandler {
   }
 
   private function lookupPathImpl(string $kind, string $name): ?string {
-    $cmd = (ImmVector {'hh_client', '--json', '--search-'.$kind, $name})->map(
+    $cmd = Vec\map(
+      vec['hh_client', '--json', '--search-'.$kind, $name],
       $x ==> \escapeshellarg($x),
     );
     $cmd = \implode(' ', $cmd);

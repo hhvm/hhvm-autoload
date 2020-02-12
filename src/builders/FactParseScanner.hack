@@ -63,7 +63,7 @@ final class FactParseScanner implements Builder {
 
   private function __construct(
     private string $root,
-    private ImmVector<string> $paths,
+    private vec<string> $paths,
   ) {
     $version = (int)\phpversion('factparse');
     invariant(
@@ -74,11 +74,11 @@ final class FactParseScanner implements Builder {
   }
 
   public static function fromFile(string $path): Builder {
-    return new FactParseScanner('', ImmVector {$path});
+    return new FactParseScanner('', vec[$path]);
   }
 
   public static function fromTree(string $root): Builder {
-    $paths = Vector {};
+    $paths = vec[];
     $rdi = new \RecursiveDirectoryIterator($root);
     $rii = new \RecursiveIteratorIterator($rdi);
     foreach ($rii as $info) {
@@ -101,13 +101,13 @@ final class FactParseScanner implements Builder {
       $paths[] = $info->getPathname();
     }
 
-    return new FactParseScanner($root, $paths->immutable());
+    return new FactParseScanner($root, $paths);
   }
 
   public function getAutoloadMap(): AutoloadMap {
     $facts = \HH\facts_parse(
       $this->root,
-      $this->paths->toValuesArray(),
+      varray($this->paths),
       /* force_hh = */ false,
       /* multithreaded = */ true,
     );
@@ -139,7 +139,7 @@ final class FactParseScanner implements Builder {
     );
   }
 
-  public function getFiles(): ImmVector<string> {
-    return ImmVector {};
+  public function getFiles(): vec<string> {
+    return vec[];
   }
 }

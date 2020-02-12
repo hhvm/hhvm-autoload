@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use namespace HH\Lib\Str;
+use namespace HH\Lib\{Str, Vec};
 
 /** Class to write `autoload.hack`.
  *
@@ -20,7 +20,7 @@ use namespace HH\Lib\Str;
  * - the failure handler
  */
 final class Writer {
-  private ?ImmVector<string> $files;
+  private ?vec<string> $files;
   private ?AutoloadMap $map;
   private ?string $root;
   private bool $relativeAutoloadRoot = true;
@@ -44,7 +44,7 @@ final class Writer {
   }
 
   /** Files to explicitly include */
-  public function setFiles(ImmVector<string> $files): this {
+  public function setFiles(vec<string> $files): this {
     $this->files = $files;
     return $this;
   }
@@ -117,20 +117,22 @@ final class Writer {
 
     if ($this->relativeAutoloadRoot) {
       $root = '__DIR__.\'/../\'';
-      $requires = $files->map(
+      $requires = Vec\map(
+        $files,
         $file ==>
           '__DIR__.'.\var_export('/../'.$this->relativePath($file), true),
       );
     } else {
       $root = \var_export($this->root.'/', true);
-      $requires = $files->map(
+      $requires = Vec\map(
+        $files,
         $file ==> \var_export($this->root.'/'.$this->relativePath($file), true),
       );
     }
 
     $requires = \implode(
       "\n",
-      $requires->map($require ==> 'require_once('.$require.');'),
+      Vec\map($requires, $require ==> 'require_once('.$require.');'),
     );
 
     $map = \array_map(

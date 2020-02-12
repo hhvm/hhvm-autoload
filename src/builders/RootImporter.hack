@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Vec;
+
 /** Build an autoload map for the project root.
  *
  * This will:
@@ -52,12 +54,9 @@ final class RootImporter implements Builder {
     );
   }
 
-  public function getFiles(): ImmVector<string> {
-    $files = Vector {};
-    foreach ($this->builders as $builder) {
-      $files->addAll($builder->getFiles());
-    }
-    return $files->toImmVector();
+  public function getFiles(): vec<string> {
+    return Vec\map($this->builders, $builder ==> $builder->getFiles())
+      |> Vec\flatten($$);
   }
 
   public function getConfig(): Config {

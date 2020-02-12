@@ -57,15 +57,15 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
     array<string, mixed> $data,
     Config $config,
   ): void {
-    expect($config['roots']->toArray())->toBePHPEqual($data['roots']);
+    expect(varray($config['roots']))->toBePHPEqual($data['roots']);
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if ($value === self::IGNORED_VALUE) {
         expect($config)->toNotContainKey($key);
       } else if (\is_array($value)) {
-        $value = new ImmVector($value);
-        expect($config[$key])->toBePHPEqual($value);
+        $value = vec($value);
+        expect(vec($config[$key] as Traversable<_>))->toBePHPEqual($value);
       } else {
         expect($config[$key])->toBeSame($value);
       }

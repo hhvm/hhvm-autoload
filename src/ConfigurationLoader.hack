@@ -51,14 +51,14 @@ abstract final class ConfigurationLoader {
     );
 
     return shape(
-      'roots' => new ImmVector(
-        TypeAssert\is_array_of_strings($data['roots'] ?? null, 'roots'),
-      ),
-      'devRoots' => new ImmVector(
+      'roots' =>
+        vec(TypeAssert\is_array_of_strings($data['roots'] ?? null, 'roots')),
+      'devRoots' => vec(
         TypeAssert\is_nullable_array_of_strings(
           $data['devRoots'] ?? null,
           'devRoots',
-        ),
+        ) ??
+          vec[],
       ),
       'relativeAutoloadRoot' => TypeAssert\is_nullable_bool(
         $data['relativeAutoloadRoot'] ?? null,
@@ -70,11 +70,12 @@ abstract final class ConfigurationLoader {
         'includeVendor',
       ) ??
         true,
-      'extraFiles' => new ImmVector(
+      'extraFiles' => vec(
         TypeAssert\is_nullable_array_of_strings(
           $data['extraFiles'] ?? null,
           'extraFiles',
-        ),
+        ) ??
+          vec[],
       ),
       'parser' => TypeAssert\is_nullable_enum(
         Parser::class,
