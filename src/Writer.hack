@@ -237,7 +237,7 @@ function initialize(): void {
   \$map = Generated\\map();
 
   \HH\autoload_set_paths(/* HH_FIXME[4110] incorrect hhi */ \$map, Generated\\root());
-  foreach (\spl_autoload_functions() ?: varray[] as \$autoloader) {
+  foreach (\spl_autoload_functions() ?: vec[] as \$autoloader) {
     \spl_autoload_unregister(\$autoloader);
   }
 

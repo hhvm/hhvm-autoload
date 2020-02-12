@@ -15,17 +15,17 @@ use function Facebook\FBExpect\expect;
 final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   const IGNORED_VALUE = '__ignore__';
 
-  public function goodTestCases(): array<string, array<array<string, mixed>>> {
-    return darray[
-      'fully specified' => varray[darray[
+  public function goodTestCases(): dict<string, (darray<string, mixed>)> {
+    return dict[
+      'fully specified' => tuple(darray[
         'autoloadFilesBehavior' => self::IGNORED_VALUE,
         'relativeAutoloadRoot' => false,
         'includeVendor' => false,
         'extraFiles' => varray[],
         'roots' => varray['foo/', 'bar/'],
         'parser' => 'ext-factparse',
-      ]],
-      'just roots' => varray[darray['roots' => varray['foo/', 'bar/']]],
+      ]),
+      'just roots' => tuple(darray['roots' => varray['foo/', 'bar/']]),
     ];
   }
 

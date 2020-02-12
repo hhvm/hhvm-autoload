@@ -30,7 +30,7 @@ abstract final class Merger {
   }
 
   private static function mergeImpl(
-    Traversable<darray<string, string>> $maps,
+    Traversable<KeyedTraversable<string, string>> $maps,
   ): darray<string, string> {
     $out = darray[];
     foreach ($maps as $map) {

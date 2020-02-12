@@ -27,8 +27,8 @@ final class RootImporterTest extends BaseTest {
     expect($importer->getFiles())->toBeEmpty();
   }
 
-  public function provideTestModes(): array<(IncludedRoots, string, bool)> {
-    return varray[
+  public function provideTestModes(): vec<(IncludedRoots, string, bool)> {
+    return vec[
       tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', true),
       tuple(IncludedRoots::PROD_ONLY, 'test-prod.php', false),
       tuple(IncludedRoots::DEV_AND_PROD, 'test-dev.php', true),

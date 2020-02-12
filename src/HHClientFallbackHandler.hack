@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Str};
 
 /**
  * If a class/function/type isn't in the map, ask `hh_client` where it is.
@@ -146,9 +146,9 @@ class HHClientFallbackHandler extends FailureHandler {
   public function handleFailedType(string $name): void {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
-      if (\substr($name, 0, 4) === 'xhp_') {
+      if (Str\slice($name, 0, 4) === 'xhp_') {
         $xhp_name = ':'.
-          \str_replace(varray['__', '_'], varray[':', '-'], \substr($name, 4));
+          Str\replace_every(Str\slice($name, 4), dict['__' => ':', '_' => '-']);
         $file = $this->lookupPath('class', $xhp_name);
       }
 
@@ -224,8 +224,8 @@ class HHClientFallbackHandler extends FailureHandler {
     $cmd = \implode(' ', $cmd);
 
     $exit_code = null;
-    $output = varray[];
-    $last = \exec($cmd, inout $output, inout $exit_code);
+    $_output = varray[];
+    $last = \exec($cmd, inout $_output, inout $exit_code);
     if ($exit_code !== 0) {
       return null;
     }
