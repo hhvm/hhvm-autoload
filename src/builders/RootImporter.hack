@@ -23,7 +23,7 @@ use namespace HH\Lib\Vec;
  * mostly applied to PHP files which HHVM can no longer parse.
  */
 final class RootImporter implements Builder {
-  private Vector<Builder> $builders = Vector {};
+  private vec<Builder> $builders = vec[];
   private HHImporter $hh_importer;
 
   public function __construct(

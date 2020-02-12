@@ -18,8 +18,8 @@ use namespace HH\Lib\Vec;
  * `vendor/` that are designed for use with `hhvm-autoload`.
  */
 final class HHImporter implements Builder {
-  private Vector<Builder> $builders = Vector {};
-  private Vector<string> $files = Vector {};
+  private vec<Builder> $builders = vec[];
+  private vec<string> $files = vec[];
   private Config $config;
 
   public function __construct(string $root, IncludedRoots $included_roots) {

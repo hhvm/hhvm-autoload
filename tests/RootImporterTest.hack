@@ -9,6 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Vec;
 use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
@@ -54,14 +55,17 @@ final class RootImporterTest extends BaseTest {
       ->writeToFile($tempfile);
 
     $cmd = (
-      Vector {
-        \PHP_BINARY,
-        '-v',
-        'Eval.Jit=0',
-        __DIR__.'/fixtures/hh-only/'.$test_file,
-        $tempfile,
-      }
-    )->map($x ==> \escapeshellarg($x));
+      Vec\map(
+        vec[
+          \PHP_BINARY,
+          '-v',
+          'Eval.Jit=0',
+          __DIR__.'/fixtures/hh-only/'.$test_file,
+          $tempfile,
+        ],
+        $x ==> \escapeshellarg($x),
+      )
+    );
     $cmd = \implode(' ', $cmd);
 
     $output = varray[];
