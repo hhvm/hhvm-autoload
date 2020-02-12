@@ -50,7 +50,7 @@ final class RootImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders->map($builder ==> $builder->getAutoloadMap()),
+      Vec\map($this->builders, $builder ==> $builder->getAutoloadMap()),
     );
   }
 

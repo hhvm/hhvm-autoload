@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Vec;
+
 /** Class for merging multiple autoload maps.
  *
  * For example, we may merge:
@@ -20,12 +22,12 @@ abstract final class Merger {
    *
    * In the case of duplicates, the last definition is used.
    */
-  public static function merge(\ConstVector<AutoloadMap> $maps): AutoloadMap {
+  public static function merge(vec<AutoloadMap> $maps): AutoloadMap {
     return shape(
-      'class' => self::mergeImpl($maps->map($map ==> $map['class'])),
-      'function' => self::mergeImpl($maps->map($map ==> $map['function'])),
-      'type' => self::mergeImpl($maps->map($map ==> $map['type'])),
-      'constant' => self::mergeImpl($maps->map($map ==> $map['constant'])),
+      'class' => self::mergeImpl(Vec\map($maps, $map ==> $map['class'])),
+      'function' => self::mergeImpl(Vec\map($maps, $map ==> $map['function'])),
+      'type' => self::mergeImpl(Vec\map($maps, $map ==> $map['type'])),
+      'constant' => self::mergeImpl(Vec\map($maps, $map ==> $map['constant'])),
     );
   }
 
