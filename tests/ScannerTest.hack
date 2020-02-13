@@ -83,8 +83,8 @@ final class ScannerTest extends BaseTest {
   }
 
   private function assertMapMatches(
-    KeyedContainer<string, string> $expected,
-    KeyedContainer<string, string> $actual,
+    dict<string, string> $expected,
+    dict<string, string> $actual,
   ): void {
     foreach ($expected as $name => $file) {
       $a = self::HH_ONLY_SRC.'/'.$file;
