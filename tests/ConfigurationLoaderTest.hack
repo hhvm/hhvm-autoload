@@ -65,7 +65,7 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
         expect($config)->toNotContainKey($key);
       } else if (\is_array($value)) {
         $value = vec($value);
-        expect(vec($config[$key] as Traversable<_>))->toBePHPEqual($value);
+        expect($config[$key])->toBePHPEqual($value);
       } else {
         expect($config[$key])->toBeSame($value);
       }
