@@ -21,11 +21,11 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
         'autoloadFilesBehavior' => self::IGNORED_VALUE,
         'relativeAutoloadRoot' => false,
         'includeVendor' => false,
-        'extraFiles' => varray[],
-        'roots' => varray['foo/', 'bar/'],
+        'extraFiles' => vec[],
+        'roots' => vec['foo/', 'bar/'],
         'parser' => 'ext-factparse',
       ]),
-      'just roots' => tuple(darray['roots' => varray['foo/', 'bar/']]),
+      'just roots' => tuple(darray['roots' => vec['foo/', 'bar/']]),
     ];
   }
 
@@ -57,15 +57,12 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
     array<string, mixed> $data,
     Config $config,
   ): void {
-    expect(varray($config['roots']))->toBePHPEqual($data['roots']);
+    expect($config['roots'])->toEqual($data['roots']);
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if ($value === self::IGNORED_VALUE) {
         expect($config)->toNotContainKey($key);
-      } else if (\is_array($value)) {
-        $value = vec($value);
-        expect($config[$key])->toBePHPEqual($value);
       } else {
         expect($config[$key])->toBeSame($value);
       }
