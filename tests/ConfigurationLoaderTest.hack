@@ -64,7 +64,7 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
       if ($value === self::IGNORED_VALUE) {
         expect($config)->toNotContainKey($key);
       } else {
-        expect($config[$key])->toBeSame($value);
+        expect($config[$key])->toEqual($value);
       }
     }
   }
