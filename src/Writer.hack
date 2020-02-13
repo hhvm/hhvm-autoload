@@ -137,10 +137,13 @@ final class Writer {
 
     $map = \array_map(
       ($sub_map): mixed ==> {
-        assert(\is_array($sub_map));
-        return \array_map($path ==> $this->relativePath($path), $sub_map);
+        assert($sub_map is KeyedContainer<_, _>);
+        return \array_map(
+          $path ==> $this->relativePath($path as string),
+          $sub_map,
+        );
       },
-      Shapes::toArray($map),
+      $map,
     );
 
     $failure_handler = $this->failureHandler;
@@ -171,7 +174,7 @@ final class Writer {
     );
 
     $map = \var_export($map, true)
-      |> \str_replace('array (', 'darray[', $$)
+      |> \str_replace('array (', 'dict[', $$)
       |> \str_replace(')', ']', $$);
 
     if ($this->relativeAutoloadRoot) {

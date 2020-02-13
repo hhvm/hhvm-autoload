@@ -23,18 +23,18 @@ abstract final class Merger {
    * In the case of duplicates, the last definition is used.
    */
   public static function merge(vec<AutoloadMap> $maps): AutoloadMap {
-    return shape(
+    return dict[
       'class' => self::mergeImpl(Vec\map($maps, $map ==> $map['class'])),
       'function' => self::mergeImpl(Vec\map($maps, $map ==> $map['function'])),
       'type' => self::mergeImpl(Vec\map($maps, $map ==> $map['type'])),
       'constant' => self::mergeImpl(Vec\map($maps, $map ==> $map['constant'])),
-    );
+    ];
   }
 
   private static function mergeImpl(
     Traversable<KeyedTraversable<string, string>> $maps,
-  ): darray<string, string> {
-    $out = darray[];
+  ): dict<string, string> {
+    $out = dict[];
     foreach ($maps as $map) {
       foreach ($map as $def => $file) {
         $out[$def] = $file;
