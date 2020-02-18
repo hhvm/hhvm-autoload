@@ -113,10 +113,10 @@ final class FactParseScanner implements Builder {
     );
     $facts = self::untypedToShape($facts);
 
-    $classes = darray[];
-    $functions = darray[];
-    $types = darray[];
-    $constants = darray[];
+    $classes = dict[];
+    $functions = dict[];
+    $types = dict[];
+    $constants = dict[];
     foreach ($facts as $file => $file_facts) {
       foreach ($file_facts['types'] as $type) {
         $classes[\strtolower($type['name'])] = $file;
@@ -131,12 +131,12 @@ final class FactParseScanner implements Builder {
         $types[\strtolower($alias)] = $file;
       }
     }
-    return shape(
+    return dict[
       'class' => $classes,
       'function' => $functions,
       'type' => $types,
       'constant' => $constants,
-    );
+    ];
   }
 
   public function getFiles(): vec<string> {
