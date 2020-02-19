@@ -132,7 +132,7 @@ class HHClientFallbackHandler extends FailureHandler {
       return false;
     }
 
-    $killswitches = vec['CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'];
+    $killswitches = keyset['CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'];
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
