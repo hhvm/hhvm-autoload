@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Vec;
+
 /** Create an autoload map for a directory that contains an
  * `hh_autoload.json`.
  *
@@ -16,17 +18,18 @@ namespace Facebook\AutoloadMap;
  * `vendor/` that are designed for use with `hhvm-autoload`.
  */
 final class HHImporter implements Builder {
-  private Vector<Builder> $builders = Vector {};
-  private Vector<string> $files = Vector {};
+  private vec<Builder> $builders = vec[];
+  private vec<string> $files = vec[];
   private Config $config;
 
   public function __construct(string $root, IncludedRoots $included_roots) {
     $config_file = $root.'/hh_autoload.json';
     if (!\file_exists($config_file)) {
-      $roots = (ImmVector {'src', 'lib'})
-        ->filter($x ==> \is_dir($root.'/'.$x));
-      $dev_roots = (ImmVector {'test', 'tests', 'examples', 'example'})
-        ->filter($x ==> \is_dir($root.'/'.$x));
+      $roots = Vec\filter(vec['src', 'lib'], $x ==> \is_dir($root.'/'.$x));
+      $dev_roots = Vec\filter(
+        vec['test', 'tests', 'examples', 'example'],
+        $x ==> \is_dir($root.'/'.$x),
+      );
       \file_put_contents(
         $config_file,
         \json_encode(
@@ -59,7 +62,7 @@ final class HHImporter implements Builder {
         $roots = $config['roots'];
         break;
       case IncludedRoots::DEV_AND_PROD:
-        $roots = $config['roots']->concat($config['devRoots']);
+        $roots = Vec\concat($config['roots'], $config['devRoots']);
         break;
     }
 
@@ -80,17 +83,14 @@ final class HHImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders->map($builder ==> $builder->getAutoloadMap()),
+      Vec\map($this->builders, $builder ==> $builder->getAutoloadMap()),
     );
   }
 
-  public function getFiles(): ImmVector<string> {
-    $files = Vector {};
-    $files->addAll($this->files);
-    foreach ($this->builders as $builder) {
-      $files->addAll($builder->getFiles());
-    }
-    return $files->toImmVector();
+  public function getFiles(): vec<string> {
+    return Vec\map($this->builders, $builder ==> $builder->getFiles())
+      |> Vec\concat(vec[$this->files], $$)
+      |> Vec\flatten($$);
   }
 
   public function getConfig(): Config {

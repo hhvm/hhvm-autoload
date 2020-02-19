@@ -22,7 +22,7 @@ final class ScannerTest extends BaseTest {
     $map = Scanner::fromTree(self::HH_ONLY_SRC, $parser)->getAutoloadMap();
 
     $this->assertMapMatches(
-      darray[
+      dict[
         'ExampleClassInHH' => 'class_in_hh.hh',
         'ExampleClass' => 'class.php',
         'ExampleEnum' => 'enum.php',
@@ -32,12 +32,12 @@ final class ScannerTest extends BaseTest {
     );
 
     $this->assertMapMatches(
-      darray['example_function' => 'function.php'],
+      dict['example_function' => 'function.php'],
       $map['function'],
     );
 
     $this->assertMapMatches(
-      darray[
+      dict[
         'ExampleType' => 'type.php',
         'ExampleNewtype' => 'newtype.php',
       ],
@@ -45,7 +45,7 @@ final class ScannerTest extends BaseTest {
     );
 
     $this->assertMapMatches(
-      darray[
+      dict[
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT' =>
           'constant.php',
       ],
@@ -74,7 +74,7 @@ final class ScannerTest extends BaseTest {
     expect($map['function'])->toBeEmpty();
     expect($map['type'])->toBeEmpty();
     $this->assertMapMatches(
-      darray[
+      dict[
         'FREDEMMOTT_AUTOLOAD_MAP_TEST_FIXTURES_EXAMPLE_CONSTANT' =>
           'constant.php',
       ],
@@ -83,8 +83,8 @@ final class ScannerTest extends BaseTest {
   }
 
   private function assertMapMatches(
-    array<string, string> $expected,
-    array<string, string> $actual,
+    dict<string, string> $expected,
+    dict<string, string> $actual,
   ): void {
     foreach ($expected as $name => $file) {
       $a = self::HH_ONLY_SRC.'/'.$file;

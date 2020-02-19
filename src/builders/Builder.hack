@@ -17,5 +17,5 @@ interface Builder {
   public function getAutoloadMap(): AutoloadMap;
   /** Returns any additional files that should be explicitly required on
    * start */
-  public function getFiles(): ImmVector<string>;
+  public function getFiles(): vec<string>;
 }

@@ -10,8 +10,8 @@
 namespace Facebook\AutoloadMap;
 
 abstract class BaseTest extends \Facebook\HackTest\HackTest {
-  public function getParsers(): array<(Parser, classname<Builder>)> {
-    return varray[
+  public function getParsers(): vec<(Parser, classname<Builder>)> {
+    return vec[
       tuple(Parser::EXT_FACTPARSE, FactParseScanner::class),
     ];
   }

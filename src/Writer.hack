@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use namespace HH\Lib\Str;
+use namespace HH\Lib\{Str, Vec};
 
 /** Class to write `autoload.hack`.
  *
@@ -20,7 +20,7 @@ use namespace HH\Lib\Str;
  * - the failure handler
  */
 final class Writer {
-  private ?ImmVector<string> $files;
+  private ?vec<string> $files;
   private ?AutoloadMap $map;
   private ?string $root;
   private bool $relativeAutoloadRoot = true;
@@ -44,7 +44,7 @@ final class Writer {
   }
 
   /** Files to explicitly include */
-  public function setFiles(ImmVector<string> $files): this {
+  public function setFiles(vec<string> $files): this {
     $this->files = $files;
     return $this;
   }
@@ -117,28 +117,33 @@ final class Writer {
 
     if ($this->relativeAutoloadRoot) {
       $root = '__DIR__.\'/../\'';
-      $requires = $files->map(
+      $requires = Vec\map(
+        $files,
         $file ==>
           '__DIR__.'.\var_export('/../'.$this->relativePath($file), true),
       );
     } else {
       $root = \var_export($this->root.'/', true);
-      $requires = $files->map(
+      $requires = Vec\map(
+        $files,
         $file ==> \var_export($this->root.'/'.$this->relativePath($file), true),
       );
     }
 
     $requires = \implode(
       "\n",
-      $requires->map($require ==> 'require_once('.$require.');'),
+      Vec\map($requires, $require ==> 'require_once('.$require.');'),
     );
 
     $map = \array_map(
       ($sub_map): mixed ==> {
-        assert(\is_array($sub_map));
-        return \array_map($path ==> $this->relativePath($path), $sub_map);
+        assert($sub_map is KeyedContainer<_, _>);
+        return \array_map(
+          $path ==> $this->relativePath($path as string),
+          $sub_map,
+        );
       },
-      Shapes::toArray($map),
+      $map,
     );
 
     $failure_handler = $this->failureHandler;
@@ -169,7 +174,7 @@ final class Writer {
     );
 
     $map = \var_export($map, true)
-      |> \str_replace('array (', 'darray[', $$)
+      |> \str_replace('array (', 'dict[', $$)
       |> \str_replace(')', ']', $$);
 
     if ($this->relativeAutoloadRoot) {
@@ -237,7 +242,7 @@ function initialize(): void {
   \$map = Generated\\map();
 
   \HH\autoload_set_paths(/* HH_FIXME[4110] incorrect hhi */ \$map, Generated\\root());
-  foreach (\spl_autoload_functions() ?: varray[] as \$autoloader) {
+  foreach (\spl_autoload_functions() ?: vec[] as \$autoloader) {
     \spl_autoload_unregister(\$autoloader);
   }
 

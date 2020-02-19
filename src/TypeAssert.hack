@@ -41,18 +41,36 @@ function is_array_of_strings(mixed $value, string $field): array<string> {
   return $out;
 }
 
-function is_nullable_array_of_strings(
+function is_vec_like_of_strings(mixed $value, string $field): vec<string> {
+  invariant(
+    $value is vec<_> || \is_array($value),
+    '%s should be a vec<string>',
+    $field,
+  );
+  $out = vec[];
+  foreach ($value as $el) {
+    invariant($el is string, '%s should be a vec<string>', $field);
+    $out[] = $el;
+  }
+  return $out;
+}
+
+function is_nullable_vec_like_of_strings(
   mixed $value,
   string $field,
-): ?array<string> {
+): ?vec<string> {
   if ($value === null) {
     return null;
   }
 
-  invariant(\is_array($value), '%s should be an ?array<string>', $field);
-  $out = varray[];
+  invariant(
+    \is_array($value) || $value is vec<_>,
+    '%s should be an ?vec<string>',
+    $field,
+  );
+  $out = vec[];
   foreach ($value as $it) {
-    invariant($it is string, '%s should be an ?array<string>', $field);
+    invariant($it is string, '%s should be an ?vec<string>', $field);
     $out[] = $it;
   }
   return $out;

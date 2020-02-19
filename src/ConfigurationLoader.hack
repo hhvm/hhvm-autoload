@@ -51,15 +51,13 @@ abstract final class ConfigurationLoader {
     );
 
     return shape(
-      'roots' => new ImmVector(
-        TypeAssert\is_array_of_strings($data['roots'] ?? null, 'roots'),
-      ),
-      'devRoots' => new ImmVector(
-        TypeAssert\is_nullable_array_of_strings(
-          $data['devRoots'] ?? null,
-          'devRoots',
-        ),
-      ),
+      'roots' =>
+        TypeAssert\is_vec_like_of_strings($data['roots'] ?? null, 'roots'),
+      'devRoots' => TypeAssert\is_nullable_vec_like_of_strings(
+        $data['devRoots'] ?? null,
+        'devRoots',
+      ) ??
+        vec[],
       'relativeAutoloadRoot' => TypeAssert\is_nullable_bool(
         $data['relativeAutoloadRoot'] ?? null,
         'relativerAutoloadRoot',
@@ -70,12 +68,11 @@ abstract final class ConfigurationLoader {
         'includeVendor',
       ) ??
         true,
-      'extraFiles' => new ImmVector(
-        TypeAssert\is_nullable_array_of_strings(
-          $data['extraFiles'] ?? null,
-          'extraFiles',
-        ),
-      ),
+      'extraFiles' => TypeAssert\is_nullable_vec_like_of_strings(
+        $data['extraFiles'] ?? null,
+        'extraFiles',
+      ) ??
+        vec[],
       'parser' => TypeAssert\is_nullable_enum(
         Parser::class,
         $data['parser'] ?? null,

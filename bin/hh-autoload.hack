@@ -56,11 +56,11 @@ final class GenerateScript {
       /* use_threads = */ true,
     );
 
-    $map = darray[
-      'class' => darray[],
-      'function' => darray[],
-      'type' => darray[],
-      'constant' => darray[],
+    $map = dict[
+      'class' => dict[],
+      'function' => dict[],
+      'type' => dict[],
+      'constant' => dict[],
     ];
 
     foreach ($facts as $path => $file_facts) {
@@ -128,9 +128,7 @@ final class GenerateScript {
   private static function generateAutoloader(self::TOptions $options): void {
     $importer = new RootImporter(
       \getcwd(),
-      $options['dev']
-        ? IncludedRoots::DEV_AND_PROD
-        : IncludedRoots::PROD_ONLY,
+      $options['dev'] ? IncludedRoots::DEV_AND_PROD : IncludedRoots::PROD_ONLY,
     );
 
     $handler = $options['dev']
@@ -147,10 +145,7 @@ final class GenerateScript {
     print(\getcwd()."/vendor/autoload.hack\n");
   }
 
-  private static function printUsage(
-    resource $to,
-    string $bin,
-  ): void {
+  private static function printUsage(resource $to, string $bin): void {
     \fprintf($to, "USAGE: %s [--no-dev]\n", $bin);
   }
 

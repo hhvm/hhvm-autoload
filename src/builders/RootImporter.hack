@@ -9,6 +9,8 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Vec;
+
 /** Build an autoload map for the project root.
  *
  * This will:
@@ -21,7 +23,7 @@ namespace Facebook\AutoloadMap;
  * mostly applied to PHP files which HHVM can no longer parse.
  */
 final class RootImporter implements Builder {
-  private Vector<Builder> $builders = Vector {};
+  private vec<Builder> $builders = vec[];
   private HHImporter $hh_importer;
 
   public function __construct(
@@ -48,16 +50,13 @@ final class RootImporter implements Builder {
 
   public function getAutoloadMap(): AutoloadMap {
     return Merger::merge(
-      $this->builders->map($builder ==> $builder->getAutoloadMap()),
+      Vec\map($this->builders, $builder ==> $builder->getAutoloadMap()),
     );
   }
 
-  public function getFiles(): ImmVector<string> {
-    $files = Vector {};
-    foreach ($this->builders as $builder) {
-      $files->addAll($builder->getFiles());
-    }
-    return $files->toImmVector();
+  public function getFiles(): vec<string> {
+    return Vec\map($this->builders, $builder ==> $builder->getFiles())
+      |> Vec\flatten($$);
   }
 
   public function getConfig(): Config {

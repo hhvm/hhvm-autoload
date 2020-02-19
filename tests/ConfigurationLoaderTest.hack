@@ -15,34 +15,34 @@ use function Facebook\FBExpect\expect;
 final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   const IGNORED_VALUE = '__ignore__';
 
-  public function goodTestCases(): array<string, array<array<string, mixed>>> {
-    return darray[
-      'fully specified' => varray[darray[
+  public function goodTestCases(): dict<string, (dict<string, mixed>)> {
+    return dict[
+      'fully specified' => tuple(dict[
         'autoloadFilesBehavior' => self::IGNORED_VALUE,
         'relativeAutoloadRoot' => false,
         'includeVendor' => false,
-        'extraFiles' => varray[],
-        'roots' => varray['foo/', 'bar/'],
+        'extraFiles' => vec[],
+        'roots' => vec['foo/', 'bar/'],
         'parser' => 'ext-factparse',
-      ]],
-      'just roots' => varray[darray['roots' => varray['foo/', 'bar/']]],
+      ]),
+      'just roots' => tuple(dict['roots' => vec['foo/', 'bar/']]),
     ];
   }
 
   <<DataProvider('goodTestCases')>>
-  public function testDataLoader(array<string, mixed> $data): void {
+  public function testDataLoader(dict<string, mixed> $data): void {
     $config = ConfigurationLoader::fromData($data, '/dev/null');
     $this->assertGoodConfig($data, $config);
   }
 
   <<DataProvider('goodTestCases')>>
-  public function testJSONLoader(array<string, mixed> $data): void {
+  public function testJSONLoader(dict<string, mixed> $data): void {
     $config = ConfigurationLoader::fromJSON(\json_encode($data), '/dev/null');
     $this->assertGoodConfig($data, $config);
   }
 
   <<DataProvider('goodTestCases')>>
-  public function testFileLoader(array<string, mixed> $data): void {
+  public function testFileLoader(dict<string, mixed> $data): void {
     $fname = \tempnam(\sys_get_temp_dir(), 'testjson');
     try {
       \file_put_contents($fname, \json_encode($data));
@@ -54,20 +54,17 @@ final class ConfigurationLoaderTest extends \Facebook\HackTest\HackTest {
   }
 
   private function assertGoodConfig(
-    array<string, mixed> $data,
+    dict<string, mixed> $data,
     Config $config,
   ): void {
-    expect($config['roots']->toArray())->toBePHPEqual($data['roots']);
+    expect($config['roots'])->toEqual($data['roots']);
 
     $config = Shapes::toArray($config);
     foreach ($data as $key => $value) {
       if ($value === self::IGNORED_VALUE) {
         expect($config)->toNotContainKey($key);
-      } else if (\is_array($value)) {
-        $value = new ImmVector($value);
-        expect($config[$key])->toBePHPEqual($value);
       } else {
-        expect($config[$key])->toBeSame($value);
+        expect($config[$key])->toEqual($value);
       }
     }
   }

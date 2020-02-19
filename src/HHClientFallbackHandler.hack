@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Str, Vec};
 
 /**
  * If a class/function/type isn't in the map, ask `hh_client` where it is.
@@ -132,7 +132,7 @@ class HHClientFallbackHandler extends FailureHandler {
       return false;
     }
 
-    $killswitches = ImmSet {'CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'};
+    $killswitches = keyset['CI', 'TRAVIS', 'CONTINUOUS_INTEGRATION'];
     foreach ($killswitches as $killswitch) {
       $env = \getenv($killswitch);
       if ($env === 'true' || $env === '1') {
@@ -146,9 +146,9 @@ class HHClientFallbackHandler extends FailureHandler {
   public function handleFailedType(string $name): void {
     $file = $this->lookupPath('class', $name);
     if ($file === null) {
-      if (\substr($name, 0, 4) === 'xhp_') {
+      if (Str\slice($name, 0, 4) === 'xhp_') {
         $xhp_name = ':'.
-          \str_replace(varray['__', '_'], varray[':', '-'], \substr($name, 4));
+          Str\replace_every(Str\slice($name, 4), dict['__' => ':', '_' => '-']);
         $file = $this->lookupPath('class', $xhp_name);
       }
 
@@ -218,14 +218,15 @@ class HHClientFallbackHandler extends FailureHandler {
   }
 
   private function lookupPathImpl(string $kind, string $name): ?string {
-    $cmd = (ImmVector {'hh_client', '--json', '--search-'.$kind, $name})->map(
+    $cmd = Vec\map(
+      vec['hh_client', '--json', '--search-'.$kind, $name],
       $x ==> \escapeshellarg($x),
     );
     $cmd = \implode(' ', $cmd);
 
     $exit_code = null;
-    $output = varray[];
-    $last = \exec($cmd, inout $output, inout $exit_code);
+    $_output = varray[];
+    $last = \exec($cmd, inout $_output, inout $exit_code);
     if ($exit_code !== 0) {
       return null;
     }
