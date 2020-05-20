@@ -31,7 +31,7 @@ function is_nullable_bool(mixed $value, string $field): ?bool {
   return $value;
 }
 
-function is_array_of_strings(mixed $value, string $field): array<string> {
+function is_array_of_strings(mixed $value, string $field): varray<string> {
   invariant(\is_array($value), '%s should be an array<string>', $field);
   $out = varray[];
   foreach ($value as $it) {
@@ -93,7 +93,7 @@ function is_nullable_enum<Tval as arraykey, T as \HH\BuiltinEnum<Tval>>(
 function is_array_of_shapes_with_name_field(
   mixed $value,
   string $field,
-): array<shape('name' => string)> {
+): varray<shape('name' => string)> {
   $msg = $field.'should be an array<shape(\'name\' => string)>';
   invariant(\is_array($value), '%s', $msg);
   $out = varray[];
