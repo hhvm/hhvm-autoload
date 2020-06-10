@@ -10,3 +10,4 @@ user_attributes=
 disable_static_local_variables = true
 disallow_array_literal = true
 disallow_silence = true
+allowed_fixme_codes_strict = 1002, 2011, 2049, 2050, 2053, 2083, 3084, 4006, 4007, 4026, 4027, 4045, 4047, 4053, 4104, 4106, 4107, 4108, 4110, 4128, 4135, 4188, 4200, 4223, 4240, 4248, 4281, 4323
