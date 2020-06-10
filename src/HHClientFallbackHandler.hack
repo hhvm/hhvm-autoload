@@ -95,7 +95,7 @@ class HHClientFallbackHandler extends FailureHandler {
     $this->map = $map;
     $map['failure'] = inst_meth($this, 'handleFailure');
     \HH\autoload_set_paths(
-      /* HH_IGNORE_ERROR[4110] incorrect hhi */ $map,
+      /* HH_FIXME[4110] incorrect hhi */ $map,
       Generated\root(),
     );
 

@@ -214,7 +214,7 @@ function is_dev(): bool {
 }
 
 function map(): \Facebook\AutoloadMap\AutoloadMap {
-  /* HH_IGNORE_ERROR[4110] invalid return type */
+  /* HH_FIXME[4110] invalid return type */
   return $map;
 }
 

@@ -139,7 +139,12 @@ final class GenerateScript {
       ->setBuilder($importer)
       ->setRoot(\getcwd())
       ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
-      ->setFailureHandler(/* HH_IGNORE_ERROR[4110] */ $handler)
+      ->setFailureHandler(
+        /* HH_FIXME[4110] expects ?classname, got ?string.
+           Can't require classname in type, because the class
+           may not be in the autoload map.*/
+        $handler
+      )
       ->setIsDev($options['dev'])
       ->writeToDirectory(\getcwd().'/vendor/');
     print(\getcwd()."/vendor/autoload.hack\n");
@@ -176,6 +181,13 @@ final class GenerateScript {
 
 <<__EntryPoint>>
 function cli_main(): noreturn {
-  GenerateScript::main(vec(/* HH_IGNORE_ERROR[2050] */ $GLOBALS['argv']));
+  $argv = vec[];
+  $global_argv = \HH\global_get('argv') as Traversable<_>;
+  // Before autoloader, can't use __Private\TypeAssert.
+  foreach ($global_argv as $arg) {
+    invariant($arg is string, 'Argv should only even contain strings');
+    $argv[] = $arg;
+  }
+  GenerateScript::main($argv);
   exit(0);
 }

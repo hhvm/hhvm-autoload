@@ -76,7 +76,7 @@ function is_nullable_vec_like_of_strings(
   return $out;
 }
 
-/* HH_IGNORE_ERROR[2053] enum usage */
+/* HH_FIXME[2053] enum usage */
 function is_nullable_enum<Tval as arraykey, T as \HH\BuiltinEnum<Tval>>(
   classname<T> $what,
   mixed $value,
