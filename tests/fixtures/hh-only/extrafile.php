@@ -1,4 +1,4 @@
-<?hh // partial
+<?hh
 /*
  *  Copyright (c) 2015-present, Facebook, Inc.
  *  All rights reserved.
@@ -8,4 +8,7 @@
  *
  */
 
-var_dump('hello');
+<<__EntryPoint>>
+function say_hello(): void {
+  var_dump('hello');
+}
