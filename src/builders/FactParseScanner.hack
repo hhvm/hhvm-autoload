@@ -13,13 +13,13 @@ use Facebook\AutoloadMap\__Private\TypeAssert;
 
 /** Create an autoload map from a directory using `ext_factparse`. */
 final class FactParseScanner implements Builder {
-  const type TFacts = array<string, shape(
-    'types' => array<shape(
+  const type TFacts = darray<string, shape(
+    'types' => varray<shape(
       'name' => string,
     )>,
-    'constants' => array<string>,
-    'functions' => array<string>,
-    'typeAliases' => array<string>,
+    'constants' => varray<string>,
+    'functions' => varray<string>,
+    'typeAliases' => varray<string>,
   )>;
 
   private static function untypedToShape(mixed $data): self::TFacts {
