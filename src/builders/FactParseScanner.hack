@@ -23,7 +23,10 @@ final class FactParseScanner implements Builder {
   )>;
 
   private static function untypedToShape(mixed $data): self::TFacts {
-    invariant(\HH\is_any_array($data), 'FactsParse did not give us an array');
+    invariant(
+      $data is KeyedTraversable<_, _>,
+      'FactsParse did not give us an array',
+    );
 
     $out = darray[];
     foreach ($data as $file => $facts) {

@@ -232,13 +232,14 @@ class HHClientFallbackHandler extends FailureHandler {
     }
 
     $data = \json_decode($last, /* assoc = */ true);
-    if (!\HH\is_any_array($data)) {
+    if (!$data is Traversable<_>) {
       return null;
     }
     foreach ($data as $row) {
+      $row as KeyedContainer<_, _>;
       if ($row['name'] === $name) {
-        $file = $row['filename'];
-        if (\substr($file, -4) === '.hhi') {
+        $file = $row['filename'] as ?string;
+        if ($file is null || \substr($file, -4) === '.hhi') {
           return null;
         }
         return $file;
