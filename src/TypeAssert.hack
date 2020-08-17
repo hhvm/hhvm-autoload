@@ -32,7 +32,7 @@ function is_nullable_bool(mixed $value, string $field): ?bool {
 }
 
 function is_array_of_strings(mixed $value, string $field): varray<string> {
-  invariant(\is_array($value), '%s should be an array<string>', $field);
+  invariant(\HH\is_any_array($value), '%s should be an array<string>', $field);
   $out = varray[];
   foreach ($value as $it) {
     invariant($it is string, '%s should be an array<string>', $field);
@@ -43,7 +43,7 @@ function is_array_of_strings(mixed $value, string $field): varray<string> {
 
 function is_vec_like_of_strings(mixed $value, string $field): vec<string> {
   invariant(
-    $value is vec<_> || \is_array($value),
+    $value is vec<_> || \HH\is_php_array($value),
     '%s should be a vec<string>',
     $field,
   );
@@ -64,7 +64,7 @@ function is_nullable_vec_like_of_strings(
   }
 
   invariant(
-    \is_array($value) || $value is vec<_>,
+    \HH\is_php_array($value) || $value is vec<_>,
     '%s should be an ?vec<string>',
     $field,
   );
@@ -95,10 +95,10 @@ function is_array_of_shapes_with_name_field(
   string $field,
 ): varray<shape('name' => string)> {
   $msg = $field.'should be an array<shape(\'name\' => string)>';
-  invariant(\is_array($value), '%s', $msg);
+  invariant(\HH\is_any_array($value), '%s', $msg);
   $out = varray[];
   foreach ($value as $it) {
-    invariant(\is_array($it), '%s', $msg);
+    invariant(\HH\is_any_array($it), '%s', $msg);
     $name = $it['name'] ?? null;
     invariant($name is string, '%s', $msg);
     $out[] = shape('name' => $name);

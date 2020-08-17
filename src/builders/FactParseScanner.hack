@@ -23,11 +23,16 @@ final class FactParseScanner implements Builder {
   )>;
 
   private static function untypedToShape(mixed $data): self::TFacts {
-    invariant(\is_array($data), 'FactsParse did not give us an array');
+    invariant(\HH\is_any_array($data), 'FactsParse did not give us an array');
 
     $out = darray[];
     foreach ($data as $file => $facts) {
       invariant($file is string, 'FactsParse data is not string-keyed');
+      invariant(
+        $facts is KeyedContainer<_, _>,
+        'FactsParse data for file "%s" is not a KeyedContainer',
+        $file,
+      );
 
       try {
         $out[$file] = shape(

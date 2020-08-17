@@ -232,7 +232,7 @@ class HHClientFallbackHandler extends FailureHandler {
     }
 
     $data = \json_decode($last, /* assoc = */ true);
-    if (!\is_array($data)) {
+    if (!\HH\is_any_array($data)) {
       return null;
     }
     foreach ($data as $row) {
