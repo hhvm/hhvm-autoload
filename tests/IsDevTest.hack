@@ -18,7 +18,7 @@ final class IsDevTest extends BaseTest {
   }
 
   public function testInStandaloneExecutable(): void {
-    $root = __DIR__.'/fixtures/hh-only';
+    $root = \realpath(__DIR__.'/../testdata/fixtures/hh-only');
     $builder = new RootImporter($root, IncludedRoots::DEV_AND_PROD);
     $tempfile = \tempnam(\sys_get_temp_dir(), 'hh_autoload.tmp.').'.hack';
 

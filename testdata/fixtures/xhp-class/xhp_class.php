@@ -10,4 +10,5 @@
 
 namespace Facebook\AutoloadMap\TestFixtures;
 
-abstract class :example:xhp-class {}
+abstract xhp class xhp_class_new {}
+abstract xhp class xhp_namespace:xhp_class_new {}
