@@ -43,7 +43,7 @@ final class RootImporterTest extends BaseTest {
     string $test_file,
     bool $relative_root,
   ): void {
-    $root = __DIR__.'/fixtures/hh-only';
+    $root = \realpath(__DIR__.'/../testdata/fixtures/hh-only');
     $builder = new RootImporter($root, $included_roots);
     $tempdir = $relative_root ? $root.'/vendor' : \sys_get_temp_dir();
     $tempfile = \tempnam($tempdir, 'hh_autoload.tmp.').'.hack';
@@ -60,7 +60,7 @@ final class RootImporterTest extends BaseTest {
           \PHP_BINARY,
           '-v',
           'Eval.Jit=0',
-          __DIR__.'/fixtures/hh-only/'.$test_file,
+          \realpath(__DIR__.'/../testdata/fixtures/hh-only/'.$test_file),
           $tempfile,
         ],
         $x ==> \escapeshellarg($x),
@@ -89,7 +89,7 @@ final class RootImporterTest extends BaseTest {
     // If a project uses <= 1.3, their existing composer plugin will try to do
     // this while upgrading, and error out if it fails - so, we need to keep
     // suppporting it.
-    $root = __DIR__.'/fixtures/hh-only';
+    $root = \realpath(__DIR__.'/../testdata/fixtures/hh-only');
     $builder = new RootImporter($root);
     expect($builder)->toNotBeNull();
   }

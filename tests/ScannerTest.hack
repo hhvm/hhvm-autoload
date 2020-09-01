@@ -14,7 +14,7 @@ use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 final class ScannerTest extends BaseTest {
-  const string FIXTURES = __DIR__.'/fixtures';
+  const string FIXTURES = __DIR__.'/../testdata/fixtures';
   const string HH_ONLY_SRC = self::FIXTURES.'/hh-only/src';
   const string XHP_CLASS_SRC = self::FIXTURES.'/xhp-class';
   const string FIXTURES_PREFIX = "Facebook\\AutoloadMap\\TestFixtures\\";
