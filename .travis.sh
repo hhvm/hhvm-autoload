@@ -17,3 +17,9 @@ hh_client
 vendor/bin/hacktest tests/*.hack
 ENABLE_HH_CLIENT_AUTOLOAD=true vendor/bin/hacktest \
   tests/FallbackHandlerTest.hack
+
+# FactParseScanner should work with either value of disable_xhp_element_mangling
+hhvm -dhhvm.hack.lang.disable_xhp_element_mangling=false \
+  vendor/bin/hacktest tests/ScannerTest.hack
+hhvm -dhhvm.hack.lang.disable_xhp_element_mangling=true \
+  vendor/bin/hacktest tests/ScannerTest.hack

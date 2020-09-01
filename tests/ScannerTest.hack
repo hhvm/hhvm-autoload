@@ -9,6 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
+use namespace HH\Lib\Dict;
 use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
@@ -21,13 +22,33 @@ final class ScannerTest extends BaseTest {
   public function testHHOnly(Parser $parser): void {
     $map = Scanner::fromTree(self::HH_ONLY_SRC, $parser)->getAutoloadMap();
 
+    // In both cases, some of the names returned by FactParseScanner are
+    // invalid, but we only care about the valid ones being parsed correctly.
+    if (\ini_get('hhvm.hack.lang.disable_xhp_element_mangling')) {
+      $xhp_classes = keyset[
+        'xhp-class-old',
+        'xhp-namespace\\xhp-class-old',
+        'xhp_class_new',
+        'xhp_namespace\\xhp_class_new',
+      ];
+    } else {
+      $xhp_classes = keyset[
+        'xhp_xhp_class_old',
+        'xhp_xhp_namespace__xhp_class_old',
+        'xhp_class_new',
+        'xhp_namespace__xhp_class_new',
+      ];
+    }
+
     $this->assertMapMatches(
-      dict[
-        'ExampleClassInHH' => 'class_in_hh.hh',
-        'ExampleClass' => 'class.php',
-        'ExampleEnum' => 'enum.php',
-        'xhp_example__xhp_class' => 'xhp_class.php',
-      ],
+      Dict\merge(
+        dict[
+          'ExampleClassInHH' => 'class_in_hh.hh',
+          'ExampleClass' => 'class.php',
+          'ExampleEnum' => 'enum.php',
+        ],
+        Dict\from_keys($xhp_classes, $_ ==> 'xhp_class.php'),
+      ),
       $map['class'],
     );
 
