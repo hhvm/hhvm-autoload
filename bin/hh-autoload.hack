@@ -176,6 +176,6 @@ final class GenerateScript {
 
 <<__EntryPoint>>
 function cli_main(): noreturn {
-  GenerateScript::main(vec(/* HH_IGNORE_ERROR[2050] */ $GLOBALS['argv']));
+  GenerateScript::main(vec(/* HH_FIXME[4110] */ \HH\global_get('argv')));
   exit(0);
 }
