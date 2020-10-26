@@ -9,7 +9,7 @@
     "bin/hh-autoload.hack"
   ],
   "require": {
-    "composer-plugin-api": "^1.0",
+    "composer-plugin-api": "^1.0|^2.0",
     "hhvm": "^4.25",
     "hhvm/hsl": "^4.0"
   },

@@ -65,4 +65,12 @@ final class ComposerPlugin
       $args;
     $executor->execute($command);
   }
+
+  /** Does nothing but required by Composer 2.0 */
+  public function deactivate(Composer $composer, IOInterface $io) {
+  }
+
+  /** Does nothing but required by Composer 2.0 */
+  public function uninstall(Composer $composer, IOInterface $io) {
+  }
 }
