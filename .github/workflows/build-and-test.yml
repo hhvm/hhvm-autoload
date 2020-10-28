@@ -62,5 +62,24 @@ jobs:
         run: cat vendor/autoload.hack
       - name: Typecheck
         run: hh_client
-      - name: Run tests
-        run: vendor/bin/hacktest tests/*.hack
+      - name: Run most tests
+        run: |
+          # Work around https://github.com/hhvm/hacktest/issues/103
+          vendor/bin/hacktest \
+            $(ls -1 tests/*hack | grep -v Fallback)
+      - name: Run fallback handler test
+        run: |
+          ENABLE_HH_CLIENT_AUTOLOAD=true vendor/bin/hacktest \
+            tests/FallbackHandlerTest.hack
+      - name: Test XHP configuration permutations
+        run: |
+          # FactParseScanner should work with any combination of enable_xhp_class_modifier
+          # and disable_xhp_element_mangling
+          for A in false true; do
+            for B in false true; do
+              hhvm \
+                -dhhvm.hack.lang.enable_xhp_class_modifier=$A \
+                -dhhvm.hack.lang.disable_xhp_element_mangling=$B \
+                vendor/bin/hacktest tests/ScannerTest.hack
+            done
+          done
