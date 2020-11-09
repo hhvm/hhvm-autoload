@@ -204,6 +204,7 @@ class HHClientFallbackHandler extends FailureHandler {
         $this->map['class'][\strtolower($name)] = $path;
         break;
       case 'type':
+      case 'typedef':
         $this->map['type'][\strtolower($name)] = $path;
         break;
       case 'function':
