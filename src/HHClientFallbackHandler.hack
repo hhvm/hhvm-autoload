@@ -17,7 +17,7 @@ use namespace HH\Lib\{C, Str, Vec};
  * This caches the results in APC (falling back to a file) to provide fast
  * workflows.
  *
- * Does nothing if CI, TRAVIS, or CONTINOUS_INTEGRATION is true.
+ * Does nothing if CI, TRAVIS, or CONTINUOUS_INTEGRATION is true.
  */
 class HHClientFallbackHandler extends FailureHandler {
   private AutoloadMap $map;
