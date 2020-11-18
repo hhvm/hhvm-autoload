@@ -1,5 +1,6 @@
 {
   "name": "hhvm/hhvm-autoload",
+  "license": "MIT",
   "replace": {
     "facebook/hhvm-autoload": "1.*"
   },
