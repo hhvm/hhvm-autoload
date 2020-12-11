@@ -129,10 +129,9 @@ final class Writer {
 
     $map = \array_map(
       ($sub_map): mixed ==> {
-        assert($sub_map is KeyedContainer<_, _>);
         return \array_map(
           $path ==> $this->relativePath($path as string),
-          $sub_map,
+          $sub_map as KeyedContainer<_, _>,
         );
       },
       $map,
