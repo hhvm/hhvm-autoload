@@ -165,9 +165,9 @@ final class Writer {
     );
 
     \ksort(inout $map);
-    $map_export = "darray[\n";
+    $map_export = "dict[\n";
     foreach ($map as $type => $mapping) {
-      $map_export .= "  '{$type}' => \n  darray[\n";
+      $map_export .= "  '{$type}' => \n  dict[\n";
       $mapping = $mapping as KeyedContainer<_, _>;
       \ksort(inout $mapping);
       foreach ($mapping as $k => $v) {
