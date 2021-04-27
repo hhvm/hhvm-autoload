@@ -115,10 +115,12 @@ final class Writer {
           '__DIR__.'.\var_export('/../'.$this->relativePath($file), true),
       );
     } else {
-      $root = \var_export($this->root.'/', true);
+      $root_maybe_null = $this->root ?? '';
+      $root = \var_export($root_maybe_null.'/', true);
       $requires = Vec\map(
         $files,
-        $file ==> \var_export($this->root.'/'.$this->relativePath($file), true),
+        $file ==>
+          \var_export($root_maybe_null.'/'.$this->relativePath($file), true),
       );
     }
 
@@ -156,7 +158,7 @@ final class Writer {
         $failure_handler,
       );
     } else {
-      $add_failure_handler = null;
+      $add_failure_handler = '';
     }
 
     $build_id = \var_export(
