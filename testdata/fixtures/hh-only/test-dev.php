@@ -35,7 +35,7 @@ function test_dev(): void {
   );
   invariant(
     \class_exists(MyExampleTest::class),
-    "Should be able to load class from dev root in prod mode",
+    "Should be able to load class from dev root in dev mode",
   );
   print("OK!");
 }
