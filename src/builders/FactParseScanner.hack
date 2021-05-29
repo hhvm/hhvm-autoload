@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use Facebook\AutoloadMap\__Private\TypeAssert;
+use Facebook\AutoloadMap\_Private\TypeAssert;
 
 /** Create an autoload map from a directory using `ext_factparse`. */
 final class FactParseScanner implements Builder {

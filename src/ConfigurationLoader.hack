@@ -9,7 +9,7 @@
 
 namespace Facebook\AutoloadMap;
 
-use Facebook\AutoloadMap\__Private\TypeAssert;
+use Facebook\AutoloadMap\_Private\TypeAssert;
 
 /** Load configuration from JSON */
 abstract final class ConfigurationLoader {
