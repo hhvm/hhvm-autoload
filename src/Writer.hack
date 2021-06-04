@@ -230,6 +230,11 @@ function initialize(): void {
   if (_Private\GlobalState::\$initialized) {
     return;
   }
+  if (\class_exists(_Private\DummyClassToDetectNativeAutoloader::class)) {
+    // Some form of native autoloading is happening.
+    // Let's not trample over the native autoloader(s).
+    return;
+  }
   _Private\GlobalState::\$initialized = true;
   _Private\bootstrap();
   \$map = Generated\\map();

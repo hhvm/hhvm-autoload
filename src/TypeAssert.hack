@@ -8,7 +8,7 @@
  */
 
 // Special-casing minimal reimplementation to avoid the dependency
-namespace Facebook\AutoloadMap\__Private\TypeAssert;
+namespace Facebook\AutoloadMap\_Private\TypeAssert;
 
 function is_string(mixed $value, string $field): string {
   invariant($value is string, '%s should be a string', $field);
