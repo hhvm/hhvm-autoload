@@ -129,14 +129,13 @@ final class GenerateScript {
           "hh_autoload.json\n",
         );
         exit(1);
-      } else {
-        \fwrite(
-          \STDERR,
-          "hh_autoload.json could not be found, but a native autoloader was detected.\n".
-          "If you intend to use native autoloading, you may ignore this message.\n",
-        );
-        exit(0);
       }
+      \fwrite(
+        \STDERR,
+        "hh_autoload.json could not be found, but a native autoloader was detected.\n".
+        "If you intend to use native autoloading, you may ignore this message.\n",
+      );
+      exit(0);
     }
   }
 
