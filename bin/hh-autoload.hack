@@ -91,12 +91,6 @@ final class GenerateScript {
     self::generateAutoloader($options);
   }
 
-  private static function nativeAutoloadingIsBeingUsed(): bool {
-    // If this class exists before we register the userland autoloader,
-    // we can safely assume that some other autoloader is taking care of us.
-    return \class_exists(_Private\DummyClassToDetectNativeAutoloader::class);
-  }
-
   private static function parseOptions(vec<string> $argv): self::TOptions {
     $options = shape(
       'dev' => true,
@@ -122,7 +116,7 @@ final class GenerateScript {
   private static function checkRoot(): void {
     // NO HSL HERE - autoloader is not yet initialized
     if (!\file_exists('hh_autoload.json')) {
-      if (!static::nativeAutoloadingIsBeingUsed()) {
+      if (!\HH\autoload_is_native()) {
         \fwrite(
           \STDERR,
           "This executable must be ran from a directory containing an ".
