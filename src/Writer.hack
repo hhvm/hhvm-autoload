@@ -26,6 +26,7 @@ final class Writer {
   private bool $relativeAutoloadRoot = true;
   private ?string $failureHandler;
   private bool $isDev = true;
+  private bool $emitFactsForwarderFile = false;
 
   /** Mark whether we're running in development mode.
    *
@@ -52,6 +53,11 @@ final class Writer {
   /** The actual autoload map */
   public function setAutoloadMap(AutoloadMap $map): this {
     $this->map = $map;
+    return $this;
+  }
+
+  public function setEmitFactsForwarderFile(bool $should_forward): this {
+    $this->emitFactsForwarderFile = $should_forward;
     return $this;
   }
 
@@ -166,9 +172,22 @@ final class Writer {
       true,
     );
 
-    $map = \var_export($map, true)
-      |> \str_replace('array (', 'dict[', $$)
-      |> \str_replace(')', ']', $$);
+    if (!$this->emitFactsForwarderFile) {
+      $memoize = '';
+      $map_as_string = \var_export($map, true)
+        |> \str_replace('array (', 'dict[', $$)
+        |> \str_replace(')', ']', $$);
+    } else {
+      $memoize = "\n<<__Memoize>>";
+      $map_as_string = <<<'EOF'
+dict[
+    'class' => \HH\Facts\all_classes(),
+    'function' => \HH\Facts\all_functions(),
+    'type' => \HH\Facts\all_type_aliasses(),
+    'constants' => \HH\Facts\all_constants(),
+  ]
+EOF;
+    }
 
     if ($this->relativeAutoloadRoot) {
       try {
@@ -206,9 +225,12 @@ function is_dev(): bool {
   return (bool) \$override;
 }
 
+function map_uncached(): \Facebook\AutoloadMap\AutoloadMap {
+  return $map_as_string;
+}
+$memoize
 function map(): \Facebook\AutoloadMap\AutoloadMap {
-  /* HH_IGNORE_ERROR[4110] invalid return type */
-  return $map;
+  return map_uncached();
 }
 
 } // Generated\

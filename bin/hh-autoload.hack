@@ -146,16 +146,23 @@ final class GenerateScript {
       $options['dev'] ? IncludedRoots::DEV_AND_PROD : IncludedRoots::PROD_ONLY,
     );
 
+    $config = $importer->getConfig();
+
     $handler = $options['dev']
-      ? ($importer->getConfig()['devFailureHandler'] ?? null)
-      : ($importer->getConfig()['failureHandler'] ?? null);
+      ? $config['devFailureHandler']
+      : $config['failureHandler'];
+
+    $emit_facts_forwarder_file =
+      $config['useFactsIfAvailableAndDoNotEmitAStaticMap'] &&
+      !$options['no-facts'];
 
     (new Writer())
       ->setBuilder($importer)
       ->setRoot(\getcwd())
-      ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
+      ->setRelativeAutoloadRoot($config['relativeAutoloadRoot'])
       ->setFailureHandler(/* HH_IGNORE_ERROR[4110] */ $handler)
       ->setIsDev($options['dev'])
+      ->setEmitFactsForwarderFile($emit_facts_forwarder_file)
       ->writeToDirectory(\getcwd().'/vendor/');
     print(\getcwd()."/vendor/autoload.hack\n");
   }
