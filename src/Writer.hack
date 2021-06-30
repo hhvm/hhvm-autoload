@@ -181,9 +181,9 @@ final class Writer {
       $memoize = "\n<<__Memoize>>";
       $map_as_string = <<<'EOF'
 dict[
-    'class' => \HH\Facts\all_classes(),
-    'function' => \HH\Facts\all_functions(),
-    'type' => \HH\Facts\all_type_aliasses(),
+    'class' => \HH\Lib\Dict\map_keys(\HH\Facts\all_types(), \HH\Lib\Str\lowercase<>),
+    'function' => \HH\Lib\Dict\map_keys(\HH\Facts\all_functions(), \HH\Lib\Str\lowercase<>),
+    'type' => \HH\Lib\Dict\map_keys(\HH\Facts\all_type_aliases(), \HH\Lib\Str\lowercase<>),
     'constants' => \HH\Facts\all_constants(),
   ]
 EOF;
