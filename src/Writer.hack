@@ -166,9 +166,20 @@ final class Writer {
       true,
     );
 
-    $map = \var_export($map, true)
-      |> \str_replace('array (', 'dict[', $$)
-      |> \str_replace(')', ']', $$);
+    \ksort(inout $map);
+    $map_export = "dict[\n";
+    foreach ($map as $type => $mapping) {
+      $map_export .= "  '{$type}' => \n  dict[\n";
+      $mapping = $mapping as KeyedContainer<_, _>;
+      \ksort(inout $mapping);
+      foreach ($mapping as $k => $v) {
+        $v = (string)$v;
+        $map_export .= "    '{$k}' => '{$v}',\n";
+      }
+      $map_export = $map_export."  ],\n";
+    }
+    $map_export = $map_export."];\n";
+    $map = $map_export;
 
     if ($this->relativeAutoloadRoot) {
       try {
