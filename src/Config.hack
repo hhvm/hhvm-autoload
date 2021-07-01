@@ -19,5 +19,5 @@ type Config = shape(
   'failureHandler' => ?string,
   'devFailureHandler' => ?string,
   'relativeAutoloadRoot' => bool,
-  'useFactsIfAvailableAndDoNotEmitAStaticMap' => bool,
+  'useFactsIfAvailable' => bool,
 );

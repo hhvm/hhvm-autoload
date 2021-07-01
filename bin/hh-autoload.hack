@@ -152,8 +152,7 @@ final class GenerateScript {
       ? $config['devFailureHandler']
       : $config['failureHandler'];
 
-    $emit_facts_forwarder_file =
-      $config['useFactsIfAvailableAndDoNotEmitAStaticMap'] &&
+    $emit_facts_forwarder_file = $config['useFactsIfAvailable'] &&
       !$options['no-facts'];
 
     (new Writer())

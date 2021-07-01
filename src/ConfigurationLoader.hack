@@ -85,10 +85,10 @@ abstract final class ConfigurationLoader {
         'devFailureHandler',
       ) ??
         $failure_handler,
-      'useFactsIfAvailableAndDoNotEmitAStaticMap' => (
+      'useFactsIfAvailable' => (
         TypeAssert\is_nullable_bool(
-          $data['useFactsIfAvailableAndDoNotEmitAStaticMap'] ?? null,
-          'useFactsIfAvailableAndDoNotEmitAStaticMap',
+          $data['useFactsIfAvailable'] ?? null,
+          'useFactsIfAvailable',
         ) ??
         false
       ) &&
