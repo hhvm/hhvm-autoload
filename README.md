@@ -7,7 +7,7 @@ Usage
 
 1. Add an `hh_autoload.json` file (see section below)
 2. `composer require hhvm/hhvm-autoload`
-3. Require the autoload file from your entrypoint functions using `require_once __DIR__ . '/..(repeat as needed)/vendor/autoload.hack`
+3. Require the autoload file from your entrypoint functions using `require_once (__DIR__ . '(/..)(repeat as needed)/vendor/autoload.hack');`
 4. Call `Facebook\AutolaodMap\initialize()` to register the autoloader with hhvm.
 5. To re-generate the map, run `vendor/bin/hh-autoload`, `composer dump-autoload`, or any other command that generates the map
 
