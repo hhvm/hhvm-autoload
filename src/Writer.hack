@@ -181,9 +181,17 @@ final class Writer {
       $memoize = "\n<<__Memoize>>";
       $map_as_string = <<<'EOF'
 dict[
+    /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.117 */
+    /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.117 */
     'class' => \HH\Lib\Dict\map_keys(\HH\Facts\all_types(), \HH\Lib\Str\lowercase<>),
+    /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.117 */
+    /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.117 */
     'function' => \HH\Lib\Dict\map_keys(\HH\Facts\all_functions(), \HH\Lib\Str\lowercase<>),
+    /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.117 */
+    /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.117 */
     'type' => \HH\Lib\Dict\map_keys(\HH\Facts\all_type_aliases(), \HH\Lib\Str\lowercase<>),
+    /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.117 */
+    /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.117 */
     'constants' => \HH\Facts\all_constants(),
   ]
 EOF;
