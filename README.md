@@ -92,7 +92,7 @@ Information you may need is available from:
  - `Facebook\AutoloadMap\Generated\root()`: the directory containing the
     project root, i.e. the parent directory of `vendor/`
 
-Use with HH\Facts
+Use with HH\\Facts
 =================
 
 HHVM 4.109 introduced ext-facts and ext-watchman. Unlike the static pre-built autoloader which is built into a [repo authoratative](https://docs.hhvm.com/hhvm/advanced-usage/repo-authoritative) build, this native autoloader works incrementally and is suitable for autoloading in your development environment. For more information about setting up this autoloader, see the [blog post](https://hhvm.com/blog/2021/05/11/hhvm-4.109.html) for hhvm 4.109.
