@@ -92,8 +92,8 @@ abstract final class ConfigurationLoader {
         ) ??
         false
       ) &&
-        /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.117 */
-        /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.117 */
+        /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.118 */
+        /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.118 */
         \HH\Facts\enabled(),
     );
   }
