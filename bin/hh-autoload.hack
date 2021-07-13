@@ -15,6 +15,7 @@ use namespace HH\Lib\Vec;
 final class GenerateScript {
   const type TOptions = shape(
     'dev' => bool,
+    'no-facts' => bool,
   );
 
   private static function initBootstrapAutoloader(): void {
@@ -94,22 +95,28 @@ final class GenerateScript {
   private static function parseOptions(vec<string> $argv): self::TOptions {
     $options = shape(
       'dev' => true,
+      'no-facts' => false,
     );
     $bin = $argv[0];
     $argv = Vec\slice($argv, 1);
     foreach ($argv as $arg) {
-      if ($arg === '--no-dev') {
-        $options['dev'] = false;
-        continue;
+      switch ($arg) {
+        case '--no-dev':
+          $options['dev'] = false;
+          break;
+        case '--no-facts':
+          $options['no-facts'] = true;
+          break;
+        case '--help':
+          self::printUsage(\STDOUT, $bin);
+          exit(0);
+        default:
+          \fprintf(\STDERR, "Unrecognized option: '%s'\n", $arg);
+          self::printUsage(\STDERR, $bin);
+          exit(1);
       }
-      if ($arg === '--help') {
-        self::printUsage(\STDOUT, $bin);
-        exit(0);
-      }
-      \fprintf(\STDERR, "Unrecognized option: '%s'\n", $arg);
-      self::printUsage(\STDERR, $bin);
-      exit(1);
     }
+
     return $options;
   }
 
@@ -139,22 +146,37 @@ final class GenerateScript {
       $options['dev'] ? IncludedRoots::DEV_AND_PROD : IncludedRoots::PROD_ONLY,
     );
 
+    $config = $importer->getConfig();
+
     $handler = $options['dev']
-      ? ($importer->getConfig()['devFailureHandler'] ?? null)
-      : ($importer->getConfig()['failureHandler'] ?? null);
+      ? $config['devFailureHandler']
+      : $config['failureHandler'];
+
+    $emit_facts_forwarder_file = $config['useFactsIfAvailable'] &&
+      !$options['no-facts'];
 
     (new Writer())
       ->setBuilder($importer)
       ->setRoot(\getcwd())
-      ->setRelativeAutoloadRoot($importer->getConfig()['relativeAutoloadRoot'])
+      ->setRelativeAutoloadRoot($config['relativeAutoloadRoot'])
       ->setFailureHandler(/* HH_IGNORE_ERROR[4110] */ $handler)
       ->setIsDev($options['dev'])
+      ->setEmitFactsForwarderFile($emit_facts_forwarder_file)
       ->writeToDirectory(\getcwd().'/vendor/');
     print(\getcwd()."/vendor/autoload.hack\n");
   }
 
   private static function printUsage(resource $to, string $bin): void {
-    \fprintf($to, "USAGE: %s [--no-dev]\n", $bin);
+    \fprintf(
+      $to,
+      "USAGE: %s [--no-dev] [--no-facts]\n".
+      "See the README for full information.\n".
+      "The README can be found at:\n\t- %s\n\t- %s.\n",
+      $bin,
+      \getcwd().'/vendor/hhvm/hhvm-autoload/README.md',
+      // ^^^^^^ Not accurate if hhvm-autoload is the top level project.
+      'https://github.com/hhvm/hhvm-autoload/blob/master/README.md',
+    );
   }
 
   private static function getFileList(string $root): vec<string> {

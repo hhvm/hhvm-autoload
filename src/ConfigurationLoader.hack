@@ -85,6 +85,16 @@ abstract final class ConfigurationLoader {
         'devFailureHandler',
       ) ??
         $failure_handler,
+      'useFactsIfAvailable' => (
+        TypeAssert\is_nullable_bool(
+          $data['useFactsIfAvailable'] ?? null,
+          'useFactsIfAvailable',
+        ) ??
+        false
+      ) &&
+        /* HH_FIXME[2049] Facts landed in 4.109, but the hhi landed in 4.118 */
+        /* HH_FIXME[4107] Facts landed in 4.109, but the hhi landed in 4.118 */
+        \HH\Facts\enabled(),
     );
   }
 
