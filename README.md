@@ -54,11 +54,6 @@ When you add, remove, or move definitions, there are several options available:
 `Facebook\AutoloadMap\HHClientFallbackHandler` is probably the most
 convenient for Hack development.
 
-For performance reasons, failure handler methods will not be invoked for
-namespaced functions or constants that have the same name as one in the
-global namespace. You will need to re-generate the map if you make changes
-to functions or constants that are affected by this restriction.
-
 HHClientFallbackHandler
 -----------------------
 
