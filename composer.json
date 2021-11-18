@@ -29,6 +29,7 @@
     ],
     "branch-alias": {
       "dev-master": "3.x-dev",
+      "dev-main": "3.x-dev",
       "dev-CI_current_pull_request": "3.x-dev"
     }
   }

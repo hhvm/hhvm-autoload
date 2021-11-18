@@ -1,6 +1,8 @@
-HHVM-Autoload [![Build Status](https://travis-ci.org/hhvm/hhvm-autoload.svg?branch=master)](https://travis-ci.org/hhvm/hhvm-autoload)
+HHVM-Autoload
 =============
 The autoloader for autoloading classes, enums, functions, typedefs, and constants on HHVM.
+
+[![Continuous Integration](https://github.com/hhvm/hhvm-autoload/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/hhvm/hhvm-autoload/actions/workflows/build-and-test.yml)
 
 Usage
 =====

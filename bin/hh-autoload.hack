@@ -175,7 +175,7 @@ final class GenerateScript {
       $bin,
       \getcwd().'/vendor/hhvm/hhvm-autoload/README.md',
       // ^^^^^^ Not accurate if hhvm-autoload is the top level project.
-      'https://github.com/hhvm/hhvm-autoload/blob/master/README.md',
+      'https://github.com/hhvm/hhvm-autoload/blob/main/README.md',
     );
   }
 
