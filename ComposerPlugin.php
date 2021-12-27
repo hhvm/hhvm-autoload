@@ -56,12 +56,8 @@ final class ComposerPlugin
    */
   public function onPostAutoloadDump(Event $event) {
     $args = $event->isDevMode() ? '' : ' --no-dev';
-    $finder = new ExecutableFinder();
-    $hhvm = $finder->find('hhvm', 'hhvm');
     $executor = new ProcessExecutor($this->io);
-    $command = $hhvm.
-      ' '.
-      ProcessExecutor::escape($this->vendor.'/bin/hh-autoload.hack').
+    $command = ProcessExecutor::escape($this->vendor.'/bin/hh-autoload.hack').
       $args;
     $executor->execute($command);
   }
