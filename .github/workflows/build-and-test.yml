@@ -80,10 +80,8 @@ jobs:
           export HHVM_CONFIG_FILE=$(mktemp)
           for A in false true; do
             for B in false true; do
-              cat > $HHVM_CONFIG_FILE << EOF
-          hhvm.hack.lang.enable_xhp_class_modifier=$A \
-          hhvm.hack.lang.disable_xhp_element_mangling=$B \
-          EOF
+              echo hhvm.hack.lang.enable_xhp_class_modifier=$A > $HHVM_CONFIG_FILE
+              echo hhvm.hack.lang.disable_xhp_element_mangling=$B >> $HHVM_CONFIG_FILE
               vendor/bin/hacktest tests/ScannerTest.hack
             done
           done
