@@ -16,6 +16,10 @@ namespace Facebook\AutoloadMap;
  */
 <<__ConsistentConstruct>>
 abstract class FailureHandler {
+  // Required for coeffects/capabilities to be defaults rather than pure
+  public function __construct() {
+  }
+
   /**
    * Called exactly once, once the autoload map has been set.
    */

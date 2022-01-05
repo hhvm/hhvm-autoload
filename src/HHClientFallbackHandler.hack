@@ -29,6 +29,7 @@ class HHClientFallbackHandler extends FailureHandler {
 
   public function __construct() {
     $this->map = Generated\map();
+    parent::__construct();
   }
 
   /** Retrieve the cached autoload map.
