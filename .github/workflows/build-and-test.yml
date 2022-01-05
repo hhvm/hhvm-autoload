@@ -77,11 +77,11 @@ jobs:
         run: |
           # FactParseScanner should work with any combination of enable_xhp_class_modifier
           # and disable_xhp_element_mangling
+          export HHVM_CONFIG_FILE=$(mktemp)
           for A in false true; do
             for B in false true; do
-              hhvm \
-                -dhhvm.hack.lang.enable_xhp_class_modifier=$A \
-                -dhhvm.hack.lang.disable_xhp_element_mangling=$B \
-                vendor/bin/hacktest tests/ScannerTest.hack
+              echo hhvm.hack.lang.enable_xhp_class_modifier=$A > $HHVM_CONFIG_FILE
+              echo hhvm.hack.lang.disable_xhp_element_mangling=$B >> $HHVM_CONFIG_FILE
+              vendor/bin/hacktest tests/ScannerTest.hack
             done
           done
