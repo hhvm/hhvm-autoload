@@ -14,8 +14,7 @@ jobs:
         os: [ ubuntu , macos ]
         hhvm:
           - '4.67'
-          - latest
-          - nightly
+          - '4.102'
     runs-on: ${{matrix.os}}-latest
     steps:
       - uses: actions/checkout@v2
