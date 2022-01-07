@@ -15,6 +15,11 @@ jobs:
         hhvm:
           - '4.67'
           - '4.102'
+        exclude:
+          # 4.67 package is no longer usable on macos
+          - os: macos
+            hhvm: '4.67'
+
     runs-on: ${{matrix.os}}-latest
     steps:
       - uses: actions/checkout@v2
