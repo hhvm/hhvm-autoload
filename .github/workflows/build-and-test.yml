@@ -39,6 +39,7 @@ jobs:
             DISTRO=$(lsb_release --codename --short)
             sudo add-apt-repository \
               "deb https://dl.hhvm.com/ubuntu ${DISTRO}-${{matrix.hhvm}} main"
+            sudo apt-get remove -y hhvm || true
             sudo apt-get install -y hhvm
           fi
       - name: Install HHVM (brew)
