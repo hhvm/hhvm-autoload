@@ -10,7 +10,7 @@ Usage
 1. Add an `hh_autoload.json` file (see section below)
 2. `composer require hhvm/hhvm-autoload`
 3. Require the autoload file from your entrypoint functions using `require_once (__DIR__ . '(/..)(repeat as needed)/vendor/autoload.hack');`
-4. Call `Facebook\AutolaodMap\initialize()` to register the autoloader with hhvm.
+4. Call `Facebook\AutoloadMap\initialize()` to register the autoloader with hhvm.
 5. To re-generate the map, run `vendor/bin/hh-autoload`, `composer dump-autoload`, or any other command that generates the map
 
 Configuration (`hh_autoload.json`)
@@ -55,11 +55,6 @@ When you add, remove, or move definitions, there are several options available:
 
 `Facebook\AutoloadMap\HHClientFallbackHandler` is probably the most
 convenient for Hack development.
-
-For performance reasons, failure handler methods will not be invoked for
-namespaced functions or constants that have the same name as one in the
-global namespace. You will need to re-generate the map if you make changes
-to functions or constants that are affected by this restriction.
 
 HHClientFallbackHandler
 -----------------------
