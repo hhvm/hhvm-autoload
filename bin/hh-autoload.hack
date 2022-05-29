@@ -69,16 +69,16 @@ final class GenerateScript {
         continue;
       }
       $file_facts = $file_facts as dynamic;
-      foreach ($file_facts['types'] as $type) {
+      foreach ($file_facts['types'] ?? vec[] as $type) {
         $map['class'][\strtolower($type['name'] as string)] = $path;
       }
-      foreach ($file_facts['constants'] as $const) {
+      foreach ($file_facts['constants'] ?? vec[] as $const) {
         $map['constant'][$const as string] = $path;
       }
-      foreach ($file_facts['functions'] as $fun) {
+      foreach ($file_facts['functions'] ?? vec[] as $fun) {
         $map['function'][\strtolower($fun as string)] = $path;
       }
-      foreach ($file_facts['typeAliases'] as $type) {
+      foreach ($file_facts['typeAliases'] ?? vec[] as $type) {
         $map['type'][\strtolower($type as string)] = $path;
       }
     }
@@ -152,8 +152,8 @@ final class GenerateScript {
       ? $config['devFailureHandler']
       : $config['failureHandler'];
 
-    $emit_facts_forwarder_file = $config['useFactsIfAvailable'] &&
-      !$options['no-facts'];
+    $emit_facts_forwarder_file =
+      $config['useFactsIfAvailable'] && !$options['no-facts'];
 
     (new Writer())
       ->setBuilder($importer)
