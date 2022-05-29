@@ -86,7 +86,7 @@ function is_array_of_shapes_with_name_field(
   mixed $value,
   string $field,
 ): varray<shape('name' => string)> {
-  $msg = $field.'should be an array<shape(\'name\' => string)>';
+  $msg = $field.'should be an vec<shape(\'name\' => string)>';
   invariant($value is Traversable<_>, '%s', $msg);
   $out = varray[];
   foreach ($value as $it) {

@@ -40,19 +40,19 @@ final class FactParseScanner implements Builder {
       try {
         $out[$file] = shape(
           'types' => TypeAssert\is_array_of_shapes_with_name_field(
-            $facts['types'] ?? null,
+            $facts['types'] ?? vec[],
             'FactParse types',
           ),
           'constants' => TypeAssert\is_array_of_strings(
-            $facts['constants'] ?? null,
+            $facts['constants'] ?? vec[],
             'FactParse constants',
           ),
           'functions' => TypeAssert\is_array_of_strings(
-            $facts['functions'] ?? null,
+            $facts['functions'] ?? vec[],
             'FactParse functions',
           ),
           'typeAliases' => TypeAssert\is_array_of_strings(
-            $facts['typeAliases'] ?? null,
+            $facts['typeAliases'] ?? vec[],
             'FactParse typeAliases',
           ),
         );
