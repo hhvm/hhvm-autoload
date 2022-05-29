@@ -10,12 +10,14 @@
 namespace Facebook\AutoloadMap;
 
 use Facebook\AutoloadMap\_Private\TypeAssert;
+use namespace HH\Lib\{C, Vec};
 
 /** Create an autoload map from a directory using `ext_factparse`. */
 final class FactParseScanner implements Builder {
   const type TFacts = darray<string, shape(
     'types' => varray<shape(
       'name' => string,
+      'kindOf' => string,
     )>,
     'constants' => varray<string>,
     'functions' => varray<string>,
@@ -38,11 +40,12 @@ final class FactParseScanner implements Builder {
       );
 
       try {
+        $types = TypeAssert\is_array_of_shapes_with_name_field_and_kind(
+          $facts['types'] ?? vec[],
+          'FactParse types',
+        );
         $out[$file] = shape(
-          'types' => TypeAssert\is_array_of_shapes_with_name_field(
-            $facts['types'] ?? vec[],
-            'FactParse types',
-          ),
+          'types' => $types,
           'constants' => TypeAssert\is_array_of_strings(
             $facts['constants'] ?? vec[],
             'FactParse constants',
@@ -56,6 +59,14 @@ final class FactParseScanner implements Builder {
             'FactParse typeAliases',
           ),
         );
+
+        // On hhvm >4.160, typeAliases may not be present,
+        // we can extract type aliases from `types` where `kindOf` === `typeAlias`.
+        if (!C\contains_key($facts, 'typeAliases')) {
+          $out[$file]['typeAliases'] =
+            Vec\filter($types, $shape ==> $shape['kindOf'] === 'typeAlias')
+            |> Vec\map($$, $shape ==> $shape['name']);
+        }
       } catch (\Exception $e) {
         $error_level = \error_reporting(0);
         $file_is_empty = \filesize($file) === 0;

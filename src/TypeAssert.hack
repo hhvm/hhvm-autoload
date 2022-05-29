@@ -82,18 +82,21 @@ function is_nullable_enum<Tval as arraykey, T as \HH\BuiltinEnum<Tval>>(
   return $value;
 }
 
-function is_array_of_shapes_with_name_field(
+function is_array_of_shapes_with_name_field_and_kind(
   mixed $value,
   string $field,
-): varray<shape('name' => string)> {
-  $msg = $field.'should be an vec<shape(\'name\' => string)>';
+): varray<shape('name' => string, 'kindOf' => string)> {
+  $msg =
+    $field.'should be a vec<shape(\'name\' => string, \'kindOf\' => string)>';
   invariant($value is Traversable<_>, '%s', $msg);
   $out = varray[];
   foreach ($value as $it) {
     invariant($it is KeyedContainer<_, _>, '%s', $msg);
     $name = $it['name'] ?? null;
     invariant($name is string, '%s', $msg);
-    $out[] = shape('name' => $name);
+    $kind_of = $it['kindOf'] ?? null;
+    invariant($kind_of is string, '%s', $msg);
+    $out[] = shape('name' => $name, 'kindOf' => $kind_of);
   }
   return $out;
 }
