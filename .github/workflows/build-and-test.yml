@@ -11,7 +11,7 @@ jobs:
       # Run tests on all OS's and HHVM versions, even if one fails
       fail-fast: false
       matrix:
-        os: [ ubuntu , macos ]
+        os: [ ubuntu ]
         hhvm:
           - '4.153'
           - latest
@@ -41,15 +41,6 @@ jobs:
               "deb https://dl.hhvm.com/ubuntu ${DISTRO}-${{matrix.hhvm}} main"
             sudo apt-get remove -y hhvm || true
             sudo apt-get install -y hhvm
-          fi
-      - name: Install HHVM (brew)
-        if: matrix.os == 'macos'
-        run: |
-          brew tap hhvm/hhvm
-          if [ "${{matrix.hhvm}}" = "latest" ]; then
-            brew install hhvm
-          else
-            brew install hhvm-${{matrix.hhvm}}
           fi
       - name: Inspect HHVM and Hack versions
         run: |
